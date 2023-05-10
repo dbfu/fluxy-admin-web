@@ -1,0 +1,72 @@
+* {
+  margin: 0;
+}
+
+.ant-menu-item {
+  height: 50px !important;
+  line-height: 50px !important;
+}
+
+.ant-menu-submenu-title {
+  height: 50px !important;
+  line-height: 50px !important;
+}
+
+.ant-menu-item span {
+  transition: none !important;
+}
+
+
+.ant-menu-item:hover {
+  color: rgb(124, 77, 255) !important;
+  background-color: #f0e9f7 !important;
+}
+
+.light .ant-menu-item:hover {
+  color: rgb(124, 77, 255) !important;
+  background-color: #f0e9f7 !important;
+}
+
+.dark .ant-menu-item:hover {
+  color: rgb(124, 77, 255) !important;
+  background-color: rgba(124, 77, 255, 0.082) !important;
+}
+
+.dark .ant-menu-item-selected {
+  color: rgb(124, 77, 255) !important;
+  background-color: rgba(124, 77, 255, 0.082) !important;
+}
+
+
+.ant-menu-submenu-title:hover {
+  color: rgb(124, 77, 255) !important;
+  background-color: #f0e9f7 !important;
+}
+
+.light .ant-menu-submenu-title:hover {
+  color: rgb(124, 77, 255) !important;
+  background-color: #f0e9f7 !important;
+}
+
+.dark .ant-menu-submenu-title:hover {
+  color: rgb(124, 77, 255) !important;
+  background-color: rgba(124, 77, 255, 0.082) !important;
+}
+
+.dark .ant-menu-item-selected {
+  color: rgb(124, 77, 255) !important;
+  background-color: rgba(124, 77, 255, 0.082) !important;
+}
+
+.ant-menu-submenu-selected .ant-menu-submenu-title {
+  color: rgb(124, 77, 255) !important;
+  background-color: rgba(124, 77, 255, 0.082) !important;
+}
+
+.ant-menu-submenu-selected .ant-menu-title-content a {
+  color: rgb(124, 77, 255) !important;
+}
+
+.ant-menu-sub {
+  background-color: transparent !important;
+}
