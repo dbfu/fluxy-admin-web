@@ -60,13 +60,69 @@
 
 .ant-menu-submenu-selected .ant-menu-submenu-title {
   color: rgb(124, 77, 255) !important;
-  background-color: rgba(124, 77, 255, 0.082) !important;
 }
 
 .ant-menu-submenu-selected .ant-menu-title-content a {
   color: rgb(124, 77, 255) !important;
 }
 
+.ant-menu-submenu-selected {
+  color: rgb(124, 77, 255) !important;
+}
+
+.ant-menu-submenu-open .ant-menu-submenu-title .ant-menu-title-content a {
+  color: rgb(124, 77, 255) !important;
+}
+
+.ant-menu-submenu-open .ant-menu-submenu-title {
+  color: rgb(124, 77, 255) !important;
+}
+
+.ant-menu-submenu-open .ant-menu-submenu-title .ant-menu-item-icon {
+  color: rgb(124, 77, 255) !important;
+}
+
+.ant-menu-submenu-selected .ant-menu-title-content a {
+  color: rgb(124, 77, 255) !important;
+}
+
+.dark .ant-menu-submenu-selected .ant-menu-title-content a {
+  color: rgb(124, 77, 255) !important;
+}
+
+.light .ant-menu-submenu-selected .ant-menu-title-content a {
+  color: rgb(124, 77, 255) !important;
+}
+
+.dark .ant-menu-title-content a {
+  color: #ffffff !important;
+}
+
+.dark .ant-menu-item-selected .ant-menu-title-content a {
+  color: rgb(124, 77, 255) !important;
+}
+
+.ant-menu-title-content a {
+  color: rgba(0, 0, 0, 0.88) !important;
+}
+
+.light .ant-menu-item-selected .ant-menu-title-content a {
+  color: rgb(124, 77, 255) !important;
+}
+
+.light .ant-menu-title-content a {
+  color: rgba(0, 0, 0, 0.88) !important;
+}
+
+.ant-menu-title-content:hover a {
+  color: rgb(124, 77, 255) !important;
+}
+
+
 .ant-menu-sub {
   background-color: transparent !important;
+}
+
+body.dark {
+  background-color: rgb(17, 25, 54);
 }

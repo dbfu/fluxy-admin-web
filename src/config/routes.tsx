@@ -1,26 +1,31 @@
 import { UserOutlined, ProjectOutlined } from '@ant-design/icons';
-import Home from '../pages/home';
-import User from '../pages/user';
+import { lazy } from 'react';
+
+export interface MenuItem {
+   path: string;
+   title?: string;
+   icon?: any;
+   element?: any;
+   children?: MenuItem[];
+   layout?: boolean;
+   Component?: any;
+}
 
 
-
-export const routeConfig = [
-   {
-      path: '/home',
-      element: <Home />,
+export const routeConfig: MenuItem[] = [{
+   path: '/home',
+   title: '项目列表',
+   icon: <ProjectOutlined />,
+   children: [{
+      path: '/home/index',
+      Component: lazy(() => import('../pages/home')),
       title: '项目列表',
       icon: <ProjectOutlined />,
-      children: [{
-         path: '/home',
-         element: <Home />,
-         title: '项目列表',
-         icon: <ProjectOutlined />,
-      }],
-   },
-   {
-      path: '/user',
-      element: <User />,
-      title: 'user',
-      icon: <UserOutlined />,
-   },
-]
+   }],
+},
+{
+   path: '/user',
+   Component: lazy(() => import('../pages/user')),
+   title: 'user',
+   icon: <UserOutlined />,
+}]

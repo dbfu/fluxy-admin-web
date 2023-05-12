@@ -1,13 +1,31 @@
-import { ConfigProvider, ThemeConfig, theme } from 'antd'
-import './App.css'
-import Layout from './layouts'
-import { useStore } from './models/global'
 import { useMemo } from 'react';
+import { ConfigProvider, ThemeConfig, theme } from 'antd'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
+import { useGlobalStore } from './models/global'
+import { routeConfig } from './config/routes';
+
+import './overwrite.css'
+import Login from './pages/user/login';
+import BasicLayout from './layouts';
 
 function App() {
 
-  const darkMode = useStore(state => state.darkMode);
+  const darkMode = useGlobalStore(state => state.darkMode);
+
+  const router = createBrowserRouter(
+    [
+      {
+        path: '/user/login',
+        Component: Login,
+      }, {
+        path: '/',
+        Component: BasicLayout,
+        children: routeConfig,
+      },
+    ]
+  );
+
 
   console.log(darkMode)
 
@@ -49,9 +67,7 @@ function App() {
     <ConfigProvider
       theme={curTheme}
     >
-      <div className={darkMode ? 'dark' : 'light'}>
-        <Layout />
-      </div>
+      <RouterProvider router={router} />
     </ConfigProvider>
   )
 }

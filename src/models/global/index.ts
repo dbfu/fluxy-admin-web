@@ -2,15 +2,20 @@ import { create } from 'zustand'
 
 interface State {
   darkMode: boolean;
-  setDarkMode: (mode: boolean) => void;
+  collapsed: boolean;
+  setDarkMode: (darkMode: boolean) => void;
+  setCollapsed: (collapsed: boolean) => void;
 }
 
-
-export const useStore = create<State>((set) => {
+export const useGlobalStore = create<State>((set) => {
   return {
     darkMode: false,
-    setDarkMode: (mode: boolean) => set({
-      darkMode: mode,
+    collapsed: false,
+    setDarkMode: (darkMode: State['darkMode']) => set({
+      darkMode,
+    }),
+    setCollapsed: (collapsed: State['collapsed']) => set({
+      collapsed,
     })
   };
 })
