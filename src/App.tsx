@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react';
 import { ConfigProvider, ThemeConfig, theme } from 'antd'
-import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 import { useGlobalStore } from './models/global'
 import { routeConfig } from './config/routes';
