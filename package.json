@@ -12,7 +12,6 @@
   "dependencies": {
     "@ant-design/icons": "^5.0.1",
     "@ant-design/plots": "^1.2.5",
-    "@ant-design/pro-components": "^2.4.12",
     "@antv/g2plot": "^2.4.31",
     "ahooks": "^3.7.7",
     "antd": "^5.4.6",
