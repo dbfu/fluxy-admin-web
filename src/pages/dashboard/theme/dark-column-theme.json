@@ -1,0 +1,84 @@
+{
+  "background": "rgba(20, 20, 20, 0)",
+  "components": {
+    "axis": {
+      "common": {
+        "grid": {
+          "line": {
+            "type": "line",
+            "style": {
+              "stroke": "rgba(189, 200, 240, 0.125)",
+              "lineWidth": 1,
+              "lineDash": null
+            }
+          },
+          "alignTick": true,
+          "animate": true
+        }
+      }
+    },
+    "tooltip": {
+      "domStyles": {
+        "g2-tooltip": {
+          "position": "absolute",
+          "visibility": "hidden",
+          "zIndex": 8,
+          "transition": "left 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s, top 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s",
+          "backgroundColor": "#1f1f1f",
+          "opacity": 0.95,
+          "boxShadow": "0px 2px 4px rgba(0,0,0,.5)",
+          "borderRadius": "3px",
+          "color": "#A6A6A6",
+          "fontSize": "12px",
+          "fontFamily": "\"Segoe UI\", Roboto, \"Helvetica Neue\", Arial,\n    \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\",\n    \"Noto Color Emoji\"",
+          "lineHeight": "12px",
+          "padding": "0 12px 0 12px"
+        },
+        "g2-tooltip-title": {
+          "marginBottom": "12px",
+          "marginTop": "12px"
+        },
+        "g2-tooltip-list": {
+          "margin": 0,
+          "listStyleType": "none",
+          "padding": 0
+        },
+        "g2-tooltip-list-item": {
+          "listStyleType": "none",
+          "padding": 0,
+          "marginBottom": "12px",
+          "marginTop": "12px",
+          "marginLeft": 0,
+          "marginRight": 0
+        },
+        "g2-tooltip-marker": {
+          "width": "8px",
+          "height": "8px",
+          "borderRadius": "50%",
+          "display": "inline-block",
+          "marginRight": "8px"
+        },
+        "g2-tooltip-value": {
+          "display": "inline-block",
+          "float": "right",
+          "marginLeft": "30px"
+        }
+      }
+    }
+  },
+  "styleSheet": {
+    "brandColor": "rgba(124, 77, 255, 0.85)",
+    "paletteQualitative10": [
+      "rgba(124, 77, 255, 0.85)",
+      "rgba(144, 202, 249, 0.85)",
+      "#65789B",
+      "#F6BD16",
+      "#7262fd",
+      "#78D3F8",
+      "#9661BC",
+      "#F6903D",
+      "#008685",
+      "#F08BB4"
+    ]
+  }
+}

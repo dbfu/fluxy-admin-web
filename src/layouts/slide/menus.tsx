@@ -15,11 +15,7 @@ const SlideMenu = () => {
 
   const {
     collapsed,
-  } = useGlobalStore(
-    ({ collapsed }) => ({
-      collapsed,
-    })
-  );
+  } = useGlobalStore();
 
   useEffect(() => {
     if (collapsed) {
@@ -43,14 +39,16 @@ const SlideMenu = () => {
   }
 
   const treeMenuData = useCallback((menus: MenuItem[]): ItemType[] => {
-    return (menus).map((menu: MenuItem) => {
-      return {
-        key: menu.path,
-        label: getMenuTitle(menu),
-        icon: menu.icon,
-        children: menu.children ? treeMenuData(menu.children) : null
-      };
-    })
+    return (menus)
+      .filter(o => o.title)
+      .map((menu: MenuItem) => {
+        return {
+          key: menu.path,
+          label: getMenuTitle(menu),
+          icon: menu.icon,
+          children: menu.children ? treeMenuData(menu.children) : null
+        };
+      })
   }, [])
 
 

@@ -1,5 +1,6 @@
-import { memo, useEffect } from 'react';
+import { memo } from 'react';
 import { Drawer } from 'antd';
+import { useUpdateEffect } from 'react-use';
 
 import { IconBuguang } from '@/assets/icons/buguang';
 import { useGlobalStore } from '@/models/global';
@@ -15,20 +16,16 @@ const SlideIndex = () => {
   const {
     collapsed,
     setCollapsed,
-  } = useGlobalStore(
-    ({ collapsed, setCollapsed }) => ({
-      collapsed,
-      setCollapsed,
-    })
-  )
+  } = useGlobalStore();
 
-  useEffect(() => {
+
+  useUpdateEffect(() => {
     if (!isPC) {
       setCollapsed(true);
     } else {
       setCollapsed(false);
     }
-  }, [isPC, setCollapsed]);
+  }, [isPC]);
 
 
   function renderMenu() {

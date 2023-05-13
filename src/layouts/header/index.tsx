@@ -5,6 +5,7 @@ import { IconJiaretaiyang } from '@/assets/icons/jiaretaiyang';
 import { IconShuyi_fanyi36 } from '@/assets/icons/shuyi_fanyi-36';
 import { defaultSetting } from '@/default-setting';
 import { useGlobalStore } from '@/models/global';
+import { i18n, t } from '@/utils/i18n';
 import { BellOutlined, MenuOutlined, SettingOutlined } from '@ant-design/icons';
 import { Avatar, Dropdown, Input } from 'antd';
 import { memo, useEffect } from 'react';
@@ -19,19 +20,9 @@ const Header = () => {
     collapsed,
     setCollapsed,
     setDarkMode,
-  } = useGlobalStore(
-    ({
-      darkMode,
-      collapsed,
-      setDarkMode,
-      setCollapsed,
-    }) => ({
-      darkMode,
-      collapsed,
-      setDarkMode,
-      setCollapsed,
-    })
-  );
+    setLang,
+    lang,
+  } = useGlobalStore();
 
   useEffect(() => {
     if (darkMode) {
@@ -79,7 +70,7 @@ const Header = () => {
               }}
             />
           }
-          placeholder="搜索菜单"
+          placeholder={t("jhqxJPbn" /* 搜索菜单 */)}
           allowClear
         />
         <div className='pl-[20px] lg:hidden'>
@@ -100,14 +91,36 @@ const Header = () => {
               <Icon3 />
             )}
           </div>
-          <div className='btn-icon text-[20px] bg-[rgb(227,242,253)] dark:text-[rgb(30,136,229)] text-[rgb(30,136,229)] hover:(bg-[rgb(33,150,243)] dark:text-[rgb(227,242,253)] text-[rgb(227,242,253)])'>
-            <IconShuyi_fanyi36 />
-          </div>
+          <Dropdown
+            menu={{
+              items: defaultSetting.languages.map(language => ({
+                label: `${t(language.name)} (${language.key.toUpperCase()})`,
+                key: language.key,
+              })),
+              onClick: async ({ key }) => {
+                await i18n.changeLanguage(key);
+                setLang(key);
+              }
+            }}
+            trigger={['click']}
+            placement="bottom"
+            overlayClassName='w-[160px]'
+          >
+            <div className='btn-icon text-[20px] bg-[rgb(227,242,253)] dark:text-[rgb(30,136,229)] text-[rgb(30,136,229)] hover:(bg-[rgb(33,150,243)] dark:text-[rgb(227,242,253)] text-[rgb(227,242,253)])'>
+              {lang === 'zh' ? (
+                <IconShuyi_fanyi36 />
+              ) : (
+                <span className='text-[14px]'>
+                  {lang.toUpperCase()}
+                </span>
+              )}
+            </div>
+          </Dropdown>
           <div className='btn-icon'>
             <BellOutlined />
           </div>
           <Dropdown
-            menu={{ items: [{ label: '退出登录', key: 'logout' }], onClick: () => { navigate('/user/login') } }}
+            menu={{ items: [{ label: t("wPqFuoLF" /* 退出登录 */), key: 'logout' }], onClick: () => { navigate('/user/login') } }}
             trigger={['click']}
             placement="bottomLeft"
           >
