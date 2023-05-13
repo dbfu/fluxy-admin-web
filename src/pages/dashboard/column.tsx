@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Column } from '@ant-design/plots';
 
 import { useGlobalStore } from '@/models/global';

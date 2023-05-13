@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 const Login = () => {
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
 
   const navigate = useNavigate();
 
