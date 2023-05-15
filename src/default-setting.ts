@@ -10,5 +10,5 @@ export const defaultSetting = {
       name: 'hGtEfNnp',
     },
   ],
-  defaultLang: 'en',
+  defaultLang: 'zh',
 }

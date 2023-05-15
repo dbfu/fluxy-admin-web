@@ -2,14 +2,15 @@ import { useEffect, useMemo } from 'react';
 import { ConfigProvider, ThemeConfig, theme } from 'antd'
 import { RouterProvider, createHashRouter } from 'react-router-dom';
 
-import { useGlobalStore } from './models/global'
+import { useGlobalStore } from './store/global'
 import { routeConfig } from './config/routes';
 
-import './overwrite.css'
 import Login from './pages/user/login';
 import BasicLayout from './layouts';
 import Result404 from './404';
 import { i18n } from './utils/i18n';
+
+import './overwrite.css'
 
 function App() {
 
@@ -44,19 +45,14 @@ function App() {
 
   useEffect(() => {
     i18n.changeLanguage(lang);
-  }, []);
+  }, [lang]);
 
   const curTheme: ThemeConfig = useMemo(() => {
-
     if (darkMode) {
-      document.body.classList.remove('light');
-      document.body.classList.add('dark');
       return {
         token: {
           colorPrimary: 'rgb(103, 58, 183)',
-          // colorBgTextHover: '#f0e9f7',
           colorBgBase: 'rgb(17, 25, 54)',
-          // colorBgLayout: 'rgb(17, 25, 54)',
           colorBgContainer: 'rgb(26, 34, 63)',
           colorBorder: 'rgba(189, 200, 240, 0.157)',
           colorBgTextHover: 'rgba(124, 77, 255, 0.082)',
@@ -69,20 +65,9 @@ function App() {
       return {
         token: {
           colorPrimary: 'rgb(103, 58, 183)',
-          // colorBgTextHover: '#f0e9f7',
-          // colorBgBase: 'rgb(17, 25, 54)',
-          // colorBgLayout: 'rgb(17, 25, 54)',
-          // colorBgContainer: 'rgb(26, 34, 63)',
-          // colorBorder: 'rgba(189, 200, 240, 0.157)',
-          // colorText: '#fff',
         },
       }
     }
-
-
-
-
-
   }, [darkMode])
 
   return (

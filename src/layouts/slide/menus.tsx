@@ -1,14 +1,13 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Menu } from 'antd';
 import type { ItemType } from 'antd/es/menu/hooks/useItems';
-import { Link, useLocation, useMatches } from 'react-router-dom';
+import { Link, useMatches } from 'react-router-dom';
 
 import { MenuItem, routeConfig } from '@/config/routes';
-import { useGlobalStore } from '@/models/global';
+import { useGlobalStore } from '@/store/global';
 
 const SlideMenu = () => {
 
-  const location = useLocation();
   const matches = useMatches();
 
   const [openKeys, setOpenKeys] = useState<string[]>([]);
@@ -60,7 +59,7 @@ const SlideMenu = () => {
     <Menu
       className='bg-primary'
       mode="inline"
-      selectedKeys={[location.pathname]}
+      selectedKeys={matches?.length ? [matches?.at(-1)?.pathname || ''] : []}
       style={{ height: '100%', borderRight: 0 }}
       items={menuData}
       inlineCollapsed={collapsed}

@@ -1,4 +1,4 @@
-import { UserOutlined, DashboardOutlined } from '@ant-design/icons';
+import { DashboardOutlined, TableOutlined } from '@ant-design/icons';
 import { lazy } from 'react';
 import { Navigate } from 'react-router';
 
@@ -20,10 +20,10 @@ export const routeConfig: MenuItem[] = [
       Component: lazy(() => import('../pages/dashboard')),
    },
    {
-      path: '/user',
-      Component: lazy(() => import('../pages/user')),
-      title: 'user',
-      icon: <UserOutlined />,
+      path: '/table',
+      Component: lazy(() => import('../pages/table')),
+      title: '表格',
+      icon: <TableOutlined />,
    },
    {
       path: '/',
