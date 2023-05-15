@@ -42,7 +42,6 @@ function App() {
     }
   }, [darkMode]);
 
-
   useEffect(() => {
     i18n.changeLanguage(lang);
   }, [lang]);
