@@ -1,6 +1,6 @@
 import { DashboardOutlined, TableOutlined } from '@ant-design/icons';
 import { lazy } from 'react';
-import { Navigate } from 'react-router';
+import { Navigate } from 'react-router-dom';
 
 export interface MenuItem {
    path: string;

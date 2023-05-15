@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import NProgress from 'nprogress';
 
-import App from './app.tsx'
+import App from './app'
 
 import 'virtual:windi.css'
 import 'nprogress/nprogress.css';
