@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { devtools, persist, createJSONStorage } from 'zustand/middleware';
+import { devtools, persist } from 'zustand/middleware';
 
 interface State {
   darkMode: boolean;
