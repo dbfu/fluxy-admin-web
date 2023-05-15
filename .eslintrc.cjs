@@ -12,5 +12,6 @@ module.exports = {
   plugins: ['react-refresh'],
   rules: {
     'react-refresh/only-export-components': 0,
+    '@typescript-eslint/no-unused-vars': 'error',
   },
 }
