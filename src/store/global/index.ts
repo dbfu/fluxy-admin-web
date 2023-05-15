@@ -5,7 +5,6 @@ interface State {
   darkMode: boolean;
   collapsed: boolean;
   lang: string;
-
 }
 
 interface Action {
