@@ -40,4 +40,13 @@ export default {
   TacOGPiP: "14% 利润",
   Imkllizi: "南京分店",
   MzCxBxLH: "6% 亏损",
+  LhjNVSoc: "名称",
+  MOlwAEMx: "年龄",
+  npxxdPKd: "地址",
+  YoERuunu: "职业",
+  QkOmYwne: "操作",
+  EOSDTAVT: "名称",
+  hQeqcUTv: "年龄",
+  YHapJMTT: "搜索",
+  uCkoPyVp: "清除",
 };

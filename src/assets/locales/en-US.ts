@@ -40,4 +40,13 @@ export default {
   TacOGPiP: "14% profit",
   Imkllizi: "Nanjing Branch",
   MzCxBxLH: "6% loss",
+  LhjNVSoc: "name",
+  MOlwAEMx: "Age",
+  npxxdPKd: "address",
+  YoERuunu: "occupation",
+  QkOmYwne: "operation",
+  EOSDTAVT: "name",
+  hQeqcUTv: "Age",
+  YHapJMTT: "search",
+  uCkoPyVp: "eliminate",
 };
