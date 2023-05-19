@@ -7,9 +7,9 @@ name: Docker
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ['main']
     # Publish semver tags as releases.
-    tags: [ 'v*.*.*' ]
+    tags: ['v*.*.*']
 
 env:
   # Use docker.io for Docker Hub if empty
@@ -17,10 +17,8 @@ env:
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
 
-
 jobs:
   build:
-
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -40,7 +38,6 @@ jobs:
         uses: sigstore/cosign-installer@f3c664df7af409cb4873aa5068053ba9d61a57b6 #v2.6.0
         with:
           cosign-release: 'v1.13.1'
-
 
       # Workaround: https://github.com/docker/build-push-action/issues/461
       - name: Setup Docker buildx
@@ -77,7 +74,6 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-
       # Sign the resulting Docker image digest except on PRs.
       # This will only write to the public Rekor transparency log when the Docker
       # repository is public to avoid leaking data.  If you would like to publish
@@ -86,7 +82,23 @@ jobs:
       - name: Sign the published Docker image
         if: ${{ github.event_name != 'pull_request' }}
         env:
-          COSIGN_EXPERIMENTAL: "true"
+          COSIGN_EXPERIMENTAL: 'true'
         # This step uses the identity token to provision an ephemeral certificate
         # against the sigstore community Fulcio instance.
         run: echo "${{ steps.meta.outputs.tags }}" | xargs -I {} cosign sign {}@${{ steps.build-and-push.outputs.digest }}
+
+      - name: SSH Command
+        # You may pin to the exact commit or the version.
+        # uses: D3rHase/ssh-command-action@981832f056c539720824429fa91df009db0ee9cd
+        uses: D3rHase/ssh-command-action@v0.2.1
+        with:
+          # hostname / IP of the server
+          HOST: ${{ secrets.SERVER_IP }}
+          # ssh port of the server
+          PORT: 22 # optional, default is 22
+          # user of the server
+          USER: root
+          # private ssh key registered on the server
+          PRIVATE_SSH_KEY: ${{ secrets.SERVER_KEY }}
+          # command to be executed
+          COMMAND: cd /root/fluxy-admin/web && ./run.sh
