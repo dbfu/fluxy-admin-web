@@ -2,11 +2,13 @@ FROM gplane/pnpm:8.4.0 as builder
 
 WORKDIR /data/web
 
+COPY pnpm-lock.yaml .
+COPY package.json .
+
+RUN pnpm install
+
 COPY . .
-
-RUN pnpm install --registry=https://registry.npm.taobao.org
 RUN pnpm run build
-
 
 FROM nginx:alpine as nginx
 
