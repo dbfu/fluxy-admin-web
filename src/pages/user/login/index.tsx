@@ -32,7 +32,7 @@ const Login = () => {
         <Form
           name="super-admin"
           className="login-form"
-          initialValues={{ username: 'admin', password: '123456' }}
+          initialValues={{ username: 'admin', password: '12345678' }}
           onFinish={onFinish}
           size="large"
         >
