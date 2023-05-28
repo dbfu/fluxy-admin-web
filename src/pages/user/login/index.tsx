@@ -5,6 +5,8 @@ import { Button, Form, Input } from 'antd';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import './index.css'
+
 
 const Login = () => {
   const [loading] = useState(false);
@@ -17,58 +19,65 @@ const Login = () => {
 
   return (
     <div className="bg-primary light:bg-[rgb(238,242,246)] bg-[rgb(238,242,246)] flex justify-center items-center h-[100vh]">
-      <div className='dark:bg-[rgb(33,41,70)] w-[328px] px-[32px] py-[20px] mt-[-12%] bg-white rounded-md'>
-        <div className='text-center'>
-          <div className='flex justify-center gap-2'>
-            <IconBuguang className='text-[20px] text-blue-500' />
-            <h1 className='dark:(text-white) ' style={{ marginBottom: '0.2em' }}>fluxy-admin</h1>
-          </div>
-          <h3
-            className='dark:(text-white) text-[rgba(0,0,0,.45)] mb-[1em] text-[14px] font-normal'
-          >
-            {t("wbTMzvDM" /* 一个高颜值后台管理系统 */)}
-          </h3>
-        </div>
-        <Form
-          name="super-admin"
-          className="login-form"
-          initialValues={{ username: 'admin', password: '123456789' }}
-          onFinish={onFinish}
-          size="large"
-        >
-          <Form.Item
-            name="username"
-            rules={[{ required: true, message: t("wVzXBuYs" /* 请输入账号 */) }]}
-          >
-            <Input
-              prefix={<UserOutlined className="site-form-item-icon" />}
-              placeholder={t("RNISycbR" /* 账号 */)}
-            />
-          </Form.Item>
-          <Form.Item
-            name="password"
-            rules={[{ required: true, message: t("DjMcEMAe" /* 请输入密码 */) }]}
-          >
-            <Input
-              prefix={<LockOutlined className="site-form-item-icon" />}
-              type="password"
-              placeholder={t("HplkKxdY" /* 密码 */)}
-            />
-          </Form.Item>
-
-          <Form.Item style={{ marginBottom: 18 }}>
-            <Button
-              type="primary"
-              htmlType="submit"
-              loading={loading}
-              block
+      <div className='flex-[2.5] flex justify-center'>
+        <div className='dark:bg-[rgb(33,41,70)] w-[328px] px-[32px] py-[20px] mt-[-12%] bg-white rounded-md'>
+          <div className='text-center w-[320px]'>
+            <div className='flex justify-center gap-2'>
+              <IconBuguang className='text-[20px] text-blue-500' />
+              <h1 className='dark:(text-white) ' style={{ marginBottom: '0.2em' }}>fluxy-admin</h1>
+            </div>
+            <h3
+              className='dark:(text-white) text-[rgba(0,0,0,.45)] mb-[1em] text-[14px] font-normal'
             >
-              {t("dDdqAAve" /* 登录 */)}
-            </Button>
-          </Form.Item>
-        </Form>
-      </div>
+              {t("wbTMzvDM" /* 一个高颜值后台管理系统 */)}
+            </h3>
+          </div>
+          <Form
+            name="super-admin"
+            className="login-form"
+            initialValues={{ username: 'admin', password: '123456789' }}
+            onFinish={onFinish}
+            size="large"
+          >
+            <Form.Item
+              name="username"
+              rules={[{ required: true, message: t("wVzXBuYs" /* 请输入账号 */) }]}
+            >
+              <Input
+                prefix={<UserOutlined className="site-form-item-icon" />}
+                placeholder={t("RNISycbR" /* 账号 */)}
+              />
+            </Form.Item>
+            <Form.Item
+              name="password"
+              rules={[{ required: true, message: t("DjMcEMAe" /* 请输入密码 */) }]}
+            >
+              <Input
+                prefix={<LockOutlined className="site-form-item-icon" />}
+                type="password"
+                placeholder={t("HplkKxdY" /* 密码 */)}
+              />
+            </Form.Item>
 
+            <Form.Item style={{ marginBottom: 18 }}>
+              <Button
+                type="primary"
+                htmlType="submit"
+                loading={loading}
+                block
+              >
+                {t("dDdqAAve" /* 登录 */)}
+              </Button>
+            </Form.Item>
+          </Form>
+        </div>
+      </div>
+      <div className='flex-[1.7] bg-[rgb(33,41,70)] h-[100vh] relative' style={{ backgroundImage: 'url(https://berrydashboard.io/static/media/auth-pattern-dark.b5dde5831391f4ac6ab0bc90176ac4cb.svg)' }}>
+        <div
+          className='img1 w-[243px] h-[210px] bg-center absolute top-[23%] left-[37%]'
+          style={{ backgroundSize: 380, backgroundImage: 'url(https://berrydashboard.io/static/media/auth-blue-card.209358074610c260ef74c448d420f8fd.svg)' }}></div>
+        <div className='img2 w-[313px] h-[280px] bg-center absolute top-[32%] left-[40%]' style={{ backgroundSize: 380, backgroundImage: 'url(https://berrydashboard.io/static/media/auth-purple-card.8b41ef131d2a063e1cd5feb7fae4413a.svg)' }}></div>
+      </div>
     </div>
   );
 };
