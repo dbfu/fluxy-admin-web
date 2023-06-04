@@ -3,7 +3,7 @@ import { Drawer } from 'antd';
 import { useUpdateEffect } from 'react-use';
 
 import { IconBuguang } from '@/assets/icons/buguang';
-import { useGlobalStore } from '@/store/global';
+import { useGlobalStore } from '@/stores/global';
 import { usePCScreen } from '@/hooks/use-pc-screen';
 import { defaultSetting } from '@/default-setting';
 

@@ -1,16 +1,19 @@
 import { useEffect, useMemo } from 'react';
-import { ConfigProvider, ThemeConfig, theme } from 'antd'
+import { ConfigProvider, ThemeConfig, theme, App as AntdApp } from 'antd'
 import { RouterProvider, createHashRouter } from 'react-router-dom';
+import zhCN from 'antd/locale/zh_CN';
+import enUS from 'antd/locale/en_US';
 
-import { useGlobalStore } from './store/global'
+import { useGlobalStore } from './stores/global'
 import { routeConfig } from './config/routes';
 
-import Login from './pages/user/login';
+import Login from './pages/login';
 import BasicLayout from './layouts';
 import Result404 from './404';
 import { i18n } from './utils/i18n';
 
 import './overwrite.css'
+
 
 function App() {
 
@@ -57,6 +60,7 @@ function App() {
           colorBgTextHover: 'rgba(124, 77, 255, 0.082)',
           colorTextHover: 'rgba(124, 77, 255, 0.082)',
           controlItemBgActive: 'rgba(33, 150, 243, 0.16)',
+          colorBgElevated: 'rgb(26, 34, 63)'
         },
         algorithm: theme.darkAlgorithm,
       }
@@ -72,8 +76,12 @@ function App() {
   return (
     <ConfigProvider
       theme={curTheme}
+      locale={lang === 'zh' ? zhCN : enUS}
+      componentSize='large'
     >
-      <RouterProvider router={router} />
+      <AntdApp>
+        <RouterProvider router={router} />
+      </AntdApp>
     </ConfigProvider>
   )
 }

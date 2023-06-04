@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Column } from '@ant-design/plots';
 
-import { useGlobalStore } from '@/store/global';
+import { useGlobalStore } from '@/stores/global';
 
 import columnDarkTheme from './theme/dark-column-theme.json'
 import columnLightTheme from './theme/light-column-theme.json'
-
 
 const DemoColumn = () => {
   const [data, setData] = useState([]);

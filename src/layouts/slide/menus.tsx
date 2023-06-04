@@ -4,7 +4,7 @@ import type { ItemType } from 'antd/es/menu/hooks/useItems';
 import { Link, useMatches } from 'react-router-dom';
 
 import { MenuItem, routeConfig } from '@/config/routes';
-import { useGlobalStore } from '@/store/global';
+import { useGlobalStore } from '@/stores/global';
 
 const SlideMenu = () => {
 

@@ -33,3 +33,11 @@
     transform: translate3d(0px, 0px, 0)
   }
 }
+
+.custom.slick-dots .slick-active button {
+  background: #000 !important;
+}
+
+.custom.slick-dots button {
+  background: rgba(0, 0, 0, .7) !important;
+}

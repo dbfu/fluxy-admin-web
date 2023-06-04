@@ -13,5 +13,13 @@ export default defineConfig({
     alias: {
       '@': '/src/',
     }
+  },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:7001',
+        changeOrigin: true,
+      }
+    }
   }
 })

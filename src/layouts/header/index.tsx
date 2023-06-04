@@ -8,7 +8,7 @@ import { IconFangdajing } from '@/assets/icons/fangdajing';
 import { IconJiaretaiyang } from '@/assets/icons/jiaretaiyang';
 import { IconShuyi_fanyi36 } from '@/assets/icons/shuyi_fanyi-36';
 import { defaultSetting } from '@/default-setting';
-import { useGlobalStore } from '@/store/global';
+import { useGlobalStore } from '@/stores/global';
 import { i18n, t } from '@/utils/i18n';
 import { BellOutlined, MenuOutlined, SettingOutlined } from '@ant-design/icons';
 
@@ -115,7 +115,7 @@ const Header = () => {
             trigger={['click']}
             placement="bottomLeft"
           >
-            <div className='btn-icon rounded-[27px] pl-[10px] pr-[14px] justify-between h-[48px] w-[75px] text-[20px] bg-[rgb(227,242,253)] text-[rgb(30,136,229)] hover:(bg-[rgb(33,150,243)] text-[rgb(227,242,253)])'>
+            <div className='btn-icon rounded-[27px] pl-[10px] pr-[14px] justify-between h-[48px] w-[92px] text-[20px] bg-[rgb(227,242,253)] text-[rgb(30,136,229)] hover:(bg-[rgb(33,150,243)] text-[rgb(227,242,253)])'>
               <Avatar style={{ backgroundColor: 'gold', verticalAlign: 'middle' }} icon={<IconBuguang />} />
               <SettingOutlined />
             </div>
