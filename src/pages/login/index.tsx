@@ -23,8 +23,6 @@ const Login = () => {
   const { data: captcha, refresh: refreshCaptcha } = useRequest(loginService.getCaptcha);
   const { runAsync: getPublicKey } = useRequest(loginService.getPublicKey, { manual: true });
 
-
-
   const onFinish = async (values: LoginDTO) => {
     if (!captcha?.data) {
       return;

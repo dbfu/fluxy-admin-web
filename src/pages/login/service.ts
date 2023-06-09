@@ -1,4 +1,5 @@
-import axios from 'axios'
+import request from '@/request';
+import axios from 'axios';
 
 export interface LoginDTO {
   accountNumber: string;
@@ -32,6 +33,14 @@ const loginService = {
   // 获取验证码
   getPublicKey: () => {
     return axios.get<string>('/api/auth/publicKey');
+  },
+  // 刷新token
+  rerefshToken(refreshToken: string) {
+    return request.post<TokenDTO>('/api/auth/refresh/token', { refreshToken });
+  },
+  // 退出登录
+  logout() {
+    return request.post<TokenDTO>('/api/auth/logout');
   }
 }
 

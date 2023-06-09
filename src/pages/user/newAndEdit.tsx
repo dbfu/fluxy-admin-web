@@ -1,9 +1,10 @@
 import { t } from '@/utils/i18n';
 import { Form, Input, Radio, App, FormInstance } from 'antd'
 import { forwardRef, useImperativeHandle, ForwardRefRenderFunction } from 'react'
-import { useRequest } from 'ahooks';
 
 import userService, { User } from './service';
+import { antdUtils } from '@/utils/antd';
+import { useRequest } from '@/hooks/use-request';
 
 interface PropsType {
   open: boolean;
@@ -30,10 +31,12 @@ const NewAndEditForm: ForwardRefRenderFunction<FormInstance, PropsType> = ({
       setSaveLoading(true);
       if (editData) {
         await updateUser({ ...editData, ...values });
-        message.success(t("NfOSPWDa" /* 更新成功！ */));
+        // message.success(t("NfOSPWDa" /* 更新成功！ */));
+        antdUtils.message?.success(t("NfOSPWDa" /* 更新成功！ */));
       } else {
         await addUser(values);
-        message.success(t("JANFdKFM" /* 创建成功！ */));
+        // message.success(t("JANFdKFM" /* 创建成功！ */));
+        antdUtils.message?.success(t("JANFdKFM" /* 创建成功！ */));
       }
       onSave();
     } catch (error: any) {

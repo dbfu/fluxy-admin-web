@@ -1,34 +1,29 @@
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware';
 
+interface User {
+  id: number;
+  userName: string;
+  nickName: string;
+  phoneNumber: string;
+  email: string;
+  createDate: string;
+  updateDate: string;
+}
 interface State {
-  darkMode: boolean;
-  collapsed: boolean;
-  lang: string;
+  currentUser: User | null;
 }
 
 interface Action {
-  setDarkMode: (darkMode: State['darkMode']) => void;
-  setCollapsed: (collapsed: State['collapsed']) => void;
-  setLang: (lang: State['lang']) => void;
+  setCurrentUser: (currentUser: State['currentUser']) => void;
 }
 
-export const useGlobalStore = create<State & Action>()(
+export const useUserStore = create<State & Action>()(
   devtools(
     (set) => {
       return {
-        darkMode: false,
-        collapsed: false,
-        lang: 'zh',
-        setDarkMode: (darkMode: State['darkMode']) => set({
-          darkMode,
-        }),
-        setCollapsed: (collapsed: State['collapsed']) => set({
-          collapsed,
-        }),
-        setLang: (lang: State['lang']) => set({
-          lang,
-        }),
+        currentUser: null,
+        setCurrentUser: (currentUser: State['currentUser']) => set({ currentUser }),
       };
     },
     { name: 'globalUserStore' }
