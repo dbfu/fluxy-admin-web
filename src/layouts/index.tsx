@@ -14,7 +14,7 @@ import { useUserStore } from '@/stores/global/user';
 
 const BasicLayout: React.FC = () => {
 
-  const { refreshToken } = useGlobalStore();
+  const { refreshToken, lang } = useGlobalStore();
   const { setCurrentUser } = useUserStore();
   const navigate = useNavigate();
 
@@ -68,7 +68,7 @@ const BasicLayout: React.FC = () => {
   }
 
   return (
-    <div className='bg-primary overflow-hidden'>
+    <div key={lang} className='bg-primary overflow-hidden'>
       <Header />
       <Slide />
       <Content>
