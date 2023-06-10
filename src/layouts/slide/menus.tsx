@@ -57,7 +57,7 @@ const SlideMenu = () => {
 
   return (
     <Menu
-      className='bg-primary'
+      className='bg-primary color-transition'
       mode="inline"
       selectedKeys={matches?.length ? [matches?.at(-1)?.pathname || ''] : []}
       style={{ height: '100%', borderRight: 0 }}

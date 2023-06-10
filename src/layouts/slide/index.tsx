@@ -67,7 +67,7 @@ const SlideIndex = () => {
   return (
     <div
       style={{ width: collapsed ? 112 : defaultSetting.slideWidth }}
-      className="top-[80px] fixed box-border left-0 bottom-0 overflow-y-auto px-[16px] bg-primary <lg:hidden"
+      className="color-transition top-[80px] fixed box-border left-0 bottom-0 overflow-y-auto px-[16px] bg-primary <lg:hidden"
     >
       {renderMenu()}
     </div>

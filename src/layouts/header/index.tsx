@@ -42,7 +42,7 @@ const Header = () => {
   return (
     <div
       style={{ zIndex: 1001 }}
-      className="h-[80px] flex basis-[48px] items-center px-0 gap-[16px] fixed top-0 right-0 left-0 bg-primary"
+      className="color-transition h-[80px] flex basis-[48px] items-center px-0 gap-[16px] fixed top-0 right-0 left-0 bg-primary"
     >
       <div style={{ width: defaultSetting.slideWidth }} className="<lg:hidden flex justify-between items-center">
         <div className='flex items-center gap-[4px] text-[20px] px-[24px] pr-0'>

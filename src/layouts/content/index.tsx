@@ -14,7 +14,7 @@ const Content: FC<any> = ({ children }) => {
 
   return (
     <div
-      className='mt-[80px] w-[100%] bg-container !<lg:ml-[16px]'
+      className='color-transition mt-[80px] w-[100%] bg-container !<lg:ml-[16px]'
       style={{
         borderRadius: '8px',
         marginLeft: collapsed ? 112 : defaultSetting.slideWidth,

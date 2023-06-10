@@ -11,10 +11,10 @@ import './index.css'
 
 const Dashboard = () => {
   return (
-    <div>
+    <>
       <Row gutter={[16, 16]}>
         <Col lg={24} xl={8} className='w-[100%]'>
-          <div className='dark:bg-[rgb(33,41,70)] w-[100%] bg-[rgb(94,53,177)] overflow-hidden h-[241px] relative rounded-md bg-card p-[32px] box-border'>
+          <div className='color-transition dark:bg-[rgb(33,41,70)] w-[100%] bg-[rgb(94,53,177)] overflow-hidden h-[241px] relative rounded-md bg-card p-[32px] box-border'>
             <div className='absolute top-[24px] right-[24px] z-10'>
               <Tooltip title={t("yAdJryjx" /* 指标说明 */)}>
                 <InfoCircleOutlined className='text-[rgb(179,157,219)] text-[20px]' />
@@ -50,7 +50,7 @@ const Dashboard = () => {
           </div>
         </Col>
         <Col lg={24} xl={8} className='w-[100%]'>
-          <div className='dark:bg-[rgb(33,41,70)] bg-[rgb(30,136,229)] theme1 overflow-hidden h-[241px] relative rounded-md bg-card p-[32px] box-border'>
+          <div className='color-transition dark:bg-[rgb(33,41,70)] bg-[rgb(30,136,229)] theme1 overflow-hidden h-[241px] relative rounded-md bg-card p-[32px] box-border'>
             <div className='absolute top-[24px] right-[24px] z-10'>
               <Tooltip title={t("iLyPEqwQ" /* 指标说明 */)}>
                 <InfoCircleOutlined className='text-[rgb(179,157,219)] text-[20px]' />
@@ -77,7 +77,7 @@ const Dashboard = () => {
           </div>
         </Col>
         <Col lg={24} xl={8} className='w-[100%]'>
-          <div className='dark:bg-[rgb(33,41,70)] bg-[rgb(94,53,177)] theme2 overflow-hidden h-[241px] relative rounded-md bg-card p-[32px] box-border'>
+          <div className='color-transition dark:bg-[rgb(33,41,70)] bg-[rgb(94,53,177)] theme2 overflow-hidden h-[241px] relative rounded-md bg-card p-[32px] box-border'>
             <div className='absolute top-[24px] right-[24px] z-10'>
               <Tooltip title={t("sdOusITo" /* 指标说明 */)}>
                 <InfoCircleOutlined className='text-[rgb(179,157,219)] text-[20px]' />
@@ -104,7 +104,7 @@ const Dashboard = () => {
           </div>
         </Col>
         <Col className='w-[100%]' lg={24} xl={16} >
-          <div className='dark:bg-[rgb(33,41,70)] bg-white h-[550px] rounded-md p-[24px] relative'>
+          <div className='color-transition dark:bg-[rgb(33,41,70)] bg-white h-[550px] rounded-md p-[24px] relative'>
             <div className='flex justify-between items-center'>
               <div>
                 <div className='text-[rgb(132,146,196)]'>{t("fHpiDHYH" /* 总增长 */)}</div>
@@ -137,7 +137,7 @@ const Dashboard = () => {
           </div>
         </Col>
         <Col className='w-[100%]' lg={24} xl={8}>
-          <div className='dark:bg-[rgb(33,41,70)] bg-white h-[550px] rounded-md p-[24px] relative'>
+          <div className='color-transition dark:bg-[rgb(33,41,70)] bg-white h-[550px] rounded-md p-[24px] relative'>
             <div className='flex justify-between'>
               <span className='dark:text-[rgb(215,220,236)] text-[18px] text-[rgb(18,25,38)]'>{t("yzUIyMhr" /* 门店销售额 */)}</span>
               <Dropdown menu={{
@@ -242,7 +242,7 @@ const Dashboard = () => {
           </div>
         </Col>
       </Row>
-    </div>
+    </>
   )
 }
 
