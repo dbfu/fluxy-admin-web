@@ -23,9 +23,9 @@ const router = createHashRouter(
 );
 
 router.subscribe((state) => {
-  const { token } = useGlobalStore.getState();
+  const { refreshToken } = useGlobalStore.getState();
 
-  if (!token && !(state.historyAction && state.location.pathname === "/user/login")) {
+  if (!refreshToken && !(state.historyAction && state.location.pathname === "/user/login")) {
     router.navigate('/user/login');
   }
 })

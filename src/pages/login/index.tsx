@@ -47,8 +47,13 @@ const Login = () => {
       values.publicKey = publicKey;
 
       const { data } = await login(values);
-      setToken(data.token);
+
+      useGlobalStore.setState({
+        refreshToken: data.refreshToken,
+        token: data.token,
+      })
       setRefreshToken(data.refreshToken);
+      setToken(data.token);
 
       navigate('/');
     } catch (error: any) {
@@ -118,9 +123,9 @@ const Login = () => {
             <Form.Item style={{ marginBottom: 18 }}>
               <Button
                 type="primary"
-                htmlType="submit"
                 loading={loading}
                 block
+                htmlType='submit'
               >
                 {t("dDdqAAve" /* 登录 */)}
               </Button>

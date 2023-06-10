@@ -90,7 +90,7 @@ class Request {
   }
 
   private async refreshToken() {
-    const { refreshToken, setToken, setRefreshToken } = useGlobalStore.getState();
+    const { refreshToken } = useGlobalStore.getState();
 
     if (!refreshToken) {
       this.toLoginPage();
@@ -102,8 +102,10 @@ class Request {
       this.toLoginPage();
     }
 
-    setToken(data.token);
-    setRefreshToken(refreshToken);
+    useGlobalStore.setState({
+      refreshToken: data.refreshToken,
+      token: data.token,
+    });
 
     this.refreshTokenFlag = false;
 

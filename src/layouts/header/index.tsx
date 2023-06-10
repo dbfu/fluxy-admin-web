@@ -23,8 +23,6 @@ const Header = () => {
     setDarkMode,
     setLang,
     lang,
-    setRefreshToken,
-    setToken,
   } = useGlobalStore();
 
   const { currentUser } = useUserStore();
@@ -35,8 +33,10 @@ const Header = () => {
     const [error] = await runAsync();
     if (error) return;
 
-    setToken('');
-    setRefreshToken('');
+    useGlobalStore.setState({
+      token: '',
+      refreshToken: ''
+    });
   }
 
   return (
