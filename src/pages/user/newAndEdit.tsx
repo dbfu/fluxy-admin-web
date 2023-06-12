@@ -1,10 +1,11 @@
 import { t } from '@/utils/i18n';
 import { Form, Input, Radio, App, FormInstance } from 'antd'
-import { forwardRef, useImperativeHandle, ForwardRefRenderFunction } from 'react'
+import { forwardRef, useImperativeHandle, ForwardRefRenderFunction, useMemo } from 'react'
 
 import userService, { User } from './service';
 import { antdUtils } from '@/utils/antd';
 import { useRequest } from '@/hooks/use-request';
+import Avatar from './avatar';
 
 interface PropsType {
   open: boolean;
@@ -24,11 +25,18 @@ const NewAndEditForm: ForwardRefRenderFunction<FormInstance, PropsType> = ({
   const { runAsync: updateUser } = useRequest(userService.updateUser, { manual: true });
   const { runAsync: addUser } = useRequest(userService.addUser, { manual: true });
 
-  useImperativeHandle(ref, () => form, [form])
+  useImperativeHandle(ref, () => form, [form]);
 
   const finishHandle = async (values: User) => {
     try {
       setSaveLoading(true);
+
+      if (values?.avatar?.[0]?.response?.id) {
+        values.avatar = values?.avatar?.[0]?.response?.id;
+      } else {
+        values.avatar = null;
+      }
+
       if (editData) {
         await updateUser({ ...editData, ...values });
         // message.success(t("NfOSPWDa" /* 更新成功！ */));
@@ -45,14 +53,37 @@ const NewAndEditForm: ForwardRefRenderFunction<FormInstance, PropsType> = ({
     setSaveLoading(false);
   }
 
+  const initialValues = useMemo(() => {
+    if (editData) {
+      return {
+        ...editData,
+        avatar: editData.avatarEntity ? [{
+          uid: '-1',
+          name: editData.avatarEntity.fileName,
+          states: 'done',
+          url: editData.avatarEntity.filePath,
+          response: {
+            id: editData.avatarEntity.id,
+          },
+        }] : []
+      }
+    }
+  }, [editData]);
+
+  console.log(initialValues);
+
+
   return (
     <Form
       labelCol={{ sm: { span: 24 }, md: { span: 5 } }}
       wrapperCol={{ sm: { span: 24 }, md: { span: 16 } }}
       form={form}
       onFinish={finishHandle}
-      initialValues={editData}
+      initialValues={initialValues || { sex: 1 }}
     >
+      <Form.Item label='头像' name="avatar">
+        <Avatar />
+      </Form.Item>
       <Form.Item
         label={t("qYznwlfj" /* 用户名 */)}
         name="userName"
@@ -102,7 +133,6 @@ const NewAndEditForm: ForwardRefRenderFunction<FormInstance, PropsType> = ({
       <Form.Item
         label={t("ykrQSYRh" /* 性别 */)}
         name="sex"
-        initialValue={1}
       >
         <Radio.Group>
           <Radio value={1}>{t("AkkyZTUy" /* 男 */)}</Radio>

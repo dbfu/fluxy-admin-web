@@ -33,6 +33,7 @@
     "@antv/g2plot": "^2.4.31",
     "ahooks": "^3.7.7",
     "antd": "^5.4.6",
+    "antd-img-crop": "^4.12.2",
     "await-to-js": "^3.0.0",
     "axios": "^1.4.0",
     "dayjs": "^1.11.7",

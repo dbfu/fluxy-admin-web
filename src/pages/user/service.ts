@@ -7,6 +7,7 @@ export interface User {
   email: string;
   createDate: string;
   updateDate: string;
+  avatar?: any;
 }
 
 export interface PageData {

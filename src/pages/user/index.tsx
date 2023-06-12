@@ -11,6 +11,7 @@ import {
   App,
   Modal,
   FormInstance,
+  Avatar,
 } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { useAntdTable, useRequest } from 'ahooks';
@@ -20,6 +21,8 @@ import { PlusOutlined } from '@ant-design/icons';
 
 import NewAndEditForm from './newAndEdit';
 import userService, { User } from './service';
+import { IconBuguang } from '@/assets/icons/buguang';
+
 
 const UserPage = () => {
   const [form] = Form.useForm();
@@ -38,6 +41,21 @@ const UserPage = () => {
   const formRef = useRef<FormInstance>(null);
 
   const columns: ColumnsType<any> = [
+    {
+      title: '头像',
+      dataIndex: 'avatarPath',
+      render: (value: string) => (
+        <div className='flex justify-center'>
+          {value ? (
+            <img src={value} className='w-[40px] h-[40px] flex items-center rounded-[50%]' />
+          ) : (
+            <Avatar className='bg-[gold] align-middle flex items-center justify-center w-[40px] h-[40px]' icon={<IconBuguang />} />
+          )}
+        </div>
+      ),
+      align: 'center',
+      width: 100,
+    },
     {
       title: t('qYznwlfj' /* 用户名 */),
       dataIndex: 'userName',
@@ -169,7 +187,7 @@ const UserPage = () => {
         }}
         destroyOnClose
         width={640}
-        zIndex={1001}
+        zIndex={999}
         onCancel={closeForm}
         confirmLoading={saveLoading}
       >

@@ -9,6 +9,7 @@ interface User {
   email: string;
   createDate: string;
   updateDate: string;
+  avatarPath?: string;
 }
 interface State {
   currentUser: User | null;
