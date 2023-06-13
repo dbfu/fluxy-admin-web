@@ -63,9 +63,6 @@ const Avatar: React.FC<PropsType> = ({
         className="avatar-uploader"
         action="/api/file/upload"
         onChange={handleChange}
-        data={{
-          pkName: 'avatar',
-        }}
         fileList={value}
         beforeUpload={beforeUpload}
         onPreview={onPreview}

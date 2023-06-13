@@ -1,5 +1,5 @@
 import { t } from '@/utils/i18n';
-import { Form, Input, Radio, App, FormInstance } from 'antd'
+import { Form, Input, Radio, FormInstance } from 'antd'
 import { forwardRef, useImperativeHandle, ForwardRefRenderFunction, useMemo } from 'react'
 
 import userService, { User } from './service';
@@ -21,36 +21,40 @@ const NewAndEditForm: ForwardRefRenderFunction<FormInstance, PropsType> = ({
 }, ref) => {
 
   const [form] = Form.useForm();
-  const { message } = App.useApp();
   const { runAsync: updateUser } = useRequest(userService.updateUser, { manual: true });
   const { runAsync: addUser } = useRequest(userService.addUser, { manual: true });
 
   useImperativeHandle(ref, () => form, [form]);
 
   const finishHandle = async (values: User) => {
-    try {
-      setSaveLoading(true);
+    setSaveLoading(true);
 
-      if (values?.avatar?.[0]?.response?.id) {
-        values.avatar = values?.avatar?.[0]?.response?.id;
-      } else {
-        values.avatar = null;
-      }
-
-      if (editData) {
-        await updateUser({ ...editData, ...values });
-        // message.success(t("NfOSPWDa" /* 更新成功！ */));
-        antdUtils.message?.success(t("NfOSPWDa" /* 更新成功！ */));
-      } else {
-        await addUser(values);
-        // message.success(t("JANFdKFM" /* 创建成功！ */));
-        antdUtils.message?.success(t("JANFdKFM" /* 创建成功！ */));
-      }
-      onSave();
-    } catch (error: any) {
-      message.error(error?.response?.data?.message);
+    if (values?.avatar?.[0]?.response?.id) {
+      values.avatar = values?.avatar?.[0]?.response?.id;
+    } else {
+      values.avatar = null;
     }
-    setSaveLoading(false);
+
+    if (editData) {
+      const [error] = await updateUser({ ...editData, ...values });
+      setSaveLoading(false);
+      if (error) {
+        return;
+      }
+      // message.success(t("NfOSPWDa" /* 更新成功！ */));
+      antdUtils.message?.success(t("NfOSPWDa" /* 更新成功！ */));
+    } else {
+      const [error] = await addUser(values);
+      setSaveLoading(false);
+      if (error) {
+        return;
+      }
+      // message.success(t("JANFdKFM" /* 创建成功！ */));
+      antdUtils.message?.success(t("JANFdKFM" /* 创建成功！ */));
+    }
+
+    onSave();
+
   }
 
   const initialValues = useMemo(() => {
@@ -69,9 +73,6 @@ const NewAndEditForm: ForwardRefRenderFunction<FormInstance, PropsType> = ({
       }
     }
   }, [editData]);
-
-  console.log(initialValues);
-
 
   return (
     <Form
