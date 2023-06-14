@@ -17,11 +17,6 @@ RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
 
 WORKDIR /data/web
 
-
-RUN rm -rf /etc/nginx/conf.d/default.conf
-COPY ./nginx/config.sh /root
-RUN chmod +x /root/config.sh
-
 RUN mkdir -p /app/www
 
 COPY ./dist /app/www/
@@ -30,5 +25,9 @@ COPY  --from=builder /data/web/dist /app/www
 
 EXPOSE 80 
 EXPOSE 443
+
+RUN rm -rf /etc/nginx/conf.d/default.conf
+COPY ./nginx/config.sh /root
+RUN chmod +x /root/config.sh
 
 CMD ["/root/config.sh"]
