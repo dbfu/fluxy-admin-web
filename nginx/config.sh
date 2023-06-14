@@ -1,4 +1,11 @@
-server {
+#! /bin/sh -e
+
+echo "setting environment config"
+echo "$ARTEMIS_URL"
+
+cat >> /etc/nginx/conf.d/default.conf <<EOF
+ 
+  server {
     listen      80;
     gzip on;
     gzip_min_length 1k;
@@ -26,16 +33,22 @@ server {
     }
 
     location /api {
-        proxy_pass  http://fluxy-admin-server:7001;
+        proxy_pass  $SERVER_URL;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     }
 
     location /file/ {
-        proxy_pass http://129.204.200.215:9000/;
+        proxy_pass $FILE_URL;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     }
  }
+
+EOF
+
+echo "starting web server"
+
+nginx -g 'daemon off;'
