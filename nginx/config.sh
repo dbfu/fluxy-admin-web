@@ -22,7 +22,7 @@ cat >> /etc/nginx/conf.d/default.conf <<EOF
         add_header Access-Control-Allow-Origin *;
         add_header Access-Control-Allow-Methods 'GET, POST, OPTIONS';
         add_header Access-Control-Allow-Headers 'DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization';
-        if ($request_filename ~* .*.(?:htm|html)$) 
+        if (\$request_filename ~* .*.(?:htm|html)$) 
 		    {
 			    add_header Cache-Control "private, no-store, no-cache, must-revalidate, proxy-revalidate";
 		    }
