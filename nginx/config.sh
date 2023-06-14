@@ -1,7 +1,6 @@
 #! /bin/sh -e
 
 echo "setting environment config"
-echo "$ARTEMIS_URL"
 
 cat >> /etc/nginx/conf.d/default.conf <<EOF
  
@@ -22,7 +21,7 @@ cat >> /etc/nginx/conf.d/default.conf <<EOF
         add_header Access-Control-Allow-Origin *;
         add_header Access-Control-Allow-Methods 'GET, POST, OPTIONS';
         add_header Access-Control-Allow-Headers 'DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization';
-        if (\$request_filename ~* .*.(?:htm|html)$) 
+        if (\$request_filename ~* .*\.(?:htm|html)$) 
 		    {
 			    add_header Cache-Control "private, no-store, no-cache, must-revalidate, proxy-revalidate";
 		    }
@@ -34,16 +33,16 @@ cat >> /etc/nginx/conf.d/default.conf <<EOF
 
     location /api {
         proxy_pass  $SERVER_URL;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
     }
 
     location /file/ {
         proxy_pass $FILE_URL;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
     }
  }
 
