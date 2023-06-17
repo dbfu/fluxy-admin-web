@@ -30,7 +30,7 @@ const DemoColumn = () => {
     xField: 'year',
     yField: 'value',
     seriesField: 'type',
-    height: 460,
+    height: 480,
     legend: {
       position: 'bottom'
     },

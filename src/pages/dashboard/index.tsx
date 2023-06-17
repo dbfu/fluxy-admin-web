@@ -104,7 +104,7 @@ const Dashboard = () => {
           </div>
         </Col>
         <Col className='w-[100%]' lg={24} xl={16} >
-          <div className='color-transition dark:bg-[rgb(33,41,70)] bg-white h-[550px] rounded-md p-[24px] relative'>
+          <div className='color-transition dark:bg-[rgb(33,41,70)] bg-white h-[600px] rounded-md p-[24px] relative'>
             <div className='flex justify-between items-center'>
               <div>
                 <div className='text-[rgb(132,146,196)]'>{t("fHpiDHYH" /* 总增长 */)}</div>
@@ -137,7 +137,7 @@ const Dashboard = () => {
           </div>
         </Col>
         <Col className='w-[100%]' lg={24} xl={8}>
-          <div className='color-transition dark:bg-[rgb(33,41,70)] bg-white h-[550px] rounded-md p-[24px] relative'>
+          <div className='color-transition dark:bg-[rgb(33,41,70)] bg-white h-[600px] rounded-md p-[24px] relative'>
             <div className='flex justify-between'>
               <span className='dark:text-[rgb(215,220,236)] text-[18px] text-[rgb(18,25,38)]'>{t("yzUIyMhr" /* 门店销售额 */)}</span>
               <Dropdown menu={{
