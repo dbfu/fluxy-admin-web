@@ -122,7 +122,7 @@ const Login = () => {
             </Form.Item>
             <Form.Item noStyle style={{ marginBottom: 0 }} >
               <div className='text-right mb-[18px]'>
-                <a className='text-[16px] text-[rgb(124,77,255)]' type='link'>忘记密码？</a>
+                <a className='text-[16px] !text-[rgb(124,77,255)]' type='link'>忘记密码？</a>
               </div>
             </Form.Item>
             <Form.Item style={{ marginBottom: 18 }}>
