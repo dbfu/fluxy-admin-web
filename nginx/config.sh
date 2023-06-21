@@ -28,6 +28,7 @@ cat >> /etc/nginx/conf.d/default.conf <<EOF
 
         root /app/www/;
         index index.html;
+        try_files \$uri \$uri /index/html
         client_max_body_size  500m;
     }
 
