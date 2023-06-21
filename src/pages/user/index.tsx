@@ -14,7 +14,7 @@ import {
   Avatar,
 } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import { useAntdTable, useRequest } from 'ahooks';
+import { useAntdTable } from 'ahooks';
 import dayjs from 'dayjs';
 import { useRef, useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
@@ -22,6 +22,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import NewAndEditForm from './newAndEdit';
 import userService, { User } from './service';
 import { IconBuguang } from '@/assets/icons/buguang';
+import { useRequest } from '@/hooks/use-request';
 
 
 const UserPage = () => {
@@ -102,9 +103,11 @@ const UserPage = () => {
               title={t('JjwFfqHG' /* 警告 */)}
               description={t('nlZBTfzL' /* 确认删除这条数据？ */)}
               onConfirm={async () => {
-                await deleteUser(record.id);
-                message.success(t('bvwOSeoJ' /* 删除成功！ */));
-                submit();
+                const [error] = await deleteUser(record.id);
+                if (!error) {
+                  message.success(t('bvwOSeoJ' /* 删除成功！ */));
+                  submit();
+                }
               }}
             >
               <a>{t('HJYhipnp' /* 删除 */)}</a>

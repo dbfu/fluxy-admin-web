@@ -6,6 +6,7 @@ import userService, { User } from './service';
 import { antdUtils } from '@/utils/antd';
 import { useRequest } from '@/hooks/use-request';
 import Avatar from './avatar';
+import EmailInput from './email-input';
 
 interface PropsType {
   open: boolean;
@@ -75,6 +76,9 @@ const NewAndEditForm: ForwardRefRenderFunction<FormInstance, PropsType> = ({
     }
   }, [editData]);
 
+  console.log(editData);
+
+
   return (
     <Form
       labelCol={{ sm: { span: 24 }, md: { span: 5 } }}
@@ -94,7 +98,7 @@ const NewAndEditForm: ForwardRefRenderFunction<FormInstance, PropsType> = ({
           message: t("jwGPaPNq" /* 不能为空 */),
         }]}
       >
-        <Input />
+        <Input disabled={!!editData} />
       </Form.Item>
       <Form.Item
         label={t("rnyigssw" /* 昵称 */)}
@@ -120,8 +124,8 @@ const NewAndEditForm: ForwardRefRenderFunction<FormInstance, PropsType> = ({
         <Input />
       </Form.Item>
       <Form.Item
-        label={t("XWVvMWig" /* 邮箱 */)}
         name="email"
+        label="邮箱"
         rules={[{
           required: true,
           message: t("QFkffbad" /* 不能为空 */),
@@ -130,8 +134,16 @@ const NewAndEditForm: ForwardRefRenderFunction<FormInstance, PropsType> = ({
           message: t("EfwYKLsR" /* 邮箱格式不正确 */),
         }]}
       >
-        <Input />
+        <EmailInput disabled={!!editData} />
       </Form.Item>
+      {!editData && (
+        <Form.Item
+          name="emailCaptcha"
+          label="邮箱验证码"
+        >
+          <Input />
+        </Form.Item>
+      )}
       <Form.Item
         label={t("ykrQSYRh" /* 性别 */)}
         name="sex"

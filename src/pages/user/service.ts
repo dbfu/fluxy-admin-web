@@ -11,29 +11,32 @@ export interface User {
 }
 
 export interface PageData {
-  data: User[],
+  data: User[];
   total: number;
 }
 
 const userService = {
   // 分页获取用户列表
-  getUserListByPage: async ({ current, pageSize }: { current: number, pageSize: number }, formData: any) => {
+  getUserListByPage: async (
+    {current, pageSize}: {current: number; pageSize: number},
+    formData: any
+  ) => {
     const [error, data] = await request.get<PageData>('/api/user/page', {
       params: {
         page: current - 1,
         size: pageSize,
         ...formData,
-      }
+      },
     });
 
     if (error) {
       return Promise.reject();
     }
 
-    return ({
+    return {
       list: data.data,
       total: data.total,
-    })
+    };
   },
   // 添加用户
   addUser: (data: User) => {
@@ -46,7 +49,10 @@ const userService = {
   // 删除用户
   deleteUser: (id: number) => {
     return request.delete(`/api/user/${id}`);
-  }
-}
+  },
+  sendEmailCaptcha: (email: string) => {
+    return request.post('/api/user/send/email/captcha', {email});
+  },
+};
 
 export default userService;

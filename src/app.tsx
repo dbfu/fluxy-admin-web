@@ -1,6 +1,5 @@
 import { useEffect, useMemo } from 'react';
 import { ConfigProvider, ThemeConfig, theme, App as AntdApp } from 'antd'
-import { RouterProvider } from 'react-router-dom';
 import zhCN from 'antd/locale/zh_CN';
 import enUS from 'antd/locale/en_US';
 
@@ -8,9 +7,7 @@ import { useGlobalStore } from './stores/global'
 
 import { i18n } from './utils/i18n';
 
-import './overwrite.css'
-import { router } from './router';
-
+import Router from './router';
 
 function App() {
 
@@ -30,11 +27,12 @@ function App() {
     i18n.changeLanguage(lang);
   }, [lang]);
 
+
   const curTheme: ThemeConfig = useMemo(() => {
     if (darkMode) {
       return {
         token: {
-          colorPrimary: 'rgb(103, 58, 183)',
+          colorPrimary: 'rgb(124, 77, 255)',
           colorBgBase: 'rgb(17, 25, 54)',
           colorBgContainer: 'rgb(26, 34, 63)',
           colorBorder: 'rgba(189, 200, 240, 0.157)',
@@ -48,7 +46,7 @@ function App() {
     } else {
       return {
         token: {
-          colorPrimary: 'rgb(103, 58, 183)',
+          colorPrimary: 'rgb(124, 77, 255)',
         },
       }
     }
@@ -61,7 +59,7 @@ function App() {
       componentSize='large'
     >
       <AntdApp>
-        <RouterProvider router={router} />
+        <Router />
       </AntdApp>
     </ConfigProvider>
   )

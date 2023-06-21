@@ -1,11 +1,11 @@
 import ReactDOM from 'react-dom/client'
+import { App as AntdApp } from 'antd'
 import NProgress from 'nprogress';
 
 import App from './app'
 
 import 'virtual:windi.css'
 import 'nprogress/nprogress.css';
-
 
 import './overwrite.css'
 
@@ -18,5 +18,7 @@ NProgress.configure({
 });
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <App />
+  <AntdApp>
+    <App />
+  </AntdApp>
 )
