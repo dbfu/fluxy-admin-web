@@ -2,65 +2,88 @@ import { IconYanzhengma01 } from '@/assets/icons/yanzhengma01'
 import { t } from '@/utils/i18n';
 import { IconBuguang } from '@/assets/icons/buguang'
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Form, Input, Carousel, App } from 'antd';
+import { Button, Form, Input, Carousel, Modal } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useGlobalStore } from '@/stores/global';
-import { useRequest } from 'ahooks'
 import { JSEncrypt } from "jsencrypt"
 
 import loginService, { LoginDTO } from './service';
 
 import './index.css'
+import { useState } from 'react';
+import { antdUtils } from '@/utils/antd';
+import { useRequest } from '@/hooks/use-request';
 
 const Login = () => {
 
   const { setToken, setRefreshToken } = useGlobalStore();
-  const { message } = App.useApp();
+  const [emailResetPasswordOpen, setEmailResetPasswordOpen] = useState(false);
+  const [emailInputFoucs, setEmailInputFoucs] = useState(false);
+  const [checkEmial, setCheckEmail] = useState<string>();
 
   const navigate = useNavigate();
 
   const { runAsync: login, loading } = useRequest(loginService.login, { manual: true });
   const { data: captcha, refresh: refreshCaptcha } = useRequest(loginService.getCaptcha);
   const { runAsync: getPublicKey } = useRequest(loginService.getPublicKey, { manual: true });
+  const { runAsync: sendResetPasswordEmail, loading: resetPasswordBtnLoading } = useRequest(loginService.sendResetPasswordEmail, { manual: true });
 
   const onFinish = async (values: LoginDTO) => {
-    if (!captcha?.data) {
+    if (!captcha) {
       return;
     }
 
-    values.captchaId = captcha.data.id;
-    try {
+    values.captchaId = captcha.id;
 
-      // 获取公钥
-      const { data: publicKey } = await getPublicKey();
+    // 获取公钥
+    const [error, publicKey] = await getPublicKey();
 
-      // 使用公钥对密码加密
-      const encrypt = new JSEncrypt();
-      encrypt.setPublicKey(publicKey);
-      const password = encrypt.encrypt(values.password);
-
-      if (!password) {
-        return;
-      }
-
-      values.password = password;
-      values.publicKey = publicKey;
-
-      const { data } = await login(values);
-
-      useGlobalStore.setState({
-        refreshToken: data.refreshToken,
-        token: data.token,
-      })
-      setRefreshToken(data.refreshToken);
-      setToken(data.token);
-
-      navigate('/');
-    } catch (error: any) {
-      refreshCaptcha();
-      message.error(error?.response?.data?.message);
+    if (error) {
+      return;
     }
+
+    // 使用公钥对密码加密
+    const encrypt = new JSEncrypt();
+    encrypt.setPublicKey(publicKey);
+    const password = encrypt.encrypt(values.password);
+
+    if (!password) {
+      return;
+    }
+
+    values.password = password;
+    values.publicKey = publicKey;
+
+    const [loginError, data] = await login(values);
+
+    if (loginError) {
+      return;
+    }
+
+    useGlobalStore.setState({
+      refreshToken: data.refreshToken,
+      token: data.token,
+    })
+    setRefreshToken(data.refreshToken);
+    setToken(data.token);
+
+    navigate('/');
   };
+
+
+  const sendCheckEmail = async () => {
+    if (!checkEmial) {
+      antdUtils.message?.error('无效的邮箱格式！');
+      return;
+    }
+
+    const [error] = await sendResetPasswordEmail(checkEmial);
+
+    if (!error) {
+      antdUtils.message?.success('邮件已发送，请到邮箱查看。');
+      setEmailResetPasswordOpen(false);
+    }
+  }
 
   return (
     <div className="bg-primary light:bg-[rgb(238,242,246)] bg-[rgb(238,242,246)] flex justify-center items-center h-[100vh]">
@@ -114,15 +137,20 @@ const Login = () => {
                 suffix={(
                   <img
                     className='cursor-pointer'
-                    src={captcha?.data?.imageBase64}
+                    src={captcha?.imageBase64}
                     onClick={refreshCaptcha}
                   />
                 )}
               />
             </Form.Item>
             <Form.Item noStyle style={{ marginBottom: 0 }} >
-              <div className='text-right mb-[18px]'>
-                <a className='text-[16px] !text-[rgb(124,77,255)]' type='link'>忘记密码？</a>
+              <div
+                onClick={() => {
+                  setEmailResetPasswordOpen(true);
+                }}
+                className='text-right mb-[18px]'
+              >
+                <a className='text-[16px] !text-[rgb(124,77,255)] select-none' type='link'>忘记密码？</a>
               </div>
             </Form.Item>
             <Form.Item style={{ marginBottom: 18 }}>
@@ -141,7 +169,7 @@ const Login = () => {
       <div
         className='flex-[1.7] dark:bg-[rgb(33,41,70)] bg-white h-[100vh] relative <lg:hidden'
         style={{
-          backgroundImage: 'url(./images/login-right-bg.svg)'
+          backgroundImage: 'url(/images/login-right-bg.svg)'
         }}
       >
         <div
@@ -199,6 +227,49 @@ const Login = () => {
           </Carousel>
         </div>
       </div>
+      <Modal
+        title="重置密码"
+        open={emailResetPasswordOpen}
+        footer={null}
+        width={400}
+        maskClosable={false}
+        bodyStyle={{ padding: '20px 0', position: 'relative' }}
+        style={{ top: 240 }}
+        onCancel={() => {
+          setEmailResetPasswordOpen(false);
+        }}
+      >
+        {!emailInputFoucs && (
+          <img
+            className='absolute top-[-139px] left-[calc(50%-67px)]'
+            src='https://lf3-cdn-tos.bytescm.com/obj/static/xitu_juejin_web/ad7fa76844a2df5c03151ead0ce65ea6.svg'
+          />
+        )}
+        {emailInputFoucs && (
+          <img
+            className='absolute top-[-139px] left-[calc(50%-67px)]'
+            src='https://lf3-cdn-tos.bytescm.com/obj/static/xitu_juejin_web/500c1180a96859e5c54a5359f024a397.svg'
+          />
+        )}
+        <Input
+          size='large'
+          placeholder='请输入邮箱'
+          onBlur={() => { setEmailInputFoucs(false) }}
+          onFocus={() => { setEmailInputFoucs(true) }}
+          onChange={e => {
+            setCheckEmail(e.target.value);
+          }}
+        />
+        <Button
+          className='mt-[16px]'
+          type='primary'
+          block
+          onClick={sendCheckEmail}
+          loading={resetPasswordBtnLoading}
+        >
+          发送验证邮件
+        </Button>
+      </Modal>
     </div>
   );
 };

@@ -1,5 +1,4 @@
 import request from '@/request';
-import axios from 'axios';
 
 export interface LoginDTO {
   accountNumber: string;
@@ -18,30 +17,46 @@ export interface TokenDTO {
 
 export interface CaptchaDTO {
   id: string;
-  imageBase64: string
+  imageBase64: string;
+}
+
+export interface ResetPasswordDTO {
+  password: string;
+  email: string;
+  emailCaptcha: string;
+  publicKey: string;
+  comfirmPassword?: string;
 }
 
 const loginService = {
   // 登录
   login: (loginDTO: LoginDTO) => {
-    return axios.post<TokenDTO>('/api/auth/login', loginDTO);
+    return request.post<TokenDTO>('/api/auth/login', loginDTO);
   },
   // 获取验证码
   getCaptcha: () => {
-    return axios.get<CaptchaDTO>('/api/auth/captcha');
+    return request.get<CaptchaDTO>('/api/auth/captcha');
   },
   // 获取验证码
   getPublicKey: () => {
-    return axios.get<string>('/api/auth/publicKey');
+    return request.get<string>('/api/auth/publicKey');
   },
   // 刷新token
   rerefshToken(refreshToken: string) {
-    return request.post<TokenDTO>('/api/auth/refresh/token', { refreshToken });
+    return request.post<TokenDTO>('/api/auth/refresh/token', {refreshToken});
   },
   // 退出登录
   logout() {
     return request.post<TokenDTO>('/api/auth/logout');
-  }
-}
+  },
+  // 退出登录
+  sendResetPasswordEmail(email: string) {
+    return request.post('/api/auth/send/reset/password/email', {email});
+  },
+  // 退出登录
+  resetPassaword(resetPasswordDTO: ResetPasswordDTO) {
+    return request.post('/api/auth/reset/password', resetPasswordDTO);
+  },
+};
 
 export default loginService;

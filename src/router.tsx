@@ -8,7 +8,7 @@ import { useGlobalStore } from './stores/global';
 import { App } from 'antd';
 import { useEffect } from 'react';
 import { antdUtils } from './utils/antd';
-import ForgotPassword from './pages/login/forgot-password';
+import ResetPassword from './pages/login/reset-password';
 
 export const router = createBrowserRouter(
   [
@@ -17,8 +17,8 @@ export const router = createBrowserRouter(
       Component: Login,
     },
     {
-      path: '/user/forgot-password',
-      Component: ForgotPassword,
+      path: '/user/reset-password',
+      Component: ResetPassword,
     },
     {
       path: '/',
@@ -35,7 +35,8 @@ export const router = createBrowserRouter(
 router.subscribe((state) => {
   const { refreshToken } = useGlobalStore.getState();
 
-  if (!refreshToken && !(state.historyAction && (state.location.pathname === "/user/login" || state.location.pathname === "/user/forgot-password"))) {
+  const notCheckPaths = ['/user/login', '/user/reset-password'];
+  if (!refreshToken && !(state.historyAction && notCheckPaths.includes(state.location.pathname))) {
     router.navigate('/user/login');
   }
 });

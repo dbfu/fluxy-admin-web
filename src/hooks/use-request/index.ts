@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { Response } from '@/request';
+import {useCallback, useEffect, useRef, useState} from 'react';
+import {Response} from '@/request';
 
 interface RequestOptions {
   manual?: boolean;
@@ -19,7 +19,6 @@ export function useRequest<T>(
   serviceMethod: (...args: any) => Response<T>,
   options?: RequestOptions
 ): RequestResponse<T> {
-
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<T>();
   const [error, setError] = useState<boolean>();
@@ -28,29 +27,38 @@ export function useRequest<T>(
 
   const resolveData = useCallback(async () => {
     setLoading(true);
-    const [error, requestData] = await serviceMethod(...(options?.defaultParams || []));
+    const [error, requestData] = await serviceMethod(
+      ...(options?.defaultParams || [])
+    );
     setLoading(false);
     setData(requestData);
     setError(error);
-  }, [serviceMethod, options])
+  }, [serviceMethod, options]);
 
-  const runAsync = useCallback(async (...params: any) => {
-    paramsRef.current = params;
-    setLoading(true);
-    const res = await serviceMethod(...params);
-    const [err, curData] = res;
-    setLoading(err);
-    setData(curData);
-    return res;
-  }, [serviceMethod]);
+  const runAsync = useCallback(
+    async (...params: any) => {
+      paramsRef.current = params;
+      setLoading(true);
+      const res = await serviceMethod(...params);
+      const [err, curData] = res;
+      setError(err);
+      setLoading(false);
+      setData(curData);
+      return res;
+    },
+    [serviceMethod]
+  );
 
-  const run = useCallback(async (...params: any) => {
-    await runAsync(...params);
-  }, [runAsync]);
+  const run = useCallback(
+    async (...params: any) => {
+      await runAsync(...params);
+    },
+    [runAsync]
+  );
 
   const refresh = useCallback(() => {
     runAsync(...paramsRef.current);
-  }, [runAsync])
+  }, [runAsync]);
 
   useEffect(() => {
     if (!options?.manual) {
@@ -65,5 +73,5 @@ export function useRequest<T>(
     run,
     runAsync,
     refresh,
-  }
+  };
 }
