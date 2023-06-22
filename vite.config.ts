@@ -1,18 +1,15 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import WindiCSS from 'vite-plugin-windicss'
+import {defineConfig} from 'vite';
+import react from '@vitejs/plugin-react';
+import WindiCSS from 'vite-plugin-windicss';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: './',
-  plugins: [
-    react(),
-    WindiCSS(),
-  ],
+  base: '/',
+  plugins: [react(), WindiCSS()],
   resolve: {
     alias: {
       '@': '/src/',
-    }
+    },
   },
   server: {
     proxy: {
@@ -24,7 +21,7 @@ export default defineConfig({
         target: 'http://localhost:9002',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/file/, ''),
-      }
-    }
-  }
-})
+      },
+    },
+  },
+});
