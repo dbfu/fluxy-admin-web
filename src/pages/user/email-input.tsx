@@ -51,7 +51,11 @@ const EmailInput: React.FC<PropsType> = ({
     <div className='flex items-center gap-[12px]'>
       <Input disabled={disabled} onChange={onChange} value={value} className='flex-1' />
       {!disabled && (
-        <Button disabled={timer > 0} onClick={sendEmailCaptcha}>{timer > 0 ? `重新发送(${timer}秒)` : '发送邮箱验证码'}</Button>
+        <Button
+          disabled={timer > 0}
+          onClick={sendEmailCaptcha}>
+          {timer > 0 ? `重新发送(${timer}秒)` : '发送邮箱验证码'}
+        </Button>
       )}
     </div>
   )

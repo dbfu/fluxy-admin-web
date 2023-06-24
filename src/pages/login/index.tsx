@@ -19,7 +19,7 @@ const Login = () => {
   const { setToken, setRefreshToken } = useGlobalStore();
   const [emailResetPasswordOpen, setEmailResetPasswordOpen] = useState(false);
   const [emailInputFoucs, setEmailInputFoucs] = useState(false);
-  const [checkEmial, setCheckEmail] = useState<string>();
+  const [checkEmail, setCheckEmail] = useState<string>();
 
   const navigate = useNavigate();
 
@@ -57,6 +57,7 @@ const Login = () => {
     const [loginError, data] = await login(values);
 
     if (loginError) {
+      refreshCaptcha();
       return;
     }
 
@@ -72,12 +73,12 @@ const Login = () => {
 
 
   const sendCheckEmail = async () => {
-    if (!checkEmial) {
+    if (!checkEmail) {
       antdUtils.message?.error('无效的邮箱格式！');
       return;
     }
 
-    const [error] = await sendResetPasswordEmail(checkEmial);
+    const [error] = await sendResetPasswordEmail(checkEmail);
 
     if (!error) {
       antdUtils.message?.success('邮件已发送，请到邮箱查看。');
@@ -145,12 +146,17 @@ const Login = () => {
             </Form.Item>
             <Form.Item noStyle style={{ marginBottom: 0 }} >
               <div
-                onClick={() => {
-                  setEmailResetPasswordOpen(true);
-                }}
                 className='text-right mb-[18px]'
               >
-                <a className='text-[16px] !text-[rgb(124,77,255)] select-none' type='link'>忘记密码？</a>
+                <a
+                  onClick={() => {
+                    setEmailResetPasswordOpen(true);
+                  }}
+                  className='text-[16px] !text-[rgb(124,77,255)] select-none'
+                  type='link'
+                >
+                  忘记密码？
+                </a>
               </div>
             </Form.Item>
             <Form.Item style={{ marginBottom: 18 }}>
