@@ -25,7 +25,7 @@ export const router = createBrowserRouter(
         path: '*',
         Component: Result404,
       }, {
-        path: '/',
+        path: '/*/',
         element: (
           <Navigate to="/dashboard" />
         ),
