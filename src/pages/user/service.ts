@@ -30,6 +30,7 @@ export interface User {
   menus: Menu[];
   routes: any[];
   flatMenus: Menu[];
+  avatarPath: string;
 }
 
 const userService = {
