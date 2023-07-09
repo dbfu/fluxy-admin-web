@@ -1,4 +1,4 @@
-import { Outlet, useLocation, useNavigate } from "react-router-dom"
+import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom"
 import { useGlobalStore } from '@/stores/global';
 import { lazy, useEffect, useState } from 'react';
 import GloablLoading from '@/components/global-loading';
@@ -12,7 +12,8 @@ import { useUserStore } from '@/stores/global/user';
 import { Menu } from '@/pages/user/service';
 import { components } from '@/config/routes';
 
-import { addRoutes, router } from '@/router';
+import { replaceRoutes, router } from '@/router';
+import Result404 from '@/404';
 
 const BasicLayout: React.FC = () => {
 
@@ -88,7 +89,7 @@ const BasicLayout: React.FC = () => {
 
     currentUserDetail.menus = formatMenus(menus.filter(o => !o.parentId), menuGroup, routes);
 
-    addRoutes('*', routes.map(menu => ({
+    replaceRoutes('*', [...routes.map(menu => ({
       path: `/*${menu.path}`,
       Component: menu.filePath ? lazy(components[menu.filePath]) : null,
       id: `/*${menu.path}`,
@@ -96,7 +97,15 @@ const BasicLayout: React.FC = () => {
         parentPaths: menu.parentPaths,
         path: menu.path,
       },
-    })));
+    })), {
+      path: '*',
+      Component: Result404,
+    }, {
+      path: '/*/',
+      element: (
+        <Navigate to="/dashboard" />
+      ),
+    }]);
 
     setCurrentUser(currentUserDetail);
     setLoading(false);

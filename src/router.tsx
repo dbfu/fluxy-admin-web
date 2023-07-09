@@ -1,4 +1,4 @@
-import { RouteObject, RouterProvider, createBrowserRouter, Navigate } from 'react-router-dom';
+import { RouteObject, RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 import Login from './pages/login';
 import BasicLayout from './layouts';
@@ -6,7 +6,6 @@ import { App } from 'antd';
 import { useEffect } from 'react';
 import { antdUtils } from './utils/antd';
 import ResetPassword from './pages/login/reset-password';
-import Result404 from '@/404';
 
 export const router = createBrowserRouter(
   [
@@ -21,15 +20,7 @@ export const router = createBrowserRouter(
     {
       path: '*',
       Component: BasicLayout,
-      children: [{
-        path: '*',
-        Component: Result404,
-      }, {
-        path: '/*/',
-        element: (
-          <Navigate to="/dashboard" />
-        ),
-      }]
+      children: []
     },
   ]
 );
@@ -55,6 +46,19 @@ export const addRoutes = (parentPath: string, routes: RouteObject[]) => {
   if (curNode?.children) {
     curNode?.children.push(...routes);
   } else if (curNode) {
+    curNode.children = routes;
+  }
+}
+
+export const replaceRoutes = (parentPath: string, routes: RouteObject[]) => {
+  if (!parentPath) {
+    router.routes.push(...routes as any);
+    return;
+  }
+
+  const curNode = findNodeByPath(router.routes, parentPath);
+
+  if (curNode) {
     curNode.children = routes;
   }
 }
