@@ -12,6 +12,7 @@ import {
   Modal,
   FormInstance,
   Avatar,
+  Tag,
 } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { useAntdTable } from 'ahooks';
@@ -19,10 +20,11 @@ import dayjs from 'dayjs';
 import { useRef, useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 
-import NewAndEditForm from './newAndEdit';
+import NewAndEditForm from './new-edit-form';
 import userService, { User } from './service';
 import { IconBuguang } from '@/assets/icons/buguang';
 import { useRequest } from '@/hooks/use-request';
+import { Role } from '../role/service';
 
 
 const UserPage = () => {
@@ -74,10 +76,17 @@ const UserPage = () => {
       dataIndex: 'email',
     },
     {
-      title: t('ykrQSYRh' /* 性别 */),
-      dataIndex: 'sex',
-      render: (value: number) =>
-        value === 1 ? t('AkkyZTUy' /* 男 */) : t('yduIcxbx' /* 女 */),
+      title: '角色',
+      dataIndex: 'roles',
+      render: (roles: Role[]) => {
+        return (
+          <Space>
+            {(roles || []).map(role => (
+              <Tag color='geekblue'>{role.name}</Tag>
+            ))}
+          </Space>
+        )
+      },
     },
     {
       title: t('TMuQjpWo' /* 创建时间 */),

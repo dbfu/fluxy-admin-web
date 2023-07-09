@@ -1,4 +1,23 @@
+import {PageData} from '@/interface';
 import request from '@/request';
+
+export interface Menu {
+  id: string;
+  parentId?: string;
+  name?: string;
+  icon?: string;
+  type?: number;
+  route?: string;
+  filePath?: string;
+  orderNumber?: number;
+  url?: string;
+  show?: boolean;
+  children?: Menu[];
+  path: string;
+  Component?: any;
+  parentPaths?: string[];
+}
+
 export interface User {
   id: number;
   userName: string;
@@ -8,11 +27,9 @@ export interface User {
   createDate: string;
   updateDate: string;
   avatar?: any;
-}
-
-export interface PageData {
-  data: User[];
-  total: number;
+  menus: Menu[];
+  routes: any[];
+  flatMenus: Menu[];
 }
 
 const userService = {
@@ -21,7 +38,7 @@ const userService = {
     {current, pageSize}: {current: number; pageSize: number},
     formData: any
   ) => {
-    const [error, data] = await request.get<PageData>('/api/user/page', {
+    const [error, data] = await request.get<PageData<User>>('/api/user/page', {
       params: {
         page: current - 1,
         size: pageSize,
@@ -52,6 +69,9 @@ const userService = {
   },
   sendEmailCaptcha: (email: string) => {
     return request.post('/api/user/send/email/captcha', {email});
+  },
+  getRoles: () => {
+    return request.get<any[]>('/api/role/list');
   },
 };
 

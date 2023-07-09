@@ -1,16 +1,7 @@
-import { create } from 'zustand'
-import { devtools } from 'zustand/middleware';
+import {User} from '@/pages/user/service';
+import {create} from 'zustand';
+import {devtools} from 'zustand/middleware';
 
-interface User {
-  id: number;
-  userName: string;
-  nickName: string;
-  phoneNumber: string;
-  email: string;
-  createDate: string;
-  updateDate: string;
-  avatarPath?: string;
-}
 interface State {
   currentUser: User | null;
 }
@@ -24,9 +15,10 @@ export const useUserStore = create<State & Action>()(
     (set) => {
       return {
         currentUser: null,
-        setCurrentUser: (currentUser: State['currentUser']) => set({ currentUser }),
+        setCurrentUser: (currentUser: State['currentUser']) =>
+          set({currentUser}),
       };
     },
-    { name: 'globalUserStore' }
+    {name: 'globalUserStore'}
   )
-)
+);

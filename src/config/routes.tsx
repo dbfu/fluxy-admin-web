@@ -1,39 +1,8 @@
-import { DashboardOutlined, UserOutlined, SettingOutlined } from '@ant-design/icons';
-import { lazy } from 'react';
-import { Navigate } from 'react-router-dom';
+export const modules = import.meta.glob('../pages/**/index.tsx');
 
-export interface MenuItem {
-   path: string;
-   title?: string;
-   icon?: any;
-   element?: any;
-   children?: MenuItem[];
-   layout?: boolean;
-   Component?: any;
-}
+export const componentPaths = Object.keys(modules).map((path: string) => path.replace('../pages', ''));
 
-
-
-export const routeConfig: MenuItem[] = [
-   {
-      path: '/dashboard',
-      title: 'Dashboard',
-      icon: <DashboardOutlined />,
-      Component: lazy(() => import('../pages/dashboard')),
-   },
-   {
-      path: '/system',
-      title: '系统管理',
-      icon: <SettingOutlined />,
-      children: [{
-         path: '/system/user',
-         Component: lazy(() => import('../pages/user')),
-         title: '用户管理',
-         icon: <UserOutlined />,
-      }]
-   },
-   {
-      path: '/',
-      element: <Navigate to='/dashboard' />,
-   }
-]
+export const components = Object.keys(modules).reduce<Record<string, () => Promise<any>>>((prev, path: string) => {
+   prev[path.replace('../pages', '')] = modules[path];
+   return prev;
+}, {});

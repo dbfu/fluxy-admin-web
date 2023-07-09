@@ -1,14 +1,12 @@
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import { routeConfig } from './config/routes';
+import { RouteObject, RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 import Login from './pages/login';
 import BasicLayout from './layouts';
-import Result404 from './404';
-import { useGlobalStore } from './stores/global';
 import { App } from 'antd';
 import { useEffect } from 'react';
 import { antdUtils } from './utils/antd';
 import ResetPassword from './pages/login/reset-password';
+import Result404 from '@/404';
 
 export const router = createBrowserRouter(
   [
@@ -21,25 +19,41 @@ export const router = createBrowserRouter(
       Component: ResetPassword,
     },
     {
-      path: '/',
-      Component: BasicLayout,
-      children: routeConfig,
-    },
-    {
       path: '*',
-      Component: Result404,
-    }
+      Component: BasicLayout,
+      children: [{
+        path: '*',
+        Component: Result404,
+      }]
+    },
   ]
 );
 
-router.subscribe((state) => {
-  const { refreshToken } = useGlobalStore.getState();
+function findNodeByPath(routes: RouteObject[], path: string) {
+  for (let i = 0; i < routes.length; i += 1) {
+    const element = routes[i];
 
-  const notCheckPaths = ['/user/login', '/user/reset-password'];
-  if (!refreshToken && !(state.historyAction && notCheckPaths.includes(state.location.pathname))) {
-    router.navigate('/user/login');
+    if (element.path === path) return element;
+
+    findNodeByPath(element.children || [], path);
   }
-});
+}
+
+export const addRoutes = (parentPath: string, routes: RouteObject[]) => {
+  if (!parentPath) {
+    router.routes.push(...routes as any);
+    return;
+  }
+
+  const curNode = findNodeByPath(router.routes, parentPath);
+
+  if (curNode?.children) {
+    curNode?.children.push(...routes);
+  } else if (curNode) {
+    curNode.children = routes;
+  }
+}
+
 
 const Router = () => {
   const { notification, message, modal } = App.useApp();
@@ -56,7 +70,4 @@ const Router = () => {
 };
 
 export default Router;
-
-
-
 

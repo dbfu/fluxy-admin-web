@@ -72,33 +72,30 @@
   color: rgb(124, 77, 255) !important;
 }
 
-.ant-menu-submenu-selected {
+.ant-menu-submenu-open>.ant-menu-submenu-title .ant-menu-title-content a {
   color: rgb(124, 77, 255) !important;
 }
 
-.ant-menu-submenu-open .ant-menu-submenu-title .ant-menu-title-content a {
+.ant-menu-submenu-open>.ant-menu-submenu-title {
   color: rgb(124, 77, 255) !important;
 }
 
-.ant-menu-submenu-open .ant-menu-submenu-title {
+.ant-menu-submenu-open>.ant-menu-submenu-title .ant-menu-item-icon {
   color: rgb(124, 77, 255) !important;
 }
 
-.ant-menu-submenu-open .ant-menu-submenu-title .ant-menu-item-icon {
+/* .ant-menu-submenu-selected .ant-menu-title-content a {
   color: rgb(124, 77, 255) !important;
-}
+} */
 
-.ant-menu-submenu-selected .ant-menu-title-content a {
+/* .dark .ant-menu-submenu-selected .ant-menu-title-content a {
   color: rgb(124, 77, 255) !important;
-}
+} */
 
-.dark .ant-menu-submenu-selected .ant-menu-title-content a {
-  color: rgb(124, 77, 255) !important;
-}
-
+/* 
 .light .ant-menu-submenu-selected .ant-menu-title-content a {
   color: rgb(124, 77, 255) !important;
-}
+} */
 
 .dark .ant-menu-title-content a {
   color: #ffffff !important;
@@ -140,4 +137,12 @@ body.dark {
 .ant-menu-item .ant-menu-item-icon {
   font-size: 18px !important;
   vertical-align: middle !important;
+}
+
+a {
+  color: rgb(124, 77, 255);
+}
+
+a:hover {
+  color: rgba(124, 77, 255, 0.7);
 }

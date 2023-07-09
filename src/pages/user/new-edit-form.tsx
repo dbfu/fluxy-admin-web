@@ -1,5 +1,5 @@
 import { t } from '@/utils/i18n';
-import { Form, Input, Radio, FormInstance } from 'antd'
+import { Form, Input, Radio, FormInstance, Select } from 'antd'
 import { forwardRef, useImperativeHandle, ForwardRefRenderFunction, useMemo } from 'react'
 
 import userService, { User } from './service';
@@ -7,6 +7,7 @@ import { antdUtils } from '@/utils/antd';
 import { useRequest } from '@/hooks/use-request';
 import Avatar from './avatar';
 import EmailInput from './email-input';
+import { Role } from '../role/service';
 
 interface PropsType {
   open: boolean;
@@ -24,8 +25,10 @@ const NewAndEditForm: ForwardRefRenderFunction<FormInstance, PropsType> = ({
   const [form] = Form.useForm();
   const { runAsync: updateUser } = useRequest(userService.updateUser, { manual: true });
   const { runAsync: addUser } = useRequest(userService.addUser, { manual: true });
+  const { data: roles, loading: getRolesLoading } = useRequest(userService.getRoles);
 
   useImperativeHandle(ref, () => form, [form]);
+
 
   const finishHandle = async (values: User) => {
     setSaveLoading(true);
@@ -69,7 +72,8 @@ const NewAndEditForm: ForwardRefRenderFunction<FormInstance, PropsType> = ({
           response: {
             id: editData.avatarEntity.id,
           },
-        }] : []
+        }] : [],
+        roleIds: (editData.roles || []).map((role: Role) => role.id),
       }
     }
   }, [editData]);
@@ -139,6 +143,19 @@ const NewAndEditForm: ForwardRefRenderFunction<FormInstance, PropsType> = ({
           <Input />
         </Form.Item>
       )}
+      <Form.Item
+        label='角色'
+        name="roleIds"
+      >
+        <Select
+          options={(roles || []).map(role => ({
+            label: role.name,
+            value: role.id,
+          }))}
+          mode='multiple'
+          loading={getRolesLoading}
+        />
+      </Form.Item>
       <Form.Item
         label={t("ykrQSYRh" /* 性别 */)}
         name="sex"

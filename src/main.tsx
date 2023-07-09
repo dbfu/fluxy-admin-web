@@ -1,5 +1,4 @@
 import ReactDOM from 'react-dom/client'
-import { App as AntdApp } from 'antd'
 import NProgress from 'nprogress';
 
 import App from './app'
@@ -18,7 +17,5 @@ NProgress.configure({
 });
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <AntdApp>
-    <App />
-  </AntdApp>
+  <App />
 )

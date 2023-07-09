@@ -6,7 +6,7 @@ import axios, {
   InternalAxiosRequestConfig,
 } from 'axios';
 import {useGlobalStore} from '@/stores/global';
-import {router} from '@/router';
+// import {router} from '@/router';
 import loginService from '@/pages/login/service';
 import {antdUtils} from '@/utils/antd';
 
@@ -166,7 +166,7 @@ class Request {
 
   private toLoginPage() {
     this.reset();
-    router.navigate('/user/login');
+    // router.navigate('/user/login');
   }
 
   request<T, D = any>(config: AxiosRequestConfig<D>): Response<T> {
