@@ -98,9 +98,11 @@ const BasicLayout: React.FC = () => {
         path: menu.path,
       },
     })), {
+      id: '*',
       path: '*',
       Component: Result404,
     }, {
+      id: '/*/',
       path: '/*/',
       element: (
         <Navigate to="/dashboard" />
