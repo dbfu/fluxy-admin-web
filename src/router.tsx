@@ -1,4 +1,4 @@
-import { RouteObject, RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { RouteObject, RouterProvider, createBrowserRouter, Navigate } from 'react-router-dom';
 
 import Login from './pages/login';
 import BasicLayout from './layouts';
@@ -24,6 +24,11 @@ export const router = createBrowserRouter(
       children: [{
         path: '*',
         Component: Result404,
+      }, {
+        path: '/',
+        element: (
+          <Navigate to="/dashboard" />
+        ),
       }]
     },
   ]
