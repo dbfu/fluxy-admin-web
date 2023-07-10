@@ -32,6 +32,7 @@
     "@ant-design/plots": "^1.2.5",
     "@ant-design/pro-components": "^2.6.2",
     "@antv/g2plot": "^2.4.31",
+    "@dbfu/react-directive": "^1.1.1",
     "ahooks": "^3.7.7",
     "antd": "^5.4.6",
     "antd-img-crop": "^4.12.2",

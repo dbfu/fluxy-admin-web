@@ -16,6 +16,7 @@ export interface Menu {
   path: string;
   Component?: any;
   parentPaths?: string[];
+  authCode?: string;
 }
 
 export interface User {
@@ -31,6 +32,7 @@ export interface User {
   routes: any[];
   flatMenus: Menu[];
   avatarPath: string;
+  authList: string[];
 }
 
 const userService = {

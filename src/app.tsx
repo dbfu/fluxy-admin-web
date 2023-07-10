@@ -8,6 +8,9 @@ import { useGlobalStore } from './stores/global'
 import { i18n } from './utils/i18n';
 
 import Router from './router';
+import { registerAuthDirective } from './directives/auth';
+
+registerAuthDirective();
 
 function App() {
 

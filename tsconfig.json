@@ -12,7 +12,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-
+    "jsxImportSource": "@dbfu/react-directive",
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
@@ -23,5 +23,5 @@
       "@/*": ["./src/*"]
     }
   },
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "references": [{"path": "./tsconfig.node.json"}]
 }

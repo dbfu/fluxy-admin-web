@@ -14,6 +14,7 @@ import { components } from '@/config/routes';
 
 import { replaceRoutes, router } from '@/router';
 import Result404 from '@/404';
+import { MenuType } from '@/pages/menu/new-edit-form';
 
 const BasicLayout: React.FC = () => {
 
@@ -88,6 +89,10 @@ const BasicLayout: React.FC = () => {
     const routes: Menu[] = [];
 
     currentUserDetail.menus = formatMenus(menus.filter(o => !o.parentId), menuGroup, routes);
+
+    currentUserDetail.authList = menus
+      .filter(menu => menu.type === MenuType.BUTTON && menu.authCode)
+      .map(menu => menu.authCode!);
 
     replaceRoutes('*', [...routes.map(menu => ({
       path: `/*${menu.path}`,

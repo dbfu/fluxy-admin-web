@@ -13,6 +13,9 @@ dependencies:
   '@antv/g2plot':
     specifier: ^2.4.31
     version: 2.4.31
+  '@dbfu/react-directive':
+    specifier: ^1.1.1
+    version: 1.1.1
   ahooks:
     specifier: ^3.7.7
     version: 3.7.7(react@18.2.0)
@@ -886,6 +889,13 @@ packages:
   /@ctrl/tinycolor@3.6.0:
     resolution: {integrity: sha512-/Z3l6pXthq0JvMYdUFyX9j0MaCltlIn6mfh9jLyQwg5aPKxkyNa0PTHtU1AlFXLNk55ZuAeJRcpvq+tmLfKmaQ==}
     engines: {node: '>=10'}
+    dev: false
+
+  /@dbfu/react-directive@1.1.1:
+    resolution: {integrity: sha512-T3b4RzJ4zJAsWaZra+4F/mvQzVgn/Y9UFbPy0vJIoKRhdl+PysjRrd6bzsaPKWHYla2cf2RfwA38WB0kwIT1CA==}
+    dependencies:
+      lodash-es: 4.17.21
+      react: 18.2.0
     dev: false
 
   /@dnd-kit/accessibility@3.0.1(react@18.2.0):

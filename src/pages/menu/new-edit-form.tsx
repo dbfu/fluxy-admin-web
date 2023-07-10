@@ -8,7 +8,7 @@ import { antdUtils } from '@/utils/antd';
 interface CreateMemuProps {
   visible: boolean;
   onCancel: (flag?: boolean) => void;
-  parentId?: string;
+  curRecord?: Menu;
   onSave: () => void;
   editData?: Menu | null;
 }
@@ -19,9 +19,15 @@ export enum MenuType {
   BUTTON,
 }
 
+export const MenuTypeName = {
+  [MenuType.DIRECTORY.toString()]: '目录',
+  [MenuType.MENU.toString()]: '菜单',
+  [MenuType.BUTTON.toString()]: '按钮',
+}
+
 const CreateMenu: React.FC<CreateMemuProps> = (props) => {
 
-  const { visible, onCancel, parentId, onSave, editData } = props;
+  const { visible, onCancel, curRecord, onSave, editData } = props;
   const [saveLoading, setSaveLoading] = useState(false);
   const [form] = Form.useForm();
 
@@ -29,6 +35,16 @@ const CreateMenu: React.FC<CreateMemuProps> = (props) => {
     if (visible) {
       if (editData) {
         form.setFieldsValue(editData);
+      } else if (curRecord) {
+        form.setFieldsValue({
+          show: true,
+          type: curRecord?.type === MenuType.MENU ? MenuType.MENU : MenuType.DIRECTORY,
+        })
+      } else {
+        form.setFieldsValue({
+          show: true,
+          type: MenuType.DIRECTORY,
+        })
       }
     } else {
       form.resetFields();
@@ -37,8 +53,12 @@ const CreateMenu: React.FC<CreateMemuProps> = (props) => {
 
   const save = async (values: any) => {
     setSaveLoading(true);
-    values.parentId = parentId || null;
-    values.show = values.type === MenuType.DIRECTORY ? true : values.show;
+    values.parentId = curRecord?.id || null;
+    if (values.type === MenuType.DIRECTORY) {
+      values.show = true;
+    } else if (values.type === MenuType.BUTTON) {
+      values.show = false;
+    }
 
     if (editData) {
       values.parentId = editData.parentId;
@@ -55,6 +75,99 @@ const CreateMenu: React.FC<CreateMemuProps> = (props) => {
       }
     }
     setSaveLoading(false);
+  }
+
+  const renderDirectoryForm = () => {
+    return (
+      <>
+        <Form.Item label="名称" name="name">
+          <Input />
+        </Form.Item>
+        <Form.Item label="图标" name="icon">
+          <Select>
+            {Object.keys(antdIcons).map((key) => (
+              <Select.Option key={key}>{React.createElement(antdIcons[key])}</Select.Option>
+            ))}
+          </Select >
+        </Form.Item>
+        <Form.Item
+          tooltip="以/开头，不用手动拼接上级路由。参数格式/:id"
+          label="路由"
+          name="route"
+          rules={[{
+            pattern: /^\//,
+            message: '必须以/开头',
+          }]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item label="排序号" name="orderNumber">
+          <InputNumber />
+        </Form.Item>
+      </>
+    )
+  }
+
+  const renderMenuForm = () => {
+    return (
+      <>
+        <Form.Item label="名称" name="name">
+          <Input />
+        </Form.Item>
+        <Form.Item label="图标" name="icon">
+          <Select>
+            {Object.keys(antdIcons).map((key) => (
+              <Select.Option key={key}>{React.createElement(antdIcons[key])}</Select.Option>
+            ))}
+          </Select >
+        </Form.Item>
+        <Form.Item
+          tooltip="以/开头，不用手动拼接上级路由。参数格式/:id"
+          label="路由"
+          name="route"
+          rules={[{
+            pattern: /^\//,
+            message: '必须以/开头',
+          }]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item label="文件地址" name="filePath">
+          <Select
+            options={componentPaths.map(path => ({
+              label: path,
+              value: path,
+            }))}
+          />
+        </Form.Item>
+        <Form.Item valuePropName="checked" label="是否显示" name="show">
+          <Switch />
+        </Form.Item>
+        <Form.Item label="排序号" name="orderNumber">
+          <InputNumber />
+        </Form.Item>
+      </>
+    )
+  }
+
+  const renderButtonForm = () => {
+    return (
+      <>
+        <Form.Item label="名称" name="name">
+          <Input />
+        </Form.Item>
+        <Form.Item label="权限代码" name="authCode">
+          <Input />
+        </Form.Item>
+      </>
+    )
+  }
+
+
+  const renderFormMap = {
+    [MenuType.DIRECTORY.toString()]: renderDirectoryForm,
+    [MenuType.MENU.toString()]: renderMenuForm,
+    [MenuType.BUTTON.toString()]: renderButtonForm,
   }
 
   return (
@@ -77,66 +190,21 @@ const CreateMenu: React.FC<CreateMemuProps> = (props) => {
         onFinish={save}
         labelCol={{ flex: '0 0 100px' }}
         wrapperCol={{ span: 16 }}
-        initialValues={{
-          show: true,
-          type: MenuType.DIRECTORY,
-        }}
       >
         <Form.Item label="类型" name="type">
           <Radio.Group
             optionType="button"
             buttonStyle="solid"
           >
-            <Radio value={MenuType.DIRECTORY}>目录</Radio>
+            {curRecord?.type !== MenuType.MENU && (
+              <Radio value={MenuType.DIRECTORY}>目录</Radio>
+            )}
             <Radio value={MenuType.MENU}>菜单</Radio>
+            <Radio value={MenuType.BUTTON}>按钮</Radio>
           </Radio.Group>
         </Form.Item>
-        <Form.Item label="名称" name="name">
-          <Input />
-        </Form.Item>
-        <Form.Item label="图标" name="icon">
-          <Select>
-            {Object.keys(antdIcons).map((key) => (
-              <Select.Option key={key}>{React.createElement(antdIcons[key])}</Select.Option>
-            ))}
-          </Select >
-        </Form.Item>
-        <Form.Item
-          tooltip="以/开头，不用手动拼接上级路由。参数格式/:id"
-          label="路由"
-          name="route"
-          rules={[{
-            pattern: /^\//,
-            message: '必须以/开头',
-          }]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item noStyle shouldUpdate>
-          {() => (
-            form.getFieldValue("type") === 2 && (
-              <Form.Item label="文件地址" name="filePath">
-                <Select
-                  options={componentPaths.map(path => ({
-                    label: path,
-                    value: path,
-                  }))}
-                />
-              </Form.Item>
-            )
-          )}
-        </Form.Item>
-        <Form.Item noStyle shouldUpdate>
-          {() => (
-            form.getFieldValue("type") === 2 && (
-              <Form.Item valuePropName="checked" label="是否显示" name="show">
-                <Switch />
-              </Form.Item>
-            )
-          )}
-        </Form.Item>
-        <Form.Item label="排序号" name="orderNumber">
-          <InputNumber />
+        <Form.Item shouldUpdate noStyle>
+          {() => renderFormMap[form.getFieldValue('type') as string]?.()}
         </Form.Item>
       </Form>
     </Modal>

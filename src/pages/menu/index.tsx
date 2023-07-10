@@ -4,7 +4,7 @@ import { antdUtils } from '@/utils/antd';
 import { antdIcons } from '@/assets/antd-icons';
 import { useRequest } from '@/hooks/use-request';
 
-import NewAndEditForm, { MenuType } from './new-edit-form';
+import NewAndEditForm, { MenuTypeName } from './new-edit-form';
 import menuService, { Menu } from './service';
 
 const MenuPage: React.FC = () => {
@@ -16,7 +16,6 @@ const MenuPage: React.FC = () => {
   });
 
   const [createVisible, setCreateVisible] = useState(false);
-  const [parentId, setParentId] = useState<string>('');
   const [expandedRowKeys, setExpandedRowKeys] = useState<readonly React.Key[]>([]);
   const [curRowData, setCurRowData] = useState<Menu>();
   const [editData, setEditData] = useState<null | Menu>(null);
@@ -100,7 +99,7 @@ const MenuPage: React.FC = () => {
         align: 'center',
         width: 100,
         render: (value: number) => (
-          <Tag color="processing">{value === MenuType.DIRECTORY ? '目录' : '菜单'}</Tag>
+          <Tag color="processing">{MenuTypeName[value]}</Tag>
         ),
       },
       {
@@ -115,12 +114,12 @@ const MenuPage: React.FC = () => {
         dataIndex: 'route',
       },
       {
-        title: 'url',
-        dataIndex: 'url',
-      },
-      {
         title: '文件地址',
         dataIndex: 'filePath',
+      },
+      {
+        title: '按钮权限代码',
+        dataIndex: 'authCode',
       },
       {
         title: '排序号',
@@ -141,7 +140,6 @@ const MenuPage: React.FC = () => {
             >
               <a
                 onClick={() => {
-                  setParentId(value);
                   setCreateVisible(true);
                   setCurRowData(record);
                 }}
@@ -211,7 +209,7 @@ const MenuPage: React.FC = () => {
         onSave={saveHandle}
         onCancel={cancelHandle}
         visible={createVisible}
-        parentId={parentId}
+        curRecord={curRowData}
         editData={editData}
       />
     </div>
