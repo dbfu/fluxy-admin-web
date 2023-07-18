@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { Button, Divider, Table, Tag, Space, TablePaginationConfig, Popconfirm } from 'antd';
-import { antdUtils } from '@/utils/antd';
+import { Button, Divider, Table, Tag, Space, TablePaginationConfig } from 'antd';
 import { antdIcons } from '@/assets/antd-icons';
 import { useRequest } from '@/hooks/use-request';
 
@@ -154,21 +153,6 @@ const MenuPage: React.FC = () => {
               >
                 编辑
               </a>
-              <Popconfirm
-                title="是否删除？"
-                onConfirm={async () => {
-                  const [error] = await menuService.removeMenu(value);
-
-                  if (!error) {
-                    antdUtils.message?.success('删除成功');
-                    getMenus();
-                    setExpandedRowKeys([]);
-                  }
-                }}
-                placement='topRight'
-              >
-                <a>删除</a>
-              </Popconfirm>
             </Space>
           );
         },
