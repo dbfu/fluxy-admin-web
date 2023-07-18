@@ -54,7 +54,7 @@ cat >> /etc/nginx/conf.d/default.conf <<EOF
     }
 
     location /ws/ {
-      proxy_pass $FILE_URL;
+      proxy_pass $SERVER_URL;
       proxy_http_version 1.1;
       proxy_set_header Upgrade \$http_upgrade;
       proxy_set_header Connection "Upgrade";
