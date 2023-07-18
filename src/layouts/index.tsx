@@ -30,7 +30,10 @@ const BasicLayout: React.FC = () => {
   const { setLatestMessage } = useMessageStore();
 
   // 当获取完用户信息后，手动连接
-  const { latestMessage, connect } = useWebSocketMessage(`ws://${window.location.host}/ws?token=${token}`, { manual: true });
+  const { latestMessage, connect } = useWebSocketMessage(
+    `${window.location.protocol.replace('http', 'ws')}//${window.location.host}/ws?token=${token}`,
+    { manual: true }
+  );
 
   const {
     data: currentUserDetail,
