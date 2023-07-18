@@ -130,7 +130,7 @@ const MenuPage: React.FC = () => {
         dataIndex: 'id',
         align: 'center',
         width: 200,
-        render: (value: string, record: Menu) => {
+        render: (_: string, record: Menu) => {
           return (
             <Space
               split={(
