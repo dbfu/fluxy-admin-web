@@ -17,6 +17,11 @@ cat >> /etc/nginx/conf.d/default.conf <<EOF
 
     proxy_read_timeout 600;
 
+    map \$http_upgrade \$connection_upgrade {
+      default upgrade;
+      ''      close;
+    }
+
     location / {
         add_header Access-Control-Allow-Origin *;
         add_header Access-Control-Allow-Methods 'GET, POST, OPTIONS';
@@ -44,6 +49,13 @@ cat >> /etc/nginx/conf.d/default.conf <<EOF
         proxy_set_header Host \$host;
         proxy_set_header X-Real-IP \$remote_addr;
         proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+    }
+
+    location /ws {
+      proxy_pass $FILE_URL;
+      proxy_http_version 1.1;
+      proxy_set_header Upgrade \$http_upgrade;
+      proxy_set_header Connection \$connection_upgrade;
     }
  }
 
