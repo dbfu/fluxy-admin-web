@@ -17,6 +17,11 @@ cat >> /etc/nginx/conf.d/default.conf <<EOF
 
     proxy_read_timeout 600;
 
+    map \$http_upgrade \$connection_upgrade {
+      default upgrade;
+      ''      close;
+    }
+
     location / {
         add_header Access-Control-Allow-Origin *;
         add_header Access-Control-Allow-Methods 'GET, POST, OPTIONS';
@@ -59,4 +64,4 @@ EOF
 
 echo "starting web server"
 
-nginx -g 'daemon off;'
+nginx -g 'daemon off;
