@@ -7,7 +7,7 @@ cat >> /etc/nginx/conf.d/default.conf <<EOF
 http {
     map \$http_upgrade \$connection_upgrade {
       default upgrade;
-      ''      close;
+      \'\'      close;
     }
 
     server {
