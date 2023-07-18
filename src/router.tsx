@@ -25,6 +25,10 @@ export const router = createBrowserRouter(
   ]
 );
 
+export const toLoginPage = () => {
+  router.navigate('/user/login');
+}
+
 function findNodeByPath(routes: RouteObject[], path: string) {
   for (let i = 0; i < routes.length; i += 1) {
     const element = routes[i];

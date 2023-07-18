@@ -15,15 +15,22 @@ import { components } from '@/config/routes';
 import { replaceRoutes, router } from '@/router';
 import Result404 from '@/404';
 import { MenuType } from '@/pages/menu/new-edit-form';
+import { SocketMessage, useMessageStore } from '@/stores/global/message';
+import MessageHandle from './message-handle';
+import { useWebSocketMessage } from '@/hooks/use-websocket';
 
 const BasicLayout: React.FC = () => {
 
   const [loading, setLoading] = useState(true);
 
-  const { refreshToken, lang } = useGlobalStore();
+  const { refreshToken, lang, token } = useGlobalStore();
   const { setCurrentUser, currentUser } = useUserStore();
   const navigate = useNavigate();
   const location = useLocation();
+  const { setLatestMessage } = useMessageStore();
+
+  // 当获取完用户信息后，手动连接
+  const { latestMessage, connect } = useWebSocketMessage(`ws://${window.location.host}/ws?token=${token}`, { manual: true });
 
   const {
     data: currentUserDetail,
@@ -59,6 +66,17 @@ const BasicLayout: React.FC = () => {
     });
   }
 
+  useEffect(() => {
+    if (latestMessage?.data) {
+      try {
+        const socketMessage = JSON.parse(latestMessage?.data) as SocketMessage;
+        setLatestMessage(socketMessage)
+      } catch {
+        console.error(latestMessage?.data);
+      }
+    }
+  }, [latestMessage]);
+
 
   useEffect(() => {
     if (!refreshToken) {
@@ -67,6 +85,12 @@ const BasicLayout: React.FC = () => {
     }
     getCurrentUserDetail();
   }, [refreshToken, getCurrentUserDetail, navigate]);
+
+  useEffect(() => {
+    if (currentUserDetail) {
+      connect && connect();
+    }
+  }, [token]);
 
   useEffect(() => {
     if (!currentUserDetail) return;
@@ -117,6 +141,9 @@ const BasicLayout: React.FC = () => {
     setCurrentUser(currentUserDetail);
     setLoading(false);
 
+    // 连接websocket
+    connect && connect();
+
     // replace一下当前路由，为了触发路由匹配
     router.navigate(`${location.pathname}${location.search}`, { replace: true });
   }, [currentUserDetail, setCurrentUser]);
@@ -143,6 +170,7 @@ const BasicLayout: React.FC = () => {
 
   return (
     <div key={lang} className='bg-primary overflow-hidden'>
+      <MessageHandle />
       <Header />
       <Slide />
       <Content>
