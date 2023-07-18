@@ -4,7 +4,13 @@ echo "setting environment config"
 
 cat >> /etc/nginx/conf.d/default.conf <<EOF
  
-  server {
+http {
+    map \$http_upgrade \$connection_upgrade {
+      default upgrade;
+      ''      close;
+    }
+
+    server {
     listen      80;
     gzip on;
     gzip_min_length 1k;
@@ -16,11 +22,6 @@ cat >> /etc/nginx/conf.d/default.conf <<EOF
     gzip_disable "MSIE [1-6].";
 
     proxy_read_timeout 600;
-
-    map \$http_upgrade \$connection_upgrade {
-      default upgrade;
-      ''      close;
-    }
 
     location / {
         add_header Access-Control-Allow-Origin *;
@@ -59,6 +60,8 @@ cat >> /etc/nginx/conf.d/default.conf <<EOF
         proxy_read_timeout 300s;
     }
  }
+}
+  
 
 EOF
 
