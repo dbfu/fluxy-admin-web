@@ -3,8 +3,8 @@
 echo "setting environment config"
 
 cat >> /etc/nginx/conf.d/default.conf <<EOF
- 
-  map \$http_upgrade \$connection_upgrade {
+  http {
+map \$http_upgrade \$connection_upgrade {
       default upgrade;
       ''      close;
   }
@@ -60,6 +60,8 @@ cat >> /etc/nginx/conf.d/default.conf <<EOF
       proxy_set_header Connection \$connection_upgrade;
     }
  }
+  }
+  
 
 EOF
 
