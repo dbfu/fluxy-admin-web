@@ -3,6 +3,8 @@
 echo "setting environment config"
 
 cat >> /etc/nginx/conf.d/default.conf <<EOF
+
+
   http {
 map \$http_upgrade \$connection_upgrade {
       default upgrade;
