@@ -4,8 +4,7 @@ echo "setting environment config"
 
 cat >> /etc/nginx/conf.d/default.conf <<EOF
  
-http {
-    server {
+  server {
     listen      80;
     gzip on;
     gzip_min_length 1k;
@@ -47,11 +46,9 @@ http {
         proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
     }
  }
-}
-  
 
 EOF
 
 echo "starting web server"
 
-nginx -g 'daemon off;
+nginx -g 'daemon off;'
