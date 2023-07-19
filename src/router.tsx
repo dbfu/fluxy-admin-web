@@ -1,4 +1,4 @@
-import { RouteObject, RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { RouteObject, RouterProvider, createBrowserRouter, Navigate } from 'react-router-dom';
 
 import Login from './pages/login';
 import BasicLayout from './layouts';
@@ -16,6 +16,12 @@ export const router = createBrowserRouter(
     {
       path: '/user/reset-password',
       Component: ResetPassword,
+    },
+    {
+      path: '/',
+      element: (
+        <Navigate to="/dashboard" />
+      ),
     },
     {
       path: '*',
