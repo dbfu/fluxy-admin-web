@@ -134,12 +134,6 @@ const BasicLayout: React.FC = () => {
         id: '*',
         path: '*',
         Component: Result404,
-      }, {
-        id: '/*',
-        path: '/*',
-        element: (
-          <div>hello</div>
-        ),
       }
     ]);
 
