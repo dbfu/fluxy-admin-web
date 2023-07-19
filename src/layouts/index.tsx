@@ -1,4 +1,4 @@
-import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom"
+import { Outlet, useLocation, useNavigate } from "react-router-dom"
 import { useGlobalStore } from '@/stores/global';
 import { lazy, useEffect, useState } from 'react';
 import GloablLoading from '@/components/global-loading';
@@ -121,25 +121,27 @@ const BasicLayout: React.FC = () => {
       .filter(menu => menu.type === MenuType.BUTTON && menu.authCode)
       .map(menu => menu.authCode!);
 
-    replaceRoutes('*', [...routes.map(menu => ({
-      path: `/*${menu.path}`,
-      Component: menu.filePath ? lazy(components[menu.filePath]) : null,
-      id: `/*${menu.path}`,
-      handle: {
-        parentPaths: menu.parentPaths,
-        path: menu.path,
-      },
-    })), {
-      id: '*',
-      path: '*',
-      Component: Result404,
-    }, {
-      id: '/*/',
-      path: '/*/',
-      element: (
-        <Navigate to="/dashboard" />
-      ),
-    }]);
+    replaceRoutes('*', [
+      ...routes.map(menu => ({
+        path: `/*${menu.path}`,
+        Component: menu.filePath ? lazy(components[menu.filePath]) : null,
+        id: `/*${menu.path}`,
+        handle: {
+          parentPaths: menu.parentPaths,
+          path: menu.path,
+        },
+      })), {
+        id: '*',
+        path: '*',
+        Component: Result404,
+      }, {
+        id: '/*/',
+        path: '/*/',
+        element: (
+          <div>hello</div>
+        ),
+      }
+    ]);
 
     setCurrentUser(currentUserDetail);
     setLoading(false);
