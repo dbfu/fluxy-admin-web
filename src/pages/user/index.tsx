@@ -98,7 +98,7 @@ const UserPage = () => {
       title: t('QkOmYwne' /* 操作 */),
       key: 'action',
       render: (_, record) =>
-        record.userName !== 'admin' && (
+        record.userName !== 'admin' && record.userName !== 'user' && (
           <Space size='middle'>
             <a
               onClick={() => {
