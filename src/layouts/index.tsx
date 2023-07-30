@@ -19,6 +19,8 @@ import { SocketMessage, useMessageStore } from '@/stores/global/message';
 import MessageHandle from './message-handle';
 import { useWebSocketMessage } from '@/hooks/use-websocket';
 
+import './index.css'
+
 const BasicLayout: React.FC = () => {
 
   const [loading, setLoading] = useState(true);
