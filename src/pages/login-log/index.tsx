@@ -68,6 +68,11 @@ const LoginLogPage = () => {
     },
   ];
 
+  console.log(tableProps);
+
+
+
+
   return (
     <div>
       <Form
@@ -99,7 +104,13 @@ const LoginLogPage = () => {
           scroll={{ x: true }}
           columns={columns}
           className='bg-transparent'
-          {...tableProps}
+          {...{
+            ...tableProps,
+            pagination: {
+              ...tableProps.pagination,
+              showTotal: (total) => `共 ${total} 条数据`
+            }
+          }}
         />
       </div>
     </div>

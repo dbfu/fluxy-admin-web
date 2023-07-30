@@ -8,7 +8,7 @@ import { antdUtils } from '@/utils/antd';
 interface CreateMemuProps {
   visible: boolean;
   onCancel: (flag?: boolean) => void;
-  curRecord?: Menu;
+  curRecord?: Menu | null;
   onSave: () => void;
   editData?: Menu | null;
 }
@@ -80,7 +80,14 @@ const CreateMenu: React.FC<CreateMemuProps> = (props) => {
   const renderDirectoryForm = () => {
     return (
       <>
-        <Form.Item label="名称" name="name">
+        <Form.Item
+          label="名称"
+          name="name"
+          rules={[{
+            required: true,
+            message: '不能为空',
+          }]}
+        >
           <Input />
         </Form.Item>
         <Form.Item label="图标" name="icon">
@@ -97,6 +104,9 @@ const CreateMenu: React.FC<CreateMemuProps> = (props) => {
           rules={[{
             pattern: /^\//,
             message: '必须以/开头',
+          }, {
+            required: true,
+            message: '不能为空',
           }]}
         >
           <Input />
@@ -111,7 +121,14 @@ const CreateMenu: React.FC<CreateMemuProps> = (props) => {
   const renderMenuForm = () => {
     return (
       <>
-        <Form.Item label="名称" name="name">
+        <Form.Item
+          rules={[{
+            required: true,
+            message: '不能为空',
+          }]}
+          label="名称"
+          name="name"
+        >
           <Input />
         </Form.Item>
         <Form.Item label="图标" name="icon">
@@ -128,11 +145,21 @@ const CreateMenu: React.FC<CreateMemuProps> = (props) => {
           rules={[{
             pattern: /^\//,
             message: '必须以/开头',
+          }, {
+            required: true,
+            message: '不能为空',
           }]}
         >
           <Input />
         </Form.Item>
-        <Form.Item label="文件地址" name="filePath">
+        <Form.Item
+          rules={[{
+            required: true,
+            message: '不能为空',
+          }]}
+          label="文件地址"
+          name="filePath"
+        >
           <Select
             options={componentPaths.map(path => ({
               label: path,
@@ -153,10 +180,24 @@ const CreateMenu: React.FC<CreateMemuProps> = (props) => {
   const renderButtonForm = () => {
     return (
       <>
-        <Form.Item label="名称" name="name">
+        <Form.Item
+          rules={[{
+            required: true,
+            message: '不能为空',
+          }]}
+          label="名称"
+          name="name"
+        >
           <Input />
         </Form.Item>
-        <Form.Item label="权限代码" name="authCode">
+        <Form.Item
+          rules={[{
+            required: true,
+            message: '不能为空',
+          }]}
+          label="权限代码"
+          name="authCode"
+        >
           <Input />
         </Form.Item>
       </>

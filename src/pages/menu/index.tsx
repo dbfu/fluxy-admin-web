@@ -16,7 +16,7 @@ const MenuPage: React.FC = () => {
 
   const [createVisible, setCreateVisible] = useState(false);
   const [expandedRowKeys, setExpandedRowKeys] = useState<readonly React.Key[]>([]);
-  const [curRowData, setCurRowData] = useState<Menu>();
+  const [curRowData, setCurRowData] = useState<null | Menu>();
   const [editData, setEditData] = useState<null | Menu>(null);
 
   const { loading, runAsync: getMenusByPage } = useRequest(menuService.getMenusByPage, { manual: true });
@@ -46,11 +46,13 @@ const MenuPage: React.FC = () => {
   const cancelHandle = () => {
     setCreateVisible(false);
     setEditData(null);
+    setCurRowData(null);
   };
 
   const saveHandle = () => {
     setCreateVisible(false);
     setEditData(null);
+    setCurRowData(null);
     if (!curRowData) {
       getMenus();
       setExpandedRowKeys([]);
