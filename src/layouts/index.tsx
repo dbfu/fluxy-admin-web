@@ -14,12 +14,12 @@ import { components } from '@/config/routes';
 
 import { replaceRoutes, router } from '@/router';
 import Result404 from '@/404';
-import { MenuType } from '@/pages/menu/new-edit-form';
 import { SocketMessage, useMessageStore } from '@/stores/global/message';
 import MessageHandle from './message-handle';
 import { useWebSocketMessage } from '@/hooks/use-websocket';
 
 import './index.css'
+import { MenuType } from '@/pages/menu/interface';
 
 const BasicLayout: React.FC = () => {
 

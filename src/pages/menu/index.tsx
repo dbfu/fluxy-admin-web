@@ -3,8 +3,9 @@ import { Button, Divider, Table, Tag, Space, TablePaginationConfig } from 'antd'
 import { antdIcons } from '@/assets/antd-icons';
 import { useRequest } from '@/hooks/use-request';
 
-import NewAndEditForm, { MenuTypeName } from './new-edit-form';
+import NewAndEditForm from './new-edit-form';
 import menuService, { Menu } from './service';
+import { MenuTypeName } from './interface';
 
 const MenuPage: React.FC = () => {
   const [dataSource, setDataSource] = useState<Menu[]>([]);
@@ -62,7 +63,7 @@ const MenuPage: React.FC = () => {
     }
   }
 
-  const expandHandle = async (expanded: boolean, record: (Menu)) => {
+  const expandHandle = async (expanded: boolean, record: Menu) => {
     if (expanded && !record._loaded_) {
       const [error, children] = await menuService.getChildren(record.id);
       if (!error) {
@@ -162,7 +163,6 @@ const MenuPage: React.FC = () => {
     ],
     [],
   );
-
   return (
     <div>
       <Button
@@ -171,6 +171,7 @@ const MenuPage: React.FC = () => {
         onClick={() => {
           setCreateVisible(true);
         }}
+        v-auth="menu:create"
       >
         新建
       </Button>

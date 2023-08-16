@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import { Modal, Form, Input, Switch, Radio, InputNumber, Select } from 'antd'
+import React, { useEffect, useMemo, useState } from 'react'
+import { Modal, Form, Input, Switch, Radio, InputNumber, Select, TreeSelect } from 'antd'
 import { componentPaths } from '@/config/routes';
 import { antdIcons } from '@/assets/antd-icons';
-import menuService, { Menu } from './service';
+import menuService, { Api, Menu } from './service';
 import { antdUtils } from '@/utils/antd';
+import { useRequest } from '@/hooks/use-request';
+import { MenuType } from './interface';
 
 interface CreateMemuProps {
   visible: boolean;
@@ -13,17 +15,6 @@ interface CreateMemuProps {
   editData?: Menu | null;
 }
 
-export enum MenuType {
-  DIRECTORY = 1,
-  MENU,
-  BUTTON,
-}
-
-export const MenuTypeName = {
-  [MenuType.DIRECTORY.toString()]: '目录',
-  [MenuType.MENU.toString()]: '菜单',
-  [MenuType.BUTTON.toString()]: '按钮',
-}
 
 const CreateMenu: React.FC<CreateMemuProps> = (props) => {
 
@@ -31,25 +22,75 @@ const CreateMenu: React.FC<CreateMemuProps> = (props) => {
   const [saveLoading, setSaveLoading] = useState(false);
   const [form] = Form.useForm();
 
+  const { data: apiData } = useRequest(menuService.getApiList);
+  const { runAsync: getAllocApis } = useRequest(menuService.getAllocApis, { manual: true });
+
+
   useEffect(() => {
     if (visible) {
-      if (editData) {
-        form.setFieldsValue(editData);
-      } else if (curRecord) {
-        form.setFieldsValue({
-          show: true,
-          type: curRecord?.type === MenuType.MENU ? MenuType.MENU : MenuType.DIRECTORY,
-        })
-      } else {
-        form.setFieldsValue({
-          show: true,
-          type: MenuType.DIRECTORY,
-        })
-      }
+      setInitValue();
     } else {
       form.resetFields();
     }
   }, [visible]);
+
+  async function setInitValue() {
+    if (editData) {
+      form.setFieldsValue(editData);
+      const [, allocApis] = await getAllocApis(editData.id);
+      form.setFieldValue('apis', allocApis.map((api: Api) => [api.method, api.path].join('~')))
+    } else if (curRecord) {
+      form.setFieldsValue({
+        show: true,
+        type: curRecord?.type === MenuType.MENU ? MenuType.MENU : MenuType.DIRECTORY,
+      })
+    } else {
+      form.setFieldsValue({
+        show: true,
+        type: MenuType.DIRECTORY,
+      })
+    }
+  }
+
+  const titleRender = (record: any) => {
+    if (record.type === 'controller') {
+      return <div>{record.title}</div>;
+    }
+
+    const colorMap: any = {
+      get: '#00FA9A',
+      post: '#FF8C00',
+      put: '#00BFFF',
+      delete: '#DC143C',
+    };
+
+    return (
+      <div>
+        <span>{record.title}</span>
+        <span
+          style={{ color: colorMap[record.method] }}
+          className="ml-8px inline-block w-60px"
+        >
+          {String(record.method).toUpperCase()}
+        </span>
+      </div>
+    );
+  };
+
+  const formatApi = useMemo(() => {
+    return (apiData || []).map((item: any) => ({
+      value: item.path,
+      label: titleRender(item),
+      type: item.type,
+      children: item.children?.map((o: any) => ({
+        value: `${o.method}~${item.prefix}${o.path}`,
+        label: titleRender(o),
+        type: o.type,
+        method: o.method,
+        path: item.prefix + o.path,
+      })),
+    }));
+  }, [apiData]);
 
   const save = async (values: any) => {
     setSaveLoading(true);
@@ -59,6 +100,14 @@ const CreateMenu: React.FC<CreateMemuProps> = (props) => {
     } else if (values.type === MenuType.BUTTON) {
       values.show = false;
     }
+
+    values.apis = (values.apis || []).map((api: string) => {
+      const [method, path] = api.split('~');
+      return {
+        method,
+        path,
+      }
+    });
 
     if (editData) {
       values.parentId = editData.parentId;
@@ -177,6 +226,9 @@ const CreateMenu: React.FC<CreateMemuProps> = (props) => {
     )
   }
 
+  console.log(formatApi, 'formatApi');
+
+
   const renderButtonForm = () => {
     return (
       <>
@@ -199,6 +251,12 @@ const CreateMenu: React.FC<CreateMemuProps> = (props) => {
           name="authCode"
         >
           <Input />
+        </Form.Item>
+        <Form.Item
+          label="绑定接口"
+          name="apis"
+        >
+          <TreeSelect maxTagCount={3} treeCheckable treeData={formatApi} />
         </Form.Item>
       </>
     )

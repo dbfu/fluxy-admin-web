@@ -17,6 +17,19 @@ export interface Menu {
   children?: Menu[] | null;
 }
 
+export interface Api {
+  id?: string;
+  path: string;
+  method: string;
+}
+
+export interface MenuApi {
+  id?: string;
+  menuId: string;
+  path: string;
+  method: string;
+}
+
 const menuService = {
   getMenusByPage: async (
     {current, pageSize}: {current: number; pageSize: number},
@@ -41,6 +54,14 @@ const menuService = {
   },
   getChildren: (parentId: string) => {
     return request.get<Menu[]>('/api/menu/children', {params: {parentId}});
+  },
+  getApiList: () => {
+    return request.get<Api[]>('/api/api/list');
+  },
+  getAllocApis: (menuId: string) => {
+    return request.get<MenuApi[]>('/api/menu/alloc/interface/list', {
+      params: {menuId},
+    });
   },
 };
 
