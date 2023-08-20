@@ -24,7 +24,7 @@ const Content: FC<any> = ({ children }) => {
       }}
     >
       <div
-        className='m-0 rounded-md z-1 p-[16px]'
+        className='m-0 rounded-md z-1 p-[0px]'
       >
         <Suspense
           fallback={(

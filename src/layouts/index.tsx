@@ -1,11 +1,10 @@
-import { Outlet, useLocation, useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { useGlobalStore } from '@/stores/global';
 import { lazy, useEffect, useState } from 'react';
 import GloablLoading from '@/components/global-loading';
 
 import Slide from './slide';
 import Header from './header';
-import Content from './content';
 import userService from '@/service';
 import { useRequest } from '@/hooks/use-request';
 import { useUserStore } from '@/stores/global/user';
@@ -20,6 +19,8 @@ import { useWebSocketMessage } from '@/hooks/use-websocket';
 
 import './index.css'
 import { MenuType } from '@/pages/menu/interface';
+import TabsLayout from './tabs-layout';
+import Content from './content';
 
 const BasicLayout: React.FC = () => {
 
@@ -30,6 +31,8 @@ const BasicLayout: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { setLatestMessage } = useMessageStore();
+
+
 
   // 当获取完用户信息后，手动连接
   const { latestMessage, connect } = useWebSocketMessage(
@@ -131,11 +134,17 @@ const BasicLayout: React.FC = () => {
         handle: {
           parentPaths: menu.parentPaths,
           path: menu.path,
+          name: menu.name,
+          icon: menu.icon,
         },
       })), {
         id: '*',
         path: '*',
         Component: Result404,
+        handle: {
+          path: '404',
+          name: '404',
+        },
       }
     ]);
 
@@ -175,7 +184,7 @@ const BasicLayout: React.FC = () => {
       <Header />
       <Slide />
       <Content>
-        <Outlet />
+        <TabsLayout />
       </Content>
     </div>
   );
