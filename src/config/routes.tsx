@@ -9,11 +9,15 @@ export const components = Object.keys(modules).reduce<Record<string, () => Promi
    prev[formatPath] = async () => {
       try {
          // 这里其实就是动态加载js，如果报错了说明js资源不存在
-         const component = await modules[path]();
+         const component = await modules[path]() as any;
 
-         console.log(component);
+         console.log(component?.default);
 
-         return component;
+         if (component?.default) {
+            return component;
+         }
+
+         throw new Error()
       } catch {
          // 如果manifest已经存在了，就不用再请求了
          if (manifest) {
