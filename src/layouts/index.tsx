@@ -126,6 +126,9 @@ const BasicLayout: React.FC = () => {
       .filter(menu => menu.type === MenuType.BUTTON && menu.authCode)
       .map(menu => menu.authCode!);
 
+
+    console.log(components, 'components');
+
     replaceRoutes('*', [
       ...routes.map(menu => ({
         path: `/*${menu.path}`,
