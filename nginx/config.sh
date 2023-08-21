@@ -22,8 +22,6 @@ cat >> /etc/nginx/conf.d/default.conf <<EOF
 
     proxy_read_timeout 600;
 
-    
-
     location / {
         add_header Access-Control-Allow-Origin *;
         add_header Access-Control-Allow-Methods 'GET, POST, OPTIONS';
@@ -37,6 +35,14 @@ cat >> /etc/nginx/conf.d/default.conf <<EOF
         index index.html;
         try_files \$uri \$uri /index.html;
         client_max_body_size  500m;
+    }
+
+    location ~* \.js$ {
+      try_files \$uri =404;
+    }
+
+    location ~* \.css$ {
+      try_files \$uri =404;
     }
 
     location /api {
