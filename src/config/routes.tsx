@@ -8,6 +8,8 @@ export const components = Object.keys(modules).reduce<Record<string, () => Promi
    const formatPath = path.replace('../pages', '');
    prev[formatPath] = async () => {
       try {
+         console.log(modules, 'modules');
+
          // 这里其实就是动态加载js，如果报错了说明js资源不存在
          const component = await modules[path]() as any;
 
