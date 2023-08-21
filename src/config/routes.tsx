@@ -12,7 +12,7 @@ export const components = Object.keys(modules).reduce<Record<string, () => Promi
          console.log(m, 'm');
          return m;
       } catch {
-         const manifest = (await fetch('/manifest.json')).json() as any;
+         const manifest = await (await fetch('/manifest.json')).json() as any;
          console.log(manifest, 'manifest');
          const m = await import(manifest[path]?.file);
          console.log(m, 'm444');
