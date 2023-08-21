@@ -31,6 +31,10 @@ export const components = Object.keys(modules).reduce<Record<string, () => Promi
                manifest = await (await fetch('/manifest.json')).json() as any;
                return await import('/' + manifest[`src/pages${formatPath}`]?.file);
             }
+         } else {
+            // 如果失败，重新获取一下manifest.json，拿到最新的路径
+            manifest = await (await fetch('/manifest.json')).json() as any;
+            return await import('/' + manifest[`src/pages${formatPath}`]?.file);
          }
       }
    }

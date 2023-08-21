@@ -91,7 +91,7 @@ const MenuPage: React.FC = () => {
   const columns: any[] = useMemo(
     () => [
       {
-        title: '名称8',
+        title: '名称9',
         dataIndex: 'name',
         width: 300,
       },
