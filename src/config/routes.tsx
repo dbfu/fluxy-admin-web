@@ -13,10 +13,10 @@ export const components = Object.keys(modules).reduce<Record<string, () => Promi
          return m;
       } catch {
          const manifest = await (await fetch('/manifest.json')).json() as any;
-         console.log(path, 'path');
+         console.log(path.replace('../pages', ''), 'path');
          console.log(manifest, 'manifest');
-         console.log(manifest[path]?.file, 'manifest[path]?.file');
-         const m = await import(manifest[path]?.file);
+         console.log(manifest[path.replace('../pages', '')]?.file, 'manifest[path]?.file');
+         const m = await import(manifest[path.replace('../pages', '')]?.file);
          console.log(m, 'm444');
          return m;
       }
