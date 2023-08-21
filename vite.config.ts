@@ -16,6 +16,9 @@ export default defineConfig({
       '@': '/src/',
     },
   },
+  build: {
+    manifest: true,
+  },
   server: {
     proxy: {
       '/api': {

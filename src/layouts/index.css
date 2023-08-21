@@ -5,9 +5,17 @@
   border: none;
 }
 
+.menu-slide::-webkit-scrollbar-thumb {
+  background: transparent
+}
+
+.menu-slide:hover::-webkit-scrollbar-thumb {
+  background: hsla(0, 0%, 52.9%, .4);
+}
+
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   background-color: transparent;
 }
 

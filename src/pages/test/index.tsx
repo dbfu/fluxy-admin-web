@@ -6,7 +6,7 @@ const Test = () => {
 
   return (
     <Space direction='vertical' className='p-[20px]'>
-      <Button type='primary' v-auth="menu-test:query">查询 (权限码：menu-test:query)</Button>
+      <Button type='primary' v-auth="menu-test:query">查询1 (权限码：menu-test:query)</Button>
       <Button type='primary' v-auth="menu-test:create">新建 (权限码：menu-test:create)</Button>
       <Button type='primary' v-auth="menu-test:edit">编辑 (权限码：menu-test:edit)</Button>
       <Button type='primary' danger v-auth="menu-test:delete">删除 (权限码：menu-test:delete)</Button>
