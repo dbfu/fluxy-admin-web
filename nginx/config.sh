@@ -38,10 +38,12 @@ cat >> /etc/nginx/conf.d/default.conf <<EOF
     }
 
     location ~* \.js$ {
+      root /app/www/;
       try_files \$uri =404;
     }
 
     location ~* \.css$ {
+      root /app/www/;
       try_files \$uri =404;
     }
 
