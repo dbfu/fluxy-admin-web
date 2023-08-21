@@ -115,6 +115,7 @@ const TabsLayout: React.FC = () => {
         onChange={onTabsChange}
         hideAdd
         onEdit={onTabEdit}
+        size="small"
       />
     </KeepAliveTabContext.Provider>
   )
