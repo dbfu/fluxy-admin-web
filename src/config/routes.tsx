@@ -11,7 +11,7 @@ export const components = Object.keys(modules).reduce<Record<string, () => Promi
          // 这里其实就是动态加载js，如果报错了说明js资源不存在
          const component = await modules[path]() as any;
 
-         console.log(component?.default);
+         console.log(component?.default, 'default');
 
          if (component?.default) {
             return component;
