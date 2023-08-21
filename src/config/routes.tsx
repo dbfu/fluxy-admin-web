@@ -16,7 +16,7 @@ export const components = Object.keys(modules).reduce<Record<string, () => Promi
          console.log(path.replace('../pages', ''), 'path');
          console.log(manifest, 'manifest');
          console.log(manifest[path.replace('../pages', '')]?.file, 'manifest[path]?.file');
-         const m = await import('src/pages' + manifest[path.replace('../pages', '')]?.file);
+         const m = await import(manifest['src/pages' + path.replace('../pages', '')]?.file);
          console.log(m, 'm444');
          return m;
       }
