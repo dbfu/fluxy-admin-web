@@ -2,27 +2,28 @@ export const modules = import.meta.glob('../pages/**/index.tsx');
 
 export const componentPaths = Object.keys(modules).map((path: string) => path.replace('../pages', ''));
 
+let manifest: any;
+
 export const components = Object.keys(modules).reduce<Record<string, () => Promise<any>>>((prev, path: string) => {
-   // prev[path.replace('../pages', '')] = modules[path];
-   prev[path.replace('../pages', '')] = async () => {
-      console.log(modules, 'modules');
-      console.log(modules[path + '132323'], '00000');
+   const formatPath = path.replace('../pages', '');
+   prev[formatPath] = async () => {
       try {
-         const m = await modules[path + '132323']();
-         console.log(m, 'm');
-         return m;
+         // 这里其实就是动态加载js，如果报错了说明js资源不存在
+         return await modules[path]();
       } catch {
-         const manifest = await (await fetch('/manifest.json')).json() as any;
-         console.log(path.replace('../pages', ''), 'path');
-         console.log(manifest, 'manifest');
-         console.log(manifest[path.replace('../pages', '')]?.file, 'manifest[path]?.file');
-         const m = await import('/' + manifest['src/pages' + path.replace('../pages', '')]?.file);
-         console.log(m, 'm444');
-         return m;
+         // 如果manifest已经存在了，就不用再请求了
+         if (manifest) {
+            try {
+               // 有可能manifest是过期的，所以可能还会加载失败
+               return await import('/' + manifest[`src/pages${formatPath}`]?.file);
+            } catch {
+               // 如果失败，重新获取一下manifest.json，拿到最新的路径
+               manifest = await (await fetch('/manifest.json')).json() as any;
+               return await import('/' + manifest[`src/pages${formatPath}`]?.file);
+            }
+         }
       }
    }
    return prev;
 }, {});
-
-console.log(components, 'components');
 
