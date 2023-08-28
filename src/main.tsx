@@ -1,12 +1,14 @@
 import ReactDOM from 'react-dom/client'
 import NProgress from 'nprogress';
-
+import * as Sentry from '@sentry/react';
+import React from "react";
 import App from './app'
 
 import 'virtual:windi.css'
 import 'nprogress/nprogress.css';
 
 import './overwrite.css'
+import { createRoutesFromChildren, matchRoutes, useLocation, useNavigationType } from 'react-router-dom';
 
 NProgress.configure({
   minimum: 0.3,
@@ -15,6 +17,39 @@ NProgress.configure({
   showSpinner: false,
   parent: '#root'
 });
+
+Sentry.init({
+  dsn: "https://d71c602a2d67b6a3bde5f1213a6dd94c@o4505777802444800.ingest.sentry.io/4505779908050944",
+  integrations: [
+    new Sentry.BrowserTracing({
+      // See docs for support of different versions of variation of react router
+      // https://docs.sentry.io/platforms/javascript/guides/react/configuration/integrations/react-router/
+      routingInstrumentation: Sentry.reactRouterV6Instrumentation(
+        React.useEffect,
+        useLocation,
+        useNavigationType,
+        createRoutesFromChildren,
+        matchRoutes
+      ),
+    }),
+    new Sentry.Replay()
+  ],
+  // Set tracesSampleRate to 1.0 to capture 100%
+  // of transactions for performance monitoring.
+  tracesSampleRate: 1.0,
+  // Capture Replay for 10% of all sessions,
+  // plus for 100% of sessions with an error
+  replaysSessionSampleRate: 0.1,
+  replaysOnErrorSampleRate: 1.0,
+});
+
+
+setTimeout(() => {
+  Sentry.captureMessage("Something went fundamentally wrong");
+
+}, 3000)
+
+
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <App />

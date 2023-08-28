@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Sentry Auth Token
+.env.sentry-build-plugin

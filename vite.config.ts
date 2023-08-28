@@ -1,3 +1,4 @@
+import {sentryVitePlugin} from '@sentry/vite-plugin';
 import {defineConfig} from 'vite';
 import react from '@vitejs/plugin-react';
 import WindiCSS from 'vite-plugin-windicss';
@@ -10,6 +11,12 @@ export default defineConfig({
       jsxImportSource: '@dbfu/react-directive',
     }),
     WindiCSS(),
+    sentryVitePlugin({
+      org: 'dbfu-e3b959e09',
+      project: 'javascript-react',
+      authToken:
+        'a5e2fa7a36ef155a82d531a6d119c238ce9297fa1d41e463bd20e1c0bbca2d78',
+    }),
   ],
   resolve: {
     alias: {
@@ -18,6 +25,7 @@ export default defineConfig({
   },
   build: {
     manifest: true,
+    sourcemap: true,
   },
   server: {
     proxy: {
