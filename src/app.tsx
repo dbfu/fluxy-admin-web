@@ -6,9 +6,10 @@ import enUS from 'antd/locale/en_US';
 import { useGlobalStore } from './stores/global'
 
 import { i18n } from './utils/i18n';
-
+import * as Sentry from '@sentry/react';
 import Router from './router';
 import { registerAuthDirective } from './directives/auth';
+import ErrorPage from './error-page';
 
 registerAuthDirective();
 
@@ -62,7 +63,9 @@ function App() {
       componentSize='large'
     >
       <AntdApp>
-        <Router />
+        <Sentry.ErrorBoundary fallback={() => <ErrorPage />}>
+          <Router />
+        </Sentry.ErrorBoundary>
       </AntdApp>
     </ConfigProvider>
   )

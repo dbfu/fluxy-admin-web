@@ -6,8 +6,14 @@ import { App } from 'antd';
 import { useEffect } from 'react';
 import { antdUtils } from './utils/antd';
 import ResetPassword from './pages/login/reset-password';
+import * as Sentry from '@sentry/react';
+import RouterErrorElement from './router-error-element';
 
-export const router = createBrowserRouter(
+const sentryCreateBrowserRouter =
+  Sentry.wrapCreateBrowserRouter(createBrowserRouter);
+
+
+export const router = sentryCreateBrowserRouter(
   [
     {
       path: '/user/login',
@@ -26,7 +32,8 @@ export const router = createBrowserRouter(
     {
       path: '*',
       Component: BasicLayout,
-      children: []
+      children: [],
+      errorElement: <RouterErrorElement />
     },
   ]
 );

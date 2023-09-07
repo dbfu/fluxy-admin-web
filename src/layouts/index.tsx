@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom"
 import { useGlobalStore } from '@/stores/global';
 import { lazy, useEffect, useState } from 'react';
 import GloablLoading from '@/components/global-loading';
-
+import * as Sentry from '@sentry/react';
 import Slide from './slide';
 import Header from './header';
 import userService from '@/service';
@@ -151,11 +151,18 @@ const BasicLayout: React.FC = () => {
       }
     ]);
 
+    Sentry.setUser({
+      username: currentUserDetail.userName,
+      id: currentUserDetail.id,
+    });
+
     setCurrentUser(currentUserDetail);
     setLoading(false);
 
     // 连接websocket
     connect && connect();
+
+
 
     // replace一下当前路由，为了触发路由匹配
     router.navigate(`${location.pathname}${location.search}`, { replace: true });
@@ -182,13 +189,15 @@ const BasicLayout: React.FC = () => {
   }
 
   return (
-    <div key={lang} className='bg-primary overflow-hidden'>
-      <MessageHandle />
-      <Header />
-      <Slide />
-      <Content>
-        <TabsLayout />
-      </Content>
+    <div>
+      <div key={lang} className='bg-primary overflow-hidden'>
+        <MessageHandle />
+        <Header />
+        <Slide />
+        <Content>
+          <TabsLayout />
+        </Content>
+      </div>
     </div>
   );
 };

@@ -19,7 +19,7 @@ NProgress.configure({
 });
 
 Sentry.init({
-  dsn: "https://d71c602a2d67b6a3bde5f1213a6dd94c@o4505777802444800.ingest.sentry.io/4505779908050944",
+  dsn: "https://e9ed02b6addc84a7bd666ecec261434b@o4505777802444800.ingest.sentry.io/4505833754787840",
   integrations: [
     new Sentry.BrowserTracing({
       // See docs for support of different versions of variation of react router
@@ -43,11 +43,6 @@ Sentry.init({
   replaysOnErrorSampleRate: 1.0,
 });
 
-
-setTimeout(() => {
-  Sentry.captureMessage("Something went fundamentally wrong");
-
-}, 3000)
 
 
 

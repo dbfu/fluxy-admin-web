@@ -172,6 +172,10 @@ const MenuPage: React.FC = () => {
         className="mb-[12px]"
         type="primary"
         onClick={() => {
+          const a: any = {};
+
+          console.log(a.b.c);
+
           setCreateVisible(true);
         }}
         v-auth="menu:create"
