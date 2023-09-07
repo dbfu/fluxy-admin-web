@@ -1,4 +1,5 @@
 FROM gplane/pnpm:8.4.0 as builder
+ARG SENTRY_AUTH_TOKEN
 
 WORKDIR /data/web
 
