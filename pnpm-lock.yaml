@@ -35,8 +35,8 @@ dependencies:
     specifier: ^7.64.0
     version: 7.64.0(react@18.2.0)
   '@sentry/vite-plugin':
-    specifier: ^2.7.0
-    version: 2.7.0
+    specifier: ^2.7.1
+    version: 2.7.1
   ahooks:
     specifier: ^3.7.7
     version: 3.7.7(react@18.2.0)
@@ -1402,8 +1402,8 @@ packages:
       tslib: 2.5.0
     dev: false
 
-  /@sentry/bundler-plugin-core@2.7.0:
-    resolution: {integrity: sha512-ZxJG/DsRXJ9BMaKv+butL3TaiHsuuUy1bNkl56/FCbCt1rYuzltEPT2cBuuveieg66ZWtzerSF17QX3v6svtJQ==}
+  /@sentry/bundler-plugin-core@2.7.1:
+    resolution: {integrity: sha512-ZC/B/7FzzgGpux2t54B2ioXudlq60MHMVPaUeuFzWwxmxiArrV4uBXcp18RMW5ns4biik5WBAD72vbsoloBfIQ==}
     engines: {node: '>= 14'}
     dependencies:
       '@sentry/cli': 2.20.5
@@ -1506,11 +1506,11 @@ packages:
       tslib: 2.5.0
     dev: false
 
-  /@sentry/vite-plugin@2.7.0:
-    resolution: {integrity: sha512-VDkKneqIV5ESg41iz0ODsTl4BXsd4C/PhLgkjES9TFzDcG9VcnbECCxosXZd7nDZB9EQZDIsKSEc29PzLl1JUQ==}
+  /@sentry/vite-plugin@2.7.1:
+    resolution: {integrity: sha512-bZrM06Z+QP/TvPyTYFxpQVugT5rzaFW1jzTnHzUHICz5tgyarY8bhhmYXnI37f6mngkVwDZNAftczbVF2IuFWQ==}
     engines: {node: '>= 14'}
     dependencies:
-      '@sentry/bundler-plugin-core': 2.7.0
+      '@sentry/bundler-plugin-core': 2.7.1
       unplugin: 1.0.1
     transitivePeerDependencies:
       - encoding

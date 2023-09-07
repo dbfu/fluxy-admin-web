@@ -25,3 +25,4 @@ dist-ssr
 
 # Sentry Auth Token
 .env.sentry-build-plugin
+

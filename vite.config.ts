@@ -1,4 +1,4 @@
-// import {sentryVitePlugin} from '@sentry/vite-plugin';
+import {sentryVitePlugin} from '@sentry/vite-plugin';
 import {defineConfig} from 'vite';
 import react from '@vitejs/plugin-react';
 import WindiCSS from 'vite-plugin-windicss';
@@ -11,15 +11,14 @@ export default defineConfig({
       jsxImportSource: '@dbfu/react-directive',
     }),
     WindiCSS(),
-    // sentryVitePlugin({
-    //   org: 'dbfu-e3b959e09',
-    //   project: 'javascript-react',
-    //   authToken:
-    //     'a5e2fa7a36ef155a82d531a6d119c238ce9297fa1d41e463bd20e1c0bbca2d78',
-    //   sourcemaps: {
-    //     filesToDeleteAfterUpload: ['dist/**/*.js.map'],
-    //   },
-    // }),
+    sentryVitePlugin({
+      org: 'dbfu-e3b959e09',
+      project: 'javascript-react',
+      authToken: process.env.SENTRY_AUTH_TOKEN,
+      sourcemaps: {
+        filesToDeleteAfterUpload: ['dist/**/*.js.map'], // 上传后删除 sourcemap 文件
+      },
+    }),
   ],
   resolve: {
     alias: {
@@ -28,7 +27,7 @@ export default defineConfig({
   },
   build: {
     manifest: true,
-    sourcemap: false,
+    sourcemap: true,
   },
   server: {
     proxy: {
