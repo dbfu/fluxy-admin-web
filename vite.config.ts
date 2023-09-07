@@ -28,7 +28,7 @@ export default defineConfig({
   },
   build: {
     manifest: true,
-    sourcemap: true,
+    sourcemap: false,
   },
   server: {
     proxy: {

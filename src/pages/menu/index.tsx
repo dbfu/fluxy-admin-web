@@ -174,7 +174,7 @@ const MenuPage: React.FC = () => {
         onClick={() => {
           const a: any = {};
 
-          console.log(a.b.c);
+          console.log(a.b.f);
 
           setCreateVisible(true);
         }}
