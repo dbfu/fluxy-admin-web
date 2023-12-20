@@ -45,7 +45,9 @@ export function useTabs() {
 
   // 关闭除了自己其它tab
   const closeOtherTab = useCallback((routePath: string = activeTabRoutePath) => {
+    const tab = keepAliveTabs.find(o => o.routePath === routePath);
     setKeepAliveTabs(prev => prev.filter(o => o.routePath === routePath));
+    router.navigate(tab?.pathname || routePath);
   }, [activeTabRoutePath]);
 
   // 刷新tab
