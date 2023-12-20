@@ -86,6 +86,11 @@ const LowCodePageList = () => {
           >
             发布
           </a>
+          <a
+            onClick={() => navigate(`/low-code/page/copy-page/${id}`)}
+          >
+            复制
+          </a>
         </Space>
       )
     }]
