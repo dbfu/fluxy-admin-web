@@ -2,6 +2,7 @@ export enum MenuType {
   DIRECTORY = 1,
   MENU,
   BUTTON,
+  LowCodePage,
 }
 
 export const MenuTypeName = {

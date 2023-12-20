@@ -9,6 +9,7 @@ export default defineConfig({
     'bg-primary': 'dark:bg-bgPrimaryColor-dark light:bg-bgPrimaryColor-light bg-bgPrimaryColor-light',
     'bg-container': 'dark:bg-bgContainerColor-dark light:bg-bgContainerColor-light bg-bgContainerColor-light',
     'text-primary': 'dark:text-textPrimaryColor-dark light:text-textPrimaryColor-light text-textPrimaryColor-light',
+    'disabled': 'cursor-not-allowed text-[rgba(255,255,255,0.25)] pointer-events-none',
   },
   theme: {
     extend: {

@@ -1,6 +1,6 @@
-import {sentryVitePlugin} from '@sentry/vite-plugin';
+import { sentryVitePlugin } from '@sentry/vite-plugin';
 import react from '@vitejs/plugin-react';
-import {defineConfig} from 'vite';
+import { defineConfig } from 'vite';
 import WindiCSS from 'vite-plugin-windicss';
 
 // https://vitejs.dev/config/
@@ -32,7 +32,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://fluxyadmin.cn',
+        target: 'http://localhost:7001',
         changeOrigin: true,
       },
       '/file': {

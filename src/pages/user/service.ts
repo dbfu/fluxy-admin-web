@@ -1,4 +1,4 @@
-import {PageData} from '@/interface';
+import { PageData } from '@/interface';
 import request from '@/request';
 
 export interface Menu {
@@ -17,6 +17,7 @@ export interface Menu {
   Component?: any;
   parentPaths?: string[];
   authCode?: string;
+  curVersion?: string;
 }
 
 export interface User {

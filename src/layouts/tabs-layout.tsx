@@ -1,11 +1,11 @@
-import React, { useCallback, useMemo } from "react";
-import { Dropdown } from 'antd';
 import { antdIcons } from '@/assets/antd-icons';
+import DraggableTab from '@/components/draggable-tab';
 import { KeepAliveTab, useTabs } from '@/hooks/use-tabs';
 import { router } from '@/router';
+import { Dropdown } from 'antd';
 import type { MenuItemType } from 'antd/es/menu/hooks/useItems';
+import React, { useCallback, useMemo } from "react";
 import { KeepAliveTabContext } from './tabs-context';
-import DraggableTab from '@/components/draggable-tab';
 
 enum OperationType {
   REFRESH = 'refresh',
@@ -57,7 +57,7 @@ const TabsLayout: React.FC = () => {
         menu={{ items: menuItems, onClick: (e) => menuClick(e, tab) }}
         trigger={['contextMenu']}
       >
-        <div style={{ margin: '-12px 0', padding: '12px 0' }}>
+        <div className='flex gap-[6px]' style={{ margin: '-12px 0', padding: '12px 0' }}>
           {getIcon(tab.icon)}
           {tab.title}
         </div>

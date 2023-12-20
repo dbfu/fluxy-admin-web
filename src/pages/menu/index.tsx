@@ -1,11 +1,11 @@
-import React, { useEffect, useState, useMemo } from 'react';
-import { Button, Divider, Table, Tag, Space, TablePaginationConfig } from 'antd';
 import { antdIcons } from '@/assets/antd-icons';
 import { useRequest } from '@/hooks/use-request';
+import { Button, Divider, Space, Table, TablePaginationConfig, Tag } from 'antd';
+import React, { useEffect, useMemo, useState } from 'react';
 
+import { MenuTypeName } from './interface';
 import NewAndEditForm from './new-edit-form';
 import menuService, { Menu } from './service';
-import { MenuTypeName } from './interface';
 
 const MenuPage: React.FC = () => {
   const [dataSource, setDataSource] = useState<Menu[]>([]);
@@ -172,10 +172,6 @@ const MenuPage: React.FC = () => {
         className="mb-[12px]"
         type="primary"
         onClick={() => {
-          const a: any = {};
-
-          console.log(a.b.f);
-
           setCreateVisible(true);
         }}
         v-auth="menu:create"

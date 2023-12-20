@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { Modal, Spin, Tree, Radio } from 'antd';
 import { antdUtils } from '@/utils/antd';
-import roleService from './service';
-import { Menu } from '../menu/service';
+import { Modal, Radio, Spin, Tree } from 'antd';
 import { DataNode } from 'antd/es/tree';
+import React, { useEffect, useState } from 'react';
+import { Menu } from '../menu/service';
+import roleService from './service';
 
 interface RoleMenuProps {
   visible: boolean;
@@ -134,7 +134,13 @@ const RoleMenu: React.FC<RoleMenuProps> = (props) => {
       width={640}
       onOk={save}
       confirmLoading={saveLoading}
-      bodyStyle={{ height: 400, overflowY: 'auto', padding: '20px 0' }}
+      styles={{
+        body: {
+          height: 400,
+          overflowY: 'auto',
+          padding: '20px 0',
+        }
+      }}
     >
       {getDataLoading ? (
         <Spin />

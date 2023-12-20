@@ -29,7 +29,7 @@ export function useTabs() {
     (routePath: string = activeTabRoutePath) => {
 
       const index = keepAliveTabs.findIndex(o => o.routePath === routePath);
-      if (keepAliveTabs[index].routePath === activeTabRoutePath) {
+      if (keepAliveTabs[index].routePath === activeTabRoutePath && keepAliveTabs.length > 1) {
         if (index > 0) {
           router.navigate(keepAliveTabs[index - 1].routePath);
         } else {

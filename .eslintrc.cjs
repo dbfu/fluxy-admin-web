@@ -13,5 +13,6 @@ module.exports = {
   rules: {
     'react-refresh/only-export-components': 0,
     '@typescript-eslint/no-unused-vars': 'error',
+    'react-hooks/exhaustive-deps': 0,
   },
 }

@@ -1,15 +1,15 @@
-import { useEffect, useMemo } from 'react';
-import { ConfigProvider, ThemeConfig, theme, App as AntdApp } from 'antd'
-import zhCN from 'antd/locale/zh_CN';
+import { App as AntdApp, ConfigProvider, ThemeConfig, theme } from 'antd';
 import enUS from 'antd/locale/en_US';
+import zhCN from 'antd/locale/zh_CN';
+import { useEffect, useMemo } from 'react';
 
-import { useGlobalStore } from './stores/global'
+import { useGlobalStore } from './stores/global';
 
-import { i18n } from './utils/i18n';
 import * as Sentry from '@sentry/react';
-import Router from './router';
 import { registerAuthDirective } from './directives/auth';
 import ErrorPage from './error-page';
+import Router from './router';
+import { i18n } from './utils/i18n';
 
 registerAuthDirective();
 

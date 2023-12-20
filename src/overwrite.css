@@ -64,11 +64,11 @@
   background-color: rgba(124, 77, 255, 0.082) !important;
 }
 
-.ant-menu-submenu-selected .ant-menu-submenu-title {
+.ant-menu-submenu-selected > .ant-menu-submenu-title{
   color: rgb(124, 77, 255) !important;
 }
 
-.ant-menu-submenu-selected .ant-menu-title-content a {
+.ant-menu-submenu-selected > .ant-menu-title-content a {
   color: rgb(124, 77, 255) !important;
 }
 

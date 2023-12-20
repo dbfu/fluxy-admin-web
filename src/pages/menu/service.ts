@@ -1,4 +1,4 @@
-import {PageData} from '@/interface';
+import { PageData } from '@/interface';
 import request from '@/request';
 
 export interface Menu {
@@ -44,7 +44,7 @@ const menuService = {
     });
   },
   addMenu: (menu: Menu) => {
-    return request.post('/api/menu', menu);
+    return request.post<any>('/api/menu', menu);
   },
   removeMenu: (id: string) => {
     return request.delete(`/api/menu/${id}`);

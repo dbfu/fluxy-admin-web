@@ -1,26 +1,27 @@
-import { useLocation, useNavigate } from "react-router-dom"
-import { useGlobalStore } from '@/stores/global';
-import { lazy, useEffect, useState } from 'react';
 import GloablLoading from '@/components/global-loading';
-import * as Sentry from '@sentry/react';
-import Slide from './slide';
-import Header from './header';
-import userService from '@/service';
-import { useRequest } from '@/hooks/use-request';
-import { useUserStore } from '@/stores/global/user';
-import { Menu } from '@/pages/user/service';
 import { components } from '@/config/routes';
+import { useRequest } from '@/hooks/use-request';
+import { Menu } from '@/pages/user/service';
+import userService from '@/service';
+import { useGlobalStore } from '@/stores/global';
+import { useUserStore } from '@/stores/global/user';
+import * as Sentry from '@sentry/react';
+import { lazy, useEffect, useState } from 'react';
+import { useLocation, useNavigate } from "react-router-dom";
+import Header from './header';
+import Slide from './slide';
 
-import { replaceRoutes, router } from '@/router';
 import Result404 from '@/404';
+import { useWebSocketMessage } from '@/hooks/use-websocket';
+import { replaceRoutes, router } from '@/router';
 import { SocketMessage, useMessageStore } from '@/stores/global/message';
 import MessageHandle from './message-handle';
-import { useWebSocketMessage } from '@/hooks/use-websocket';
 
-import './index.css'
+import LowCodeRenderer from '@/components/low-code/renderer';
 import { MenuType } from '@/pages/menu/interface';
-import TabsLayout from './tabs-layout';
 import Content from './content';
+import './index.css';
+import TabsLayout from './tabs-layout';
 
 const BasicLayout: React.FC = () => {
 
@@ -127,20 +128,35 @@ const BasicLayout: React.FC = () => {
       .map(menu => menu.authCode!);
 
 
-    console.log(components, 'components');
-
     replaceRoutes('*', [
-      ...routes.map(menu => ({
-        path: `/*${menu.path}`,
-        Component: menu.filePath ? lazy(components[menu.filePath]) : null,
-        id: `/*${menu.path}`,
-        handle: {
-          parentPaths: menu.parentPaths,
-          path: menu.path,
-          name: menu.name,
-          icon: menu.icon,
-        },
-      })), {
+      ...routes.map(menu => {
+
+        if (menu.type === MenuType.LowCodePage) {
+          return ({
+            path: `/*${menu.path}`,
+            element: <LowCodeRenderer pageId={menu.id} version={menu.curVersion} />,
+            id: `/*${menu.path}`,
+            handle: {
+              parentPaths: menu.parentPaths,
+              path: menu.path,
+              name: menu.name,
+              icon: menu.icon,
+            },
+          })
+        }
+
+        return ({
+          path: `/*${menu.path}`,
+          Component: menu.filePath ? lazy(components[menu.filePath]) : null,
+          id: `/*${menu.path}`,
+          handle: {
+            parentPaths: menu.parentPaths,
+            path: menu.path,
+            name: menu.name,
+            icon: menu.icon,
+          },
+        })
+      }), {
         id: '*',
         path: '*',
         Component: Result404,

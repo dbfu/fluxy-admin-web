@@ -1,11 +1,11 @@
-import React, { useEffect, useMemo, useState } from 'react'
-import { Modal, Form, Input, Switch, Radio, InputNumber, Select, TreeSelect } from 'antd'
-import { componentPaths } from '@/config/routes';
 import { antdIcons } from '@/assets/antd-icons';
-import menuService, { Api, Menu } from './service';
-import { antdUtils } from '@/utils/antd';
+import { componentPaths } from '@/config/routes';
 import { useRequest } from '@/hooks/use-request';
+import { antdUtils } from '@/utils/antd';
+import { Form, Input, InputNumber, Modal, Radio, Select, Switch, TreeSelect } from 'antd';
+import React, { useEffect, useMemo, useState } from 'react';
 import { MenuType } from './interface';
+import menuService, { Api, Menu } from './service';
 
 interface CreateMemuProps {
   visible: boolean;
@@ -225,8 +225,6 @@ const CreateMenu: React.FC<CreateMemuProps> = (props) => {
       </>
     )
   }
-
-  console.log(formatApi, 'formatApi');
 
 
   const renderButtonForm = () => {
