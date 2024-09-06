@@ -1,0 +1,25 @@
+::-webkit-scrollbar-thumb {
+  background: hsla(0, 0%, 52.9%, .4);
+
+  border-radius: 4px;
+  border: none;
+}
+
+.menu-slide::-webkit-scrollbar-thumb {
+  background: transparent
+}
+
+.menu-slide:hover::-webkit-scrollbar-thumb {
+  background: hsla(0, 0%, 52.9%, .4);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+

@@ -1,0 +1,15 @@
+.tab-layout.ant-tabs-card>.ant-tabs-nav .ant-tabs-tab {
+  transition: none;
+}
+
+.tab-layout.ant-tabs-card>.ant-tabs-nav .ant-tabs-tab-remove:active {
+  color: unset;
+}
+
+.tab-layout.ant-tabs-card>.ant-tabs-nav .ant-tabs-tab-btn:active {
+  color: unset;
+}
+
+.tab-layout.ant-tabs-card>.ant-tabs-nav .ant-tabs-tab-btn:focus:not(:focus-visible) {
+  color: unset;
+}

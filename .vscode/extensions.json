@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "dbfu321.easy-i18n-helper", 
+    "dbfu321.iconfont-helper",
+    "bradlc.vscode-tailwindcss",
+    "stivo.tailwind-fold"
+  ]
+}

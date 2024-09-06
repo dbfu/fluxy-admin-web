@@ -1,0 +1,55 @@
+.bg-card {
+  @apply before:content-[''] before:absolute before:w-[210px] before:h-[210px] before:top-[-125px] before:right-[-15px] before:rounded-[50%] before:opacity-[.5];
+}
+
+.dark .bg-card::before {
+  background: linear-gradient(140.9deg, rgb(101, 31, 255) -14.02%, rgba(144, 202, 249, 0) 85.5%);
+}
+
+.bg-card {
+  @apply after:content-[''] after:absolute after:w-[210px] after:h-[210px] after:top-[-85px] after:right-[-95px] after:rounded-[50%] after:dark:opacity-[.5];
+}
+
+.dark .bg-card::after {
+  background: linear-gradient(140.9deg, rgb(101, 31, 255) -14.02%, rgba(144, 202, 249, 0) 85.5%);
+}
+
+.dark .bg-card.theme1::before {
+  background: linear-gradient(140.9deg, rgb(30, 136, 229) -14.02%, rgba(144, 202, 249, 0) 82.5%);
+}
+
+.dark .bg-card.theme1::after {
+  background: linear-gradient(140.9deg, rgb(30, 136, 229) -14.02%, rgba(144, 202, 249, 0) 82.5%);
+}
+
+.dark .bg-card.theme2::before {
+  background: linear-gradient(140.9deg, rgb(255, 193, 7) -14.02%, rgba(144, 202, 249, 0) 70.5%);
+}
+
+.dark .bg-card.theme2::after {
+  background: linear-gradient(140.9deg, rgb(255, 193, 7) -14.02%, rgba(144, 202, 249, 0) 70.5%);
+}
+
+.bg-card::before {
+  background: rgb(69, 39, 160);
+}
+
+.bg-card::after {
+  background: rgb(69, 39, 160);
+}
+
+.bg-card.theme1::before {
+  background: rgb(21, 101, 192);
+}
+
+.bg-card.theme1::after {
+  background: rgb(21, 101, 192);
+}
+
+.dark .bg-card.theme2::before {
+  background: linear-gradient(140.9deg, rgb(255, 193, 7) -14.02%, rgba(144, 202, 249, 0) 70.5%);
+}
+
+.dark .bg-card.theme2::after {
+  background: linear-gradient(140.9deg, rgb(255, 193, 7) -14.02%, rgba(144, 202, 249, 0) 70.5%);
+}
