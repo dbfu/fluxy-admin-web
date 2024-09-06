@@ -4,6 +4,7 @@ import type { NotificationInstance } from 'antd/es/notification/interface';
 
 type ModalInstance = Omit<ModalStaticFunctions, 'warn'>;
 
+
 class AntdUtils {
   message!: MessageInstance;
   notification!: NotificationInstance;
