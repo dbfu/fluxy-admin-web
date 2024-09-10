@@ -16,7 +16,7 @@ import { Tabs, TabsProps } from 'antd';
 import React, { useEffect, useState } from 'react';
 
 import { useUpdateEffect } from 'ahooks';
-import { omit } from 'lodash';
+import { omit } from 'lodash-es';
 import './index.css';
 
 type Write<T, U> = Omit<T, keyof U> & U

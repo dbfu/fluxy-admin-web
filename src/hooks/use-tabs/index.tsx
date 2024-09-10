@@ -2,7 +2,7 @@
 import { useMatchRoute } from '@/hooks/use-match-router';
 import { router } from '@/router/router-utils';
 import { useLocalStorageState } from 'ahooks';
-import { omit } from 'lodash';
+import { omit } from 'lodash-es';
 import React, { useCallback, useEffect, useState } from 'react';
 
 export interface KeepAliveTab {

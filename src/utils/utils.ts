@@ -1,6 +1,6 @@
 import { PageParams, PageRequestParams } from '@/interface';
 import { FormInstance } from 'antd';
-import { omit } from 'lodash';
+import { omit } from 'lodash-es';
 
 export function getParamsBySearchParams<T = unknown>(query: URLSearchParams) {
   const params = [...query.keys()].reduce<Record<string, unknown>>(

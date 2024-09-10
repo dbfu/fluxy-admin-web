@@ -1,11 +1,37 @@
-import react from '@vitejs/plugin-react-swc'
-import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react-swc';
+import externalGlobals from 'rollup-plugin-external-globals';
+import { visualizer } from 'rollup-plugin-visualizer';
+import { defineConfig } from 'vite';
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react({
     jsxImportSource: '@dbfu/react-directive'
   })],
+  build: {
+    rollupOptions: {
+      external: [
+        'react',
+        'react-dom',
+        'antd',
+        '@ant-design/icons',
+      ],
+      plugins: [
+        visualizer({
+          open: true, // 直接在浏览器中打开分析报告
+          gzipSize: true, // 显示gzip后的大小
+          brotliSize: true, // 显示brotli压缩后的大小
+        }),
+        externalGlobals({
+          react: 'React',
+          'react-dom': 'ReactDOM',
+          antd: 'antd',
+          '@ant-design/icons': 'Icons',
+          'lodash-es': '_',
+        }),
+      ]
+    }
+  },
   resolve: {
     alias: {
       '@': '/src/',

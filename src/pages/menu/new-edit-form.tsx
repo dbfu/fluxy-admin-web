@@ -7,7 +7,7 @@ import { clearFormValues } from '@/utils/utils';
 import { useRequest } from 'ahooks';
 import { Form, Input, InputNumber, Radio, Select, Switch, TreeSelect } from 'antd';
 import to from 'await-to-js';
-import { omit } from 'lodash';
+import { omit } from 'lodash-es';
 import React, { useEffect, useMemo } from 'react';
 import { MenuType } from './interface';
 import menuService, { Menu } from './service';
