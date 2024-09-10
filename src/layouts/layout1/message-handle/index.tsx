@@ -14,7 +14,7 @@ const MessageHandle = () => {
 
    const a = 'hello';
 
-   console.log(a.toStrng())
+   console.log(a.toStrng());
 
    const messageHandleMap = {
       [SocketMessageType.PermissionChange]: () => {
