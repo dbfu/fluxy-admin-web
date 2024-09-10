@@ -4,7 +4,7 @@ import { Button, Carousel, Form, Input } from 'antd';
 import { JSEncrypt } from "jsencrypt";
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 
-import loginService, { ResetPasswordDTO } from './service';
+import loginService from './service';
 
 import { antdUtils } from '@/utils/antd';
 import { getParamsBySearchParams } from '@/utils/utils';
@@ -31,7 +31,7 @@ const ResetPassword = () => {
 
   }, [query]);
 
-  const onFinish = async (values: ResetPasswordDTO) => {
+  const onFinish = async (values: any) => {
 
     if (values.comfirmPassword !== values.password) {
       antdUtils.message?.error('两次密码不一致');

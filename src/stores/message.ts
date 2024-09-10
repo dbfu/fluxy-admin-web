@@ -1,6 +1,6 @@
-import {SocketMessageType} from '@/layouts/message-handle';
-import {create} from 'zustand';
-import {devtools} from 'zustand/middleware';
+import { SocketMessageType } from '@/layouts/layout1/message-handle/interface';
+import { create } from 'zustand';
+import { devtools } from 'zustand/middleware';
 
 export interface SocketMessage {
   type: SocketMessageType;
