@@ -1,7 +1,7 @@
 FROM gplane/pnpm:8.4.0 as builder
 ARG SENTRY_AUTH_TOKEN
 
-WORKDIR /data/web
+WORKDIR /app/web
 
 COPY pnpm-lock.yaml .
 COPY package.json .
@@ -16,11 +16,11 @@ FROM nginx:alpine as nginx
 RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && echo "Asia/Shanghai" > /etc/timezone 
 
-WORKDIR /data/web
+WORKDIR /app/web
 
 RUN mkdir -p /app/www
 
-COPY  --from=builder /data/web/dist /app/www
+COPY  --from=builder /app/web/dist /app/www
 
 EXPOSE 80 
 EXPOSE 443
