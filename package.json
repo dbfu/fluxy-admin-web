@@ -6,7 +6,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint . --ext ts,tsx",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "check-types": "tsc -b"
   },
   "dependencies": {
     "@ant-design/charts": "^2.1.2",
@@ -75,6 +76,6 @@
   },
   "simple-git-hooks": {
     "commit-msg": "pnpm commitlint --edit",
-    "pre-commit": "tsc --noEmit && pnpm lint-staged"
+    "pre-commit": "tsc -b && pnpm lint-staged"
   }
 }

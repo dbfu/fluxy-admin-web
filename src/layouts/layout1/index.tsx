@@ -4,6 +4,7 @@ import { useGlobalStore } from '@/stores/global';
 import { useUserDetail } from '../common/use-user-detail';
 import Content from './content';
 import Header from './header';
+import MessageHandle from './message-handle';
 import Slide from './slide';
 import SystemSetting from './system-setting';
 
@@ -22,6 +23,7 @@ export default function Layout1() {
 
   return (
     <div key={lang} className='overflow-hidden'>
+      <MessageHandle />
       <Header />
       <Slide />
       <Content />

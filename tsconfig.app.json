@@ -27,5 +27,9 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src"],
+  "include": [
+    "src", 
+    "src/**/dark-column-theme.json",
+    "src/**/light-column-theme.json"
+  ],
 }

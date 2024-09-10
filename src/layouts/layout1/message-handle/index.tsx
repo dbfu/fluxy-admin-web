@@ -12,10 +12,6 @@ const MessageHandle = () => {
    const { latestMessage } = useMessageStore();
    const { refreshToken, setToken } = useGlobalStore();
 
-   const a = 'hello';
-
-   console.log(a.toStrng());
-
    const messageHandleMap = {
       [SocketMessageType.PermissionChange]: () => {
          antdUtils.modal?.warning({
