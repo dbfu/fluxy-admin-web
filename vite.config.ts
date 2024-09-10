@@ -13,7 +13,6 @@ export default defineConfig({
         'react',
         'react-dom',
         'antd',
-        '@ant-design/icons',
       ],
       plugins: [
         visualizer({
@@ -25,7 +24,6 @@ export default defineConfig({
           react: 'React',
           'react-dom': 'ReactDOM',
           antd: 'antd',
-          '@ant-design/icons': 'icons',
           'lodash-es': '_',
         }),
       ]
