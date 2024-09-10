@@ -11,6 +11,8 @@ export default defineConfig({
   build: {
     rollupOptions: {
       external: [
+        'react',
+        'react-dom',
         'antd',
         '@ant-design/icons',
       ],
@@ -21,6 +23,8 @@ export default defineConfig({
           brotliSize: true, // 显示brotli压缩后的大小
         }),
         externalGlobals({
+          react: 'React',
+          'react-dom': 'ReactDOM',
           antd: 'antd',
           '@ant-design/icons': 'icons',
           'lodash-es': '_',
