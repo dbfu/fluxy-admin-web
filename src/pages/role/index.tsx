@@ -99,6 +99,7 @@ function RolePage() {
 
 
   const openForm = () => {
+    console.log('test')
     setFormOpen(true);
   };
 
