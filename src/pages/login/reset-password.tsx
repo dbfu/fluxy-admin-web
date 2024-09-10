@@ -17,7 +17,7 @@ const ResetPassword = () => {
   const navigate = useNavigate();
 
   const { runAsync: getPublicKey } = useRequest(loginService.getPublicKey, { manual: true });
-  const { runAsync: resetPassaword, loading } = useRequest(loginService.resetPassaword, { manual: true });
+  const { runAsync: resetPassword, loading } = useRequest(loginService.resetPassword, { manual: true });
 
   const [query] = useSearchParams();
 
@@ -60,7 +60,7 @@ const ResetPassword = () => {
     values.email = params.email;
     values.emailCaptcha = params.emailCaptcha;
 
-    const [resetPassawordError] = await resetPassaword(values);
+    const [resetPassawordError] = await resetPassword(values);
 
     if (resetPassawordError) {
       return;
