@@ -68,16 +68,15 @@
   },
   "lint-staged": {
     "*.ts?(x)": [
-      "tsc -b",
-      "eslint --ext .js,.jsx --fix"
+      "eslint --ext .js,.jsx --fix",
+      "bash -c 'npm run check-types'"
     ],
     "*.{js,jsx}": [
-      "tsc -b",
       "eslint --ext ts,tsx --fix"
     ]
   },
   "simple-git-hooks": {
     "commit-msg": "pnpm commitlint --edit",
-    "pre-commit": " pnpm lint-staged"
+    "pre-commit": "pnpm lint-staged"
   }
 }
