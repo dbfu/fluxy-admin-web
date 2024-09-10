@@ -7,6 +7,7 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
+    "resolvePackageJsonExports": true,
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -29,7 +30,5 @@
   },
   "include": [
     "src", 
-    "src/**/dark-column-theme.json",
-    "src/**/light-column-theme.json"
   ],
 }
