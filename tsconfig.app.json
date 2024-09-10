@@ -31,4 +31,5 @@
     "src", 
     "src/**/*.json"
   ],
+  "exclude": []
 }
