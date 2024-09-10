@@ -26,7 +26,7 @@ export default defineConfig({
           react: 'React',
           'react-dom': 'ReactDOM',
           antd: 'antd',
-          '@ant-design/icons': 'Icons',
+          '@ant-design/icons': 'icons',
           'lodash-es': '_',
         }),
       ]
