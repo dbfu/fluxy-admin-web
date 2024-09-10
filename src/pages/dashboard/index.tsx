@@ -26,7 +26,7 @@ function Dashboard() {
             <div className="text-white text-2xl mt-[28px] text-[30px]">
               ¥ 126,560
             </div>
-            <div className='mt-[24px] text-[rgba(229,224,216,0.85)] text-[16px] flex gap-[24px]'>
+            <div className='mt-[30px] text-[rgba(229,224,216,0.85)] text-[16px] flex gap-[24px]'>
               <div className='flex items-center'>
                 <span>{t("NpRFMJyD" /* 周同比 */)}</span>
                 <span className='ml-[12px]'>12%</span>
