@@ -94,4 +94,4 @@ jobs:
           # private ssh key registered on the server
           PRIVATE_SSH_KEY: ${{ secrets.SERVER_KEY }}
           # command to be executed
-          COMMAND: cd /root && ./run.sh
+          COMMAND: cd /project/docker-compose && sh ./run.sh
