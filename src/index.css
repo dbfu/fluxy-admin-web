@@ -25,6 +25,4 @@
   background-color: var(--ant-menu-dark-item-selected-bg);
 }
 
-body {
-  transition: background-color 0.3s;
-}
+

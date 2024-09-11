@@ -1,8 +1,26 @@
 import react from '@vitejs/plugin-react-swc';
 import externalGlobals from 'rollup-plugin-external-globals';
 import { visualizer } from 'rollup-plugin-visualizer';
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 
+const env = loadEnv(process.env.NODE_ENV!, process.cwd());
+
+const plugins = [ externalGlobals({
+  react: 'React',
+  'react-dom': 'ReactDOM',
+  antd: 'antd',
+  'lodash-es': '_',
+})]
+
+if (process.env.ANALYZE) {
+  plugins.push(
+    visualizer({
+    open: true, // 直接在浏览器中打开分析报告
+    gzipSize: true, // 显示gzip后的大小
+    brotliSize: true, // 显示brotli压缩后的大小
+    })
+  )
+}
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -18,19 +36,7 @@ export default defineConfig({
         'react-dom',
         'antd',
       ],
-      plugins: [
-        visualizer({
-          open: true, // 直接在浏览器中打开分析报告
-          gzipSize: true, // 显示gzip后的大小
-          brotliSize: true, // 显示brotli压缩后的大小
-        }),
-        externalGlobals({
-          react: 'React',
-          'react-dom': 'ReactDOM',
-          antd: 'antd',
-          'lodash-es': '_',
-        }),
-      ]
+      plugins,
     }
   },
   resolve: {
@@ -39,6 +45,8 @@ export default defineConfig({
     },
   },
   server: {
+    port: env.VITE_PORT ? +env.VITE_PORT : 5173,
+    open: true,
     proxy: {
       '/api': {
         target: 'http://localhost:7001',
