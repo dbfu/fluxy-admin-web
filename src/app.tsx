@@ -71,7 +71,6 @@ function App() {
     >
       <AntdApp>
         <RootRouterProvider />
-        <div v-if={false}>hello</div>
       </AntdApp>
     </ConfigProvider >
   )

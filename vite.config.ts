@@ -3,10 +3,14 @@ import externalGlobals from 'rollup-plugin-external-globals';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { defineConfig } from 'vite';
 
+
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react({
-  })],
+  plugins: [
+    react({
+      jsxImportSource: '@dbfu/react-directive',
+    }),
+  ],
   build: {
     rollupOptions: {
       external: [
