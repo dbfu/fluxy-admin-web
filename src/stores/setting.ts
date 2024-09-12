@@ -7,6 +7,8 @@ interface State {
   showKeepAliveTab: boolean;
   filterType: 'light' | 'query';
   showFormType: 'drawer' | 'modal';
+  showWatermark: boolean;
+  watermarkPos: 'full' | 'content';
 }
 
 interface Action {
@@ -14,6 +16,8 @@ interface Action {
   setShowKeepAliveTab: (collapsed: State['showKeepAliveTab']) => void;
   setFilterType: (type: State['filterType']) => void;
   setShowFormType: (type: State['showFormType']) => void;
+  setShowWatermark: (showWatermark: State['showWatermark']) => void;
+  setWatermarkPos: (pos: State['watermarkPos']) => void;
   reset: () => void;
 }
 
@@ -29,6 +33,10 @@ export const useSettingStore = create<State & Action>()(
         setFilterType: (type) => set({ filterType: type }),
         showFormType: defaultSetting.showFormType,
         setShowFormType: (type) => set({ showFormType: type }),
+        showWatermark: defaultSetting.showWatermark,
+        setShowWatermark: (showWatermark) => set({ showWatermark }),
+        watermarkPos: defaultSetting.watermarkPos,
+        setWatermarkPos: (pos) => set({ watermarkPos: pos }),
         reset: () => {
           set({
             primaryColor: defaultSetting.primaryColor,

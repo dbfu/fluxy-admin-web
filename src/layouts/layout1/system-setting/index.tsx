@@ -3,7 +3,7 @@ import { useSelector } from '@/hooks/use-selector';
 import { useSettingStore } from '@/stores/setting';
 import { antdUtils } from '@/utils/antd';
 import { SettingOutlined } from '@ant-design/icons';
-import { Button, ColorPicker, Drawer, FloatButton, Form, Select, Space, Switch } from 'antd';
+import { Button, ColorPicker, Drawer, FloatButton, Form, Radio, Select, Space, Switch } from 'antd';
 import copy from 'copy-to-clipboard';
 import { useState } from 'react';
 
@@ -40,6 +40,10 @@ function SystemSetting() {
     setFilterType,
     showFormType,
     setShowFormType,
+    showWatermark,
+    setShowWatermark,
+    watermarkPos,
+    setWatermarkPos,
     reset,
   } = useSettingStore(
     useSelector([
@@ -51,6 +55,10 @@ function SystemSetting() {
       'setFilterType',
       'showFormType',
       'setShowFormType',
+      'showWatermark',
+      'setShowWatermark',
+      'watermarkPos',
+      'setWatermarkPos',
       'reset',
     ])
   );
@@ -76,14 +84,14 @@ function SystemSetting() {
           <Space size="large">
             <Button
               onClick={() => {
-              copy(`
+                copy(`
                 import { SystemSettingType } from './interface';
 
 export const defaultSetting = ${JSON.stringify({ ...defaultSetting, ...form.getFieldsValue() }, null, 2)} as SystemSettingType;
                 `
-              );
-              antdUtils.message.success('复制成功');
-            }}
+                );
+                antdUtils.message.success('复制成功');
+              }}
               type='primary'
             >
               复制配置
@@ -110,6 +118,8 @@ export const defaultSetting = ${JSON.stringify({ ...defaultSetting, ...form.getF
             showKeepAliveTab,
             filterType,
             showFormType,
+            showWatermark,
+            watermarkPos,
           }}
           form={form}
         >
@@ -165,6 +175,30 @@ export const defaultSetting = ${JSON.stringify({ ...defaultSetting, ...form.getF
               ]}
             />
           </Form.Item>
+          <Form.Item
+            label="水印"
+            name="showWatermark"
+            valuePropName='checked'
+          >
+            <Switch
+              onChange={(value) => {
+                setShowWatermark(value);
+              }}
+              checkedChildren="显示"
+              unCheckedChildren="隐藏"
+            />
+          </Form.Item>
+          {showWatermark && (
+            <Form.Item
+              label="水印位置"
+              name="watermarkPos"
+            >
+              <Radio.Group onChange={e => setWatermarkPos(e.target.value)}>
+                <Radio value='full'>全屏</Radio>
+                <Radio value='content'>内容</Radio>
+              </Radio.Group>
+            </Form.Item>
+          )}
         </Form>
       </Drawer>
     </>

@@ -1,8 +1,5 @@
-import { createBrowserRouter, RouteObject } from 'react-router-dom';
-import { routes } from './routes';
-
-export const router: ReturnType<typeof createBrowserRouter> = createBrowserRouter(routes);
-
+import { RouteObject } from 'react-router-dom';
+import { router } from '.';
 
 export const toLoginPage = () => {
   router.navigate('/user/login');

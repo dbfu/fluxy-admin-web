@@ -1,7 +1,8 @@
+
 import { SystemSettingType } from './interface';
 
 export const defaultSetting = {
-  "primaryColor": "rgb(124,77,255)",
+  "primaryColor": "rgb(24,144,255)",
   "filterType": "light",
   "showFormType": "modal",
   "showKeepAliveTab": true,
@@ -10,6 +11,8 @@ export const defaultSetting = {
   "slideWidth": 240,
   "collapsedSlideWidth": 112,
   "mobileMargin": 16,
+  "showWatermark": true,
+  "watermarkPos": "content",
   "languages": [
     {
       "key": "zh",

@@ -1,6 +1,6 @@
 // /src/layouts/useTabs.tsx 
 import { useMatchRoute } from '@/hooks/use-match-router';
-import { router } from '@/router/router-utils';
+import { router } from '@/router';
 import { useLocalStorageState } from 'ahooks';
 import { omit } from 'lodash-es';
 import React, { useCallback, useEffect, useState } from 'react';

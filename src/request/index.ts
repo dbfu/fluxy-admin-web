@@ -9,7 +9,7 @@ import axios, {
 } from 'axios';
 // import {router} from '@/router';
 import loginService from '@/pages/login/service';
-import { router } from '@/router/router-utils';
+import { router } from '@/router';
 import { antdUtils } from '@/utils/antd';
 import to from 'await-to-js';
 

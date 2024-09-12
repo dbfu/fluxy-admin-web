@@ -1,5 +1,5 @@
 import { useSelector } from '@/hooks/use-selector';
-import { router } from '@/router/router-utils';
+import { router } from '@/router';
 import { useGlobalStore } from '@/stores/global';
 import { useSettingStore } from '@/stores/setting';
 import { useRequest } from 'ahooks';

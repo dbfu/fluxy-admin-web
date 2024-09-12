@@ -1,6 +1,6 @@
 import { IconBuguang } from '@/assets/icons/buguang';
 import IconButton from '@/components/icon-button';
-import { router } from '@/router/router-utils';
+import { router } from '@/router';
 import { useUserStore } from '@/stores/user';
 import { SettingOutlined } from '@ant-design/icons';
 import { Avatar, Button, Dropdown } from 'antd';

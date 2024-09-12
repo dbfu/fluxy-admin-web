@@ -23,6 +23,8 @@ export interface SystemSettingType {
   primaryColor: string;
   filterType: 'light' | 'query';
   showFormType: 'modal' | 'drawer';
+  showWatermark: boolean;
+  watermarkPos: 'full' | 'content';
   languages: {
     key: string;
     name: string;

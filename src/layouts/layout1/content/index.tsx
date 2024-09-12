@@ -2,6 +2,7 @@ import { Loading } from '@/components/loading';
 import { defaultSetting } from '@/default-setting';
 import { usePCScreen } from '@/hooks/use-pc-screen';
 import { useSelector } from '@/hooks/use-selector';
+import Watermark from '@/layouts/common/watermark';
 import { useGlobalStore } from '@/stores/global';
 import { useSettingStore } from '@/stores/setting';
 import { Suspense } from 'react';
@@ -27,17 +28,18 @@ function Content() {
         width: `calc(100vw - ${(isPC ? collapsed ? defaultSetting.collapsedSlideWidth : defaultSetting.slideWidth : defaultSetting.mobileMargin * 2)}px)`
       }}
     >
-      <div
-        className='m-0 rounded-md z-1 p-[0px]'
-      >
-        <Suspense
-          fallback={(
-            <Loading />
-          )}
+        <div
+          className='m-0 rounded-md z-1 p-[0px]'
         >
-          {showKeepAliveTab ? <TabsLayout /> : <Outlet />}
-        </Suspense>
-      </div>
+          <Suspense
+            fallback={(
+              <Loading />
+            )}
+          >
+            {showKeepAliveTab ? <TabsLayout /> : <Watermark type='content'><Outlet /></Watermark> }
+          </Suspense>
+        </div>
+
     </div>
   );
 }

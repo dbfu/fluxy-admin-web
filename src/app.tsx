@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 
 import { useGlobalStore } from '@/stores/global';
 
-import RootRouterProvider from '@/router';
+import RootRouterProvider from '@/router/provider';
 import { configResponsive } from 'ahooks';
 import NProgress from 'nprogress';
 import { i18n } from './utils/i18n';

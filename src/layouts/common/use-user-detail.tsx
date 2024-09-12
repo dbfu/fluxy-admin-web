@@ -1,7 +1,8 @@
 import Result404 from '@/components/exception/404';
 import { pages } from '@/config/pages';
 import globalService, { Menu, MenuType } from '@/global-service';
-import { replaceRoutes, router } from '@/router/router-utils';
+import { router } from '@/router';
+import { replaceRoutes } from '@/router/router-utils';
 import { useGlobalStore } from '@/stores/global';
 import { useUserStore } from '@/stores/user';
 import { useRequest } from 'ahooks';
@@ -76,6 +77,9 @@ export function useUserDetail() {
       .filter(menu => menu.type === MenuType.BUTTON && menu.authCode)
       .map(menu => menu.authCode!);
 
+    
+    
+    console.log(router, 'router')
 
     replaceRoutes('*', [
       ...routes.map(menu => {

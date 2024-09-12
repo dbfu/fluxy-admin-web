@@ -2,13 +2,14 @@ import { antdIcons } from '@/assets/antd-icons';
 import DraggableTab from '@/components/draggable-tab';
 import { defaultSetting } from '@/default-setting';
 import { KeepAliveTab, useTabs } from '@/hooks/use-tabs';
-import { router } from '@/router/router-utils';
+import { router } from '@/router';
 import { t } from '@/utils/i18n';
 import { arrayMove } from '@dnd-kit/sortable';
 import { Dropdown } from 'antd';
 import { MenuItemType } from 'antd/es/menu/interface';
 import React, { useCallback, useMemo } from "react";
 import { KeepAliveTabContext } from './tabs-context';
+import Watermark from './watermark';
 
 enum OperationType {
   REFRESH = 'refresh',
@@ -34,15 +35,15 @@ const TabsLayout: React.FC = () => {
   const menuItems: MenuItemType[] = useMemo(
     () => [
       {
-        label: t ("slZKRXqL" /* 刷新 */),
+        label: t("slZKRXqL" /* 刷新 */),
         key: OperationType.REFRESH,
       },
       tabs.length <= 1 ? null : {
-        label: t ("FplLzQwk" /* 关闭 */),
+        label: t("FplLzQwk" /* 关闭 */),
         key: OperationType.CLOSE,
       },
       tabs.length <= 1 ? null : {
-        label: t ("JPlYJWgB" /* 关闭其他 */),
+        label: t("JPlYJWgB" /* 关闭其他 */),
         key: OperationType.CLOSE_OTHER,
       },
     ].filter(o => o !== null) as MenuItemType[],
@@ -97,7 +98,9 @@ const TabsLayout: React.FC = () => {
               height: `calc(100vh - ${defaultSetting.headerHeight + 36}px)`,
             }}
           >
-            {tab.children}
+            <Watermark type='content'>
+              {tab.children}
+            </Watermark>
           </div>
         ),
         closable: tabs.length > 1, // 剩最后一个就不能删除了

@@ -23,7 +23,7 @@ function Dashboard() {
             <div className="text-[rgba(229,224,216,0.45)] text-[16px]">
               {t("nKMAkrqJ" /* 总销售额 */)}
             </div>
-            <div className="text-white text-2xl mt-[28px] text-[30px]">
+            <div className="text-white text-2xl mt-[20px] text-[30px]">
               ¥ 126,560
             </div>
             <div className='mt-[30px] text-[rgba(229,224,216,0.85)] text-[16px] flex gap-[24px]'>
@@ -38,7 +38,7 @@ function Dashboard() {
                 <CaretUpOutlined className='ml-[6px] text-green-500' />
               </div>
             </div>
-            <Divider className='dark:bg-[rgb(189,200,240)] bg-[rgb(227,232,239)] opacity-[0.2] my-[10px]' />
+            <Divider className='dark:bg-[rgb(189,200,240)] bg-[rgb(227,232,239)] opacity-[0.2] my-[16px]' />
             <div className='text-[rgba(229,224,216,0.85)] text-[16px]'>
               <span>
                 {t("ZPCQOWAn" /* 日销售额 */)}
