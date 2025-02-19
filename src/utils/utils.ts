@@ -25,5 +25,8 @@ export function toPageRequestParams<T = Record<string, any>>(pageParams: PagePar
 }
 
 export function clearFormValues(form: FormInstance) {
-  form.setFieldsValue(Object.keys(form.getFieldsValue()).reduce((prev, cur) => ({ ...prev, [cur]: undefined }), {}));
+  form.setFieldsValue(
+    Object.keys(form.getFieldsValue())
+      .reduce((prev, cur) => ({ ...prev, [cur]: undefined }), {})
+  );
 }

@@ -2,22 +2,25 @@ import react from '@vitejs/plugin-react-swc';
 import externalGlobals from 'rollup-plugin-external-globals';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { defineConfig, loadEnv } from 'vite';
+import { createHtmlPlugin } from 'vite-plugin-html';
 
 const env = loadEnv(process.env.NODE_ENV!, process.cwd());
 
-const plugins = [ externalGlobals({
-  react: 'React',
-  'react-dom': 'ReactDOM',
-  antd: 'antd',
-  'lodash-es': '_',
-})]
+const plugins = [
+  externalGlobals({
+    react: 'React',
+    'react-dom': 'ReactDOM',
+    antd: 'antd',
+    'lodash-es': '_',
+  })
+]
 
 if (process.env.ANALYZE) {
   plugins.push(
     visualizer({
-    open: true, // 直接在浏览器中打开分析报告
-    gzipSize: true, // 显示gzip后的大小
-    brotliSize: true, // 显示brotli压缩后的大小
+      open: true, // 直接在浏览器中打开分析报告
+      gzipSize: true, // 显示gzip后的大小
+      brotliSize: true, // 显示brotli压缩后的大小
     })
   )
 }
@@ -28,6 +31,13 @@ export default defineConfig({
     react({
       jsxImportSource: '@dbfu/react-directive',
     }),
+    createHtmlPlugin({
+      inject: {
+        data: {
+          NODE_ENV: process.env.NODE_ENV,
+        },
+      },
+    }),
   ],
   build: {
     rollupOptions: {
@@ -35,6 +45,10 @@ export default defineConfig({
         'react',
         'react-dom',
         'antd',
+        'lodash-es',
+        '@ant-design/icons',
+        'ahooks',
+        'react-router-dom',
       ],
       plugins,
     }

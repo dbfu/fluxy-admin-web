@@ -1,15 +1,12 @@
-import { t } from '@/utils/i18n';
-import { Form, Input, Radio, Select } from 'antd';
-import { useEffect } from 'react';
-
+import { role_list } from '@/api/role';
+import { user_create, user_update } from '@/api/user';
 import FModalForm from '@/components/modal-form';
 import { antdUtils } from '@/utils/antd';
+import { t } from '@/utils/i18n';
 import { clearFormValues } from '@/utils/utils';
-import { useRequest } from 'ahooks';
-import { Role } from '../role/service';
+import { useRequest, useUpdateEffect } from 'ahooks';
+import { Form, Input, Radio, Select } from 'antd';
 import Avatar from './avatar';
-import EmailInput from './email-input';
-import userService from './service';
 
 interface PropsType {
   open: boolean;
@@ -26,25 +23,43 @@ function NewAndEditForm({
   onClose,
   title,
 }: PropsType) {
-  const [form] = Form.useForm();
-  const { runAsync: updateUser, loading: updateLoading } = useRequest(
-    userService.updateUser, {
-    manual: true,
-    onSuccess: () => {
-      antdUtils.message?.success(t("NfOSPWDa" /* 更新成功！ */));
-      onSaveSuccess();
-    },
-  });
-  const { runAsync: addUser, loading: createLoading } = useRequest(
-    userService.addUser, {
-    manual: true,
-    onSuccess: () => {
-      antdUtils.message?.success(t("JANFdKFM" /* 创建成功！ */));
-      onSaveSuccess();
-    },
-  });
 
-  const { data: roles, loading: getRolesLoading } = useRequest(userService.getRoles);
+  const [form] = Form.useForm();
+
+  const {
+    runAsync: updateUser,
+    loading: updateLoading,
+  } = useRequest(
+    user_update,
+    {
+      manual: true,
+      onSuccess: () => {
+        antdUtils.message.success(t("NfOSPWDa" /* 更新成功！ */));
+        onSaveSuccess();
+      },
+    }
+  );
+
+  const {
+    runAsync: addUser,
+    loading: createLoading,
+  } = useRequest(
+    user_create,
+    {
+      manual: true,
+      onSuccess: () => {
+        antdUtils.message.success(t("JANFdKFM" /* 创建成功！ */));
+        onSaveSuccess();
+      },
+    }
+  );
+
+  const {
+    data: roles,
+    loading: getRolesLoading,
+  } = useRequest(
+    role_list
+  );
 
   const finishHandle = async (values: any) => {
     if (values?.avatar?.[0]?.response?.id) {
@@ -60,20 +75,20 @@ function NewAndEditForm({
     }
   }
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     if (editData) {
       form.setFieldsValue({
         ...editData,
-        avatar: editData.avatarEntity ? [{
+        avatar: editData.avatar ? [{
           uid: '-1',
-          name: editData.avatarEntity.fileName,
+          name: editData.avatar.fileName,
           states: 'done',
-          url: editData.avatarEntity.filePath,
+          url: editData.avatar.filePath,
           response: {
-            id: editData.avatarEntity.id,
+            id: editData.avatar.id,
           },
         }] : [],
-        roleIds: (editData.roles || []).map((role: Role) => role.id),
+        roleIds: (editData.roles || []).map((role: API.RoleVO) => role.id),
       })
     } else {
       clearFormValues(form);
@@ -95,7 +110,10 @@ function NewAndEditForm({
       layout="horizontal"
       modalProps={{ forceRender: true }}
     >
-      <Form.Item label={t("YxQffpdF" /* 头像 */)} name="avatar">
+      <Form.Item
+        label={t("YxQffpdF" /* 头像 */)}
+        name="avatar"
+      >
         <Avatar />
       </Form.Item>
       <Form.Item
@@ -142,16 +160,8 @@ function NewAndEditForm({
           message: t("EfwYKLsR" /* 邮箱格式不正确 */),
         }]}
       >
-        <EmailInput disabled={!!editData} />
+        <Input disabled={!!editData} />
       </Form.Item>
-      {!editData && (
-        <Form.Item
-          name="emailCaptcha"
-          label={t("baHVcbPK" /* 邮箱验证码 */)}
-        >
-          <Input />
-        </Form.Item>
-      )}
       <Form.Item
         label={t("PnmzVovn" /* 角色 */)}
         name="roleIds"

@@ -2,12 +2,13 @@ import { useGlobalStore } from '@/stores/global';
 import { Menu } from 'antd';
 
 import { antdIcons } from '@/assets/antd-icons';
-import { Menu as MenuObj } from '@/global-service';
 import { useUserStore } from '@/stores/user';
 import { MenuItemType } from 'antd/es/menu/interface';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link, useMatches } from 'react-router-dom';
 import './menu.css';
+
+type MenuObj = API.MenuVO & { children?: MenuObj[], path?: string };
 
 function SlideMenu() {
 
@@ -52,7 +53,7 @@ function SlideMenu() {
       return menu.name;
     }
     return (
-      <Link to={menu.path}>{menu.name}</Link>
+      <Link to={menu.path || ''}>{menu.name}</Link>
     );
   }
 
@@ -61,7 +62,7 @@ function SlideMenu() {
       .map((menu: MenuObj) => {
         const children = menu?.children?.filter(menu => menu.show) || [];
         return {
-          key: menu.path,
+          key: menu.path || '',
           label: getMenuTitle(menu),
           icon: menu.icon && antdIcons[menu.icon] && React.createElement(antdIcons[menu.icon]),
           children: children.length ? treeMenuData(children || []) : null,
@@ -70,7 +71,9 @@ function SlideMenu() {
   }, []);
 
   const menuData = useMemo(() => {
-    return treeMenuData(currentUser?.menus?.filter(menu => menu.show) || []);
+    return treeMenuData(
+      (currentUser?.menus?.filter(menu => menu.show) || [])
+    );
   }, [currentUser]);
 
 

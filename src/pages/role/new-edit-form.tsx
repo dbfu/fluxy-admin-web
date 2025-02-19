@@ -2,17 +2,17 @@ import { t } from '@/utils/i18n';
 import { Form, Input } from 'antd';
 import { useEffect, useState } from 'react';
 
+import { role_create, role_update } from '@/api/role';
 import LinkButton from '@/components/link-button';
 import FModalForm from '@/components/modal-form';
 import { antdUtils } from '@/utils/antd';
 import { clearFormValues } from '@/utils/utils';
 import { useRequest } from 'ahooks';
 import RoleMenu from './role-menu';
-import roleService, { Role } from './service';
 
 interface PropsType {
   open: boolean;
-  editData?: Role | null;
+  editData?: API.RoleVO | null;
   title: string;
   onOpenChange: (open: boolean) => void;
   onSaveSuccess: () => void;
@@ -27,14 +27,14 @@ function NewAndEditRoleForm({
 }: PropsType) {
 
   const [form] = Form.useForm();
-  const { runAsync: updateUser, loading: updateLoading } = useRequest(roleService.updateRole, {
+  const { runAsync: updateUser, loading: updateLoading } = useRequest(role_update, {
     manual: true,
     onSuccess: () => {
       antdUtils.message?.success(t("NfOSPWDa" /* 更新成功！ */));
       onSaveSuccess();
     },
   });
-  const { runAsync: addUser, loading: createLoading } = useRequest(roleService.addRole, {
+  const { runAsync: addUser, loading: createLoading } = useRequest(role_create, {
     manual: true,
     onSuccess: () => {
       antdUtils.message?.success(t("JANFdKFM" /* 创建成功！ */));
@@ -77,7 +77,7 @@ function NewAndEditRoleForm({
       modalProps={{ forceRender: true }}
     >
       <Form.Item
-        label={t ("WIRfoXjK" /* 代码 */)}
+        label={t("WIRfoXjK" /* 代码 */)}
         name="code"
         rules={[{
           required: true,
@@ -87,7 +87,7 @@ function NewAndEditRoleForm({
         <Input disabled={!!editData} />
       </Form.Item>
       <Form.Item
-        label={t ("qvtQYcfN" /* 名称 */)}
+        label={t("qvtQYcfN" /* 名称 */)}
         name="name"
         rules={[{
           required: true,
@@ -97,10 +97,10 @@ function NewAndEditRoleForm({
         <Input />
       </Form.Item>
       <Form.Item
-        label={t ("DvINURho" /* 分配菜单 */)}
+        label={t("DvINURho" /* 分配菜单 */)}
         name="menus"
       >
-        <LinkButton onClick={() => { setRoleMenuVisible(true) }}>{t ("rDmZCvin" /* 选择菜单 */)}</LinkButton>
+        <LinkButton onClick={() => { setRoleMenuVisible(true) }}>{t("rDmZCvin" /* 选择菜单 */)}</LinkButton>
       </Form.Item>
       <RoleMenu
         onSave={(menuIds: string[]) => {

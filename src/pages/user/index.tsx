@@ -9,28 +9,27 @@ import {
 import dayjs from 'dayjs';
 import { useRef, useState } from 'react';
 
+import { user_page, user_remove } from '@/api/user';
 import { IconBuguang } from '@/assets/icons/buguang';
 import LinkButton from '@/components/link-button';
 import FProTable from '@/components/pro-table';
 import { antdUtils } from '@/utils/antd';
+import { toPageRequestParams } from '@/utils/utils';
 import { PlusOutlined } from '@ant-design/icons';
 import { ActionType, ProColumns } from '@ant-design/pro-components';
 import { useRequest } from 'ahooks';
-import { Role } from '../role/service';
 import NewAndEditForm from './new-edit-form';
-import userService, { User } from './service';
 
 function UserPage() {
-
   const actionRef = useRef<ActionType>();
 
-  const { runAsync: deleteUser } = useRequest(userService.deleteUser, {
+  const { runAsync: deleteUser } = useRequest(user_remove, {
     manual: true,
   });
-  const [editData, setEditData] = useState<User | null>(null);
+  const [editData, setEditData] = useState<API.UserVO | null>(null);
   const [formOpen, setFormOpen] = useState(false);
 
-  const columns: ProColumns<User>[] = [{
+  const columns: ProColumns<API.UserVO>[] = [{
     title: t("YxQffpdF" /* 头像 */),
     dataIndex: 'avatarPath',
     renderText: (value) => (
@@ -69,7 +68,7 @@ function UserPage() {
     title: t("PnmzVovn" /* 角色 */),
     dataIndex: 'roles',
     valueType: 'select',
-    renderText: (roles: Role[]) => {
+    renderText: (roles: API.RoleVO[]) => {
       return (
         <Space>
           {(roles || []).map(role => (
@@ -94,7 +93,7 @@ function UserPage() {
     align: 'center',
     width: 150,
     render: (_, record) =>
-      record.userName !== 'admin' && record.userName !== 'user' && (
+      record.userName !== 'admin' && (
         <Space size='middle'>
           <LinkButton
             onClick={() => {
@@ -108,7 +107,7 @@ function UserPage() {
             title={t('JjwFfqHG' /* 警告 */)}
             description={t('nlZBTfzL' /* 确认删除这条数据？ */)}
             onConfirm={async () => {
-              const [error] = await deleteUser(record.id);
+              const [error] = await deleteUser({ id: record.id! });
               if (!error) {
                 antdUtils.message.success(t('bvwOSeoJ' /* 删除成功！ */));
                 actionRef.current?.reload();
@@ -140,12 +139,12 @@ function UserPage() {
 
   return (
     <>
-      <FProTable<User, { userName?: string }>
+      <FProTable
         actionRef={actionRef}
         request={async (
           params
         ) => {
-          return userService.getUserListByPage(params)
+          return user_page(toPageRequestParams(params));
         }}
         columns={columns || []}
         headerTitle={(

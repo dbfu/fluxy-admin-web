@@ -3,7 +3,7 @@ import LinkButton from '@/components/link-button';
 import { t } from '@/utils/i18n';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Form, Input } from 'antd';
-import { useLogin } from '../hooks/use-login';
+import useLogin from '../hooks/use-login';
 
 function LoginForm({
   onForgetPasswordClick,

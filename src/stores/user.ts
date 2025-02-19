@@ -1,9 +1,9 @@
-import {User} from '@/pages/user/service';
-import {create} from 'zustand';
-import {devtools} from 'zustand/middleware';
+import { CurrentUser } from '@/interface';
+import { create } from 'zustand';
+import { devtools } from 'zustand/middleware';
 
 interface State {
-  currentUser: User | null;
+  currentUser: CurrentUser | null;
 }
 
 interface Action {
@@ -16,9 +16,9 @@ export const useUserStore = create<State & Action>()(
       return {
         currentUser: null,
         setCurrentUser: (currentUser: State['currentUser']) =>
-          set({currentUser}),
+          set({ currentUser }),
       };
     },
-    {name: 'globalUserStore'}
+    { name: 'globalUserStore' }
   )
 );

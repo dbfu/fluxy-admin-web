@@ -1,14 +1,13 @@
 import { antdIcons } from '@/assets/antd-icons';
 import { IconFangdajing } from '@/assets/icons/fangdajing';
-import { MenuType } from '@/global-service';
 import { useSelector } from '@/hooks/use-selector';
+import { MenuType } from '@/pages/menu/interface';
 import { useUserStore } from '@/stores/user';
 import { EnterOutlined } from '@ant-design/icons';
 import { List, Select } from 'antd';
 import { t } from 'i18next';
 import React, { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-
 
 function MenuSearcher() {
 
@@ -18,8 +17,8 @@ function MenuSearcher() {
   const [open, setOpen] = useState(false);
 
   const menus = useMemo(() => {
-    if (!currentUser) return [];
-    return currentUser?.flatMenus?.filter(
+    if (!currentUser?.flatMenus) return [];
+    return currentUser.flatMenus.filter(
       o => o.type === MenuType.MENU && o.show
     )
   }, [currentUser])

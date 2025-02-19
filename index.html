@@ -1,20 +1,29 @@
 <!doctype html>
-<html  lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>fluxy-admin</title>
-    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.13/dayjs.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/antd@5.20.6/dist/antd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@ant-design/icons@5.4.0/dist/index.umd.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/antd@5.20.6/dist/reset.min.css">
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>fluxy-admin</title>
+  <% if(NODE_ENV !=='development') { %>
+    <script src="/externals/lodash@4.17.21/lodash.min.js"></script>
+    <script  src="/externals/react@18/react.production.min.js"></script>
+    <script  src="/externals/react-dom@18/react-dom.production.min.js"></script>
+    <script src="/externals/dayjs@1.11.13/dayjs.min.js"></script>
+    <script src="/externals/antd@5.20.6/antd.min.js"></script>
+    <script src="/externals/@ant-design/icons@5.4.0/index.umd.min.js"></script>
+    <script src="/externals/@remix-run/router@1.21.0/router.umd.min.js"></script>
+    <script src="/externals/react-router@6.28.0/react-router.production.min.js"></script>
+    <script src="/externals/react-router-dom@6.28.1/react-router-dom.production.min.js"></script>
+    <script src="/externals/ahooks@3.8.4/ahooks.js"></script>
+    <link rel="stylesheet" href="/externals/antd@5.20.6/reset.min.css">
+  <% } %>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>

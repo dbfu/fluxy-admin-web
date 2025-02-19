@@ -9,18 +9,9 @@ const RightContent = () => {
         backgroundImage: 'url(/images/login-right-bg.svg)'
       }}
     >
-      <div
-        className='img1 w-[243px] h-[210px] bg-center absolute top-[23%] left-[37%]'
+      <div className='w-[540px] h-[280px] bg-cover absolute top-[24%] left-[20%]'
         style={{
-          backgroundSize: 380,
-          backgroundImage: 'url(/images/login-right-before.svg)'
-        }}
-      />
-      <div
-        className='img2 w-[313px] h-[280px] bg-center absolute top-[32%] left-[40%]'
-        style={{
-          backgroundSize: 380,
-          backgroundImage: 'url(/images/login-right-after.svg)'
+          backgroundImage: 'url(/images/login-image-dark.png)',
         }}
       />
       <div className='absolute left-[100px] right-[100px] bottom-[50px] h-[200px]'>

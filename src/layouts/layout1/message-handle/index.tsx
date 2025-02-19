@@ -1,9 +1,10 @@
-import loginService from '@/pages/login/service';
+import { auth_refreshToken } from '@/api/auth';
 import { toLoginPage } from '@/router/router-utils';
 import { useGlobalStore } from '@/stores/global';
 import { useMessageStore } from '@/stores/message';
 import { antdUtils } from '@/utils/antd';
-import to from 'await-to-js';
+import { useRequest } from 'ahooks';
+import { Modal } from 'antd';
 import { useEffect } from 'react';
 import { SocketMessageType } from './interface';
 
@@ -12,8 +13,19 @@ const MessageHandle = () => {
    const { latestMessage } = useMessageStore();
    const { refreshToken, setToken } = useGlobalStore();
 
+   const { run: refreshTokenFunc } = useRequest(auth_refreshToken, {
+      manual: true,
+      onSuccess: (data) => {
+         setToken(data.token!)
+      },
+      onError() {
+         toLoginPage();
+      },
+   });
+
    const messageHandleMap = {
       [SocketMessageType.PermissionChange]: () => {
+         Modal.destroyAll();
          antdUtils.modal?.warning({
             title: '权限变更',
             content: '由于你的权限已经变更，需要重新刷新页面。',
@@ -23,6 +35,7 @@ const MessageHandle = () => {
          })
       },
       [SocketMessageType.PasswordChange]: () => {
+         Modal.destroyAll();
          const hiddenModal = antdUtils.modal?.warning({
             title: '密码重置',
             content: '密码已经重置，需要重新登录。',
@@ -35,15 +48,7 @@ const MessageHandle = () => {
          })
       },
       [SocketMessageType.TokenExpire]: async () => {
-         // token失效调用刷新token，外面token变化，会自动重连。
-         const [error, data] = await to(
-            loginService.refreshToken(refreshToken)
-         );
-         if (!error) {
-            setToken(data.token)
-         } else {
-            toLoginPage();
-         }
+         refreshTokenFunc({ refreshToken });
       },
    };
 

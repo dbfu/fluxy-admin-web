@@ -3,21 +3,24 @@ import { t } from '@/utils/i18n';
 import { Button, Divider, Space, Tag } from 'antd';
 import React, { useRef, useState } from 'react';
 
+import { menu_children, menu_page } from '@/api/menu';
 import LinkButton from '@/components/link-button';
 import FProTable from '@/components/pro-table';
+import { toPageRequestParams } from '@/utils/utils';
 import { PlusOutlined } from '@ant-design/icons';
 import { ActionType, ProColumnType } from '@ant-design/pro-components';
 import to from 'await-to-js';
 import { MenuTypeName } from './interface';
 import NewAndEditForm from './new-edit-form';
-import menuService, { Menu } from './service';
+
+type DataRecord = API.MenuVO & { _loaded_: boolean, children: API.MenuVO[] };
 
 function MenuPage() {
-  const [dataSource, setDataSource] = useState<Menu[]>([]);
+  const [dataSource, setDataSource] = useState<API.MenuVO[]>([]);
   const [formVisible, setFormVisible] = useState(false);
   const [expandedRowKeys, setExpandedRowKeys] = useState<readonly React.Key[]>([]);
-  const [curRowData, setCurRowData] = useState<null | Menu>();
-  const [editData, setEditData] = useState<null | Menu>(null);
+  const [curRowData, setCurRowData] = useState<null | DataRecord>();
+  const [editData, setEditData] = useState<null | API.MenuVO>(null);
 
   const actionRef = useRef<ActionType>();
 
@@ -40,12 +43,12 @@ function MenuPage() {
     }
   }
 
-  const expandHandle = async (expanded: boolean, record: Menu) => {
+  const expandHandle = async (expanded: boolean, record: API.MenuVO & { _loaded_: boolean, children: API.MenuVO[] }) => {
     if (expanded && !record._loaded_) {
-      const [error, children] = await to(menuService.getChildren(record.id!));
+      const [error, children] = await to(menu_children({ parentId: record.id! }));
       if (!error) {
         record._loaded_ = true;
-        record.children = (children || []).map((o: Menu) => ({
+        record.children = (children || []).map((o: API.MenuVO) => ({
           ...o,
           children: o.hasChild ? [] : null,
         }));
@@ -54,7 +57,7 @@ function MenuPage() {
     }
   };
 
-  const columns: ProColumnType<Menu>[] = [{
+  const columns: ProColumnType<DataRecord>[] = [{
     title: t("qvtQYcfN" /* 名称 */),
     dataIndex: 'name',
     width: 300,
@@ -90,7 +93,7 @@ function MenuPage() {
     dataIndex: 'id',
     align: 'center',
     width: 200,
-    renderText: (_: string, record: Menu) => {
+    renderText: (_: string, record: DataRecord) => {
       return (
         <Space
           split={(
@@ -121,7 +124,7 @@ function MenuPage() {
 
   return (
     <>
-      <FProTable<Menu>
+      <FProTable<DataRecord>
         search={false}
         actionRef={actionRef}
         columns={columns}
@@ -139,12 +142,13 @@ function MenuPage() {
           setDataSource(data);
         }}
         request={async (params) => {
-          const tableData = await menuService.getMenusByPage(params);
+          const tableData = await menu_page(toPageRequestParams(params));
           return {
             data: tableData?.data?.map((item) => ({
               ...item,
               children: item.hasChild ? [] : null,
-            })),
+              _loaded_: false,
+            })) as DataRecord[],
             total: tableData.total,
           };
         }}

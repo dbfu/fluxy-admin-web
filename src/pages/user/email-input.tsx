@@ -1,8 +1,8 @@
+import { user_sendEmailCaptcha } from '@/api/user';
 import { t } from '@/utils/i18n';
 import { useRequest } from 'ahooks';
 import { Button, Form, Input } from 'antd';
 import { ChangeEventHandler, useEffect, useRef, useState } from "react";
-import userService from './service';
 
 interface PropsType {
   value?: string;
@@ -20,7 +20,7 @@ function EmailInput({
   const form = Form.useFormInstance();
   const intervalTimerRef = useRef<number>();
 
-  const { runAsync } = useRequest(userService.sendEmailCaptcha, { manual: true });
+  const { runAsync } = useRequest(user_sendEmailCaptcha, { manual: true });
 
   const sendEmailCaptcha = async () => {
     const values = await form.validateFields(['email']);

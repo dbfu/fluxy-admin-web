@@ -1,3 +1,4 @@
+import { auth_getImageCaptcha, auth_getPublicKey, auth_login } from '@/api/auth';
 import { useSelector } from '@/hooks/use-selector';
 import { router } from '@/router';
 import { useGlobalStore } from '@/stores/global';
@@ -5,23 +6,22 @@ import { useSettingStore } from '@/stores/setting';
 import { useRequest } from 'ahooks';
 import to from 'await-to-js';
 import { JSEncrypt } from "jsencrypt";
-import loginService, { LoginDTO } from '../service';
-export const useLogin = () => {
+const useLogin = () => {
 
   const { showKeepAliveTab } = useSettingStore(
     useSelector('showKeepAliveTab')
   )
 
   const { data: captcha, refresh: refreshCaptcha } = useRequest(
-    loginService.getCaptcha
+    auth_getImageCaptcha
   );
 
   const { runAsync: login, loading: loginLoading } = useRequest(
-    loginService.login,
+    auth_login,
     { manual: true }
   );
 
-  async function loginHandle(values: LoginDTO) {
+  async function loginHandle(values: API.LoginDTO & { publicKey: string }) {
     if (!captcha) {
       return;
     }
@@ -29,7 +29,7 @@ export const useLogin = () => {
     values.captchaId = captcha.id;
 
     // 获取公钥
-    const [error, publicKey] = await to(loginService.getPublicKey());
+    const [error, publicKey] = await to(auth_getPublicKey());
 
     if (error) {
       return;
@@ -38,7 +38,7 @@ export const useLogin = () => {
     // 使用公钥对密码加密
     const encrypt = new JSEncrypt();
     encrypt.setPublicKey(publicKey);
-    const password = encrypt.encrypt(values.password);
+    const password = encrypt.encrypt(values.password!);
 
     if (!password) {
       return;
@@ -73,3 +73,5 @@ export const useLogin = () => {
     loginLoading
   }
 }
+
+export default useLogin;

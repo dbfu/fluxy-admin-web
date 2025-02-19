@@ -11,5 +11,8 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "jsxImportSource": "@dbfu/react-directive",
-  }
+  },
+  "exclude": [
+    "public"
+  ]
 }

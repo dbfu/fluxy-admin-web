@@ -3,13 +3,14 @@ import {
   Badge
 } from 'antd';
 
+import { login_log_page } from '@/api/loginLog';
 import FProTable from '@/components/pro-table';
+import { toPageRequestParams } from '@/utils/utils';
 import { ProColumnType } from '@ant-design/pro-components';
 import dayjs from 'dayjs';
-import loginLogService, { LoginLog } from './service';
 
 function LoginLogPage() {
-  const columns: ProColumnType<LoginLog>[] = [
+  const columns: ProColumnType<API.LoginLogVO>[] = [
     {
       title: t("EOnUUxNS" /* 登录帐号 */),
       dataIndex: 'userName',
@@ -61,11 +62,14 @@ function LoginLogPage() {
     },
   ];
 
-
   return (
-    <FProTable<LoginLog>
+    <FProTable<API.LoginLogVO>
       columns={columns}
-      request={async (params) => loginLogService.getRoleListByPage(params)}
+      request={async (params) => {
+        return login_log_page(
+          toPageRequestParams(params)
+        )
+      }}
     />
   );
 }

@@ -1,3 +1,5 @@
+import { api_apiList } from '@/api/api';
+import { menu_create, menu_getAllocAPIByMenu, menu_update } from '@/api/menu';
 import { antdIcons } from '@/assets/antd-icons';
 import FModalForm from '@/components/modal-form';
 import { componentPaths } from '@/config/pages';
@@ -10,13 +12,12 @@ import to from 'await-to-js';
 import { omit } from 'lodash-es';
 import React, { useEffect, useMemo } from 'react';
 import { MenuType } from './interface';
-import menuService, { Menu } from './service';
 
 interface CreateMenuProps {
   visible: boolean;
   onCancel: (flag?: boolean) => void;
-  curRecord?: Menu | null;
-  editData?: Menu | null;
+  curRecord?: API.MenuVO | null;
+  editData?: API.MenuVO | null;
   onOpenChange: (open: boolean) => void;
   onSaveSuccess: () => void;
 }
@@ -32,9 +33,9 @@ function NewAndEditMenuForm({
 
   const [form] = Form.useForm();
 
-  const { data: apiData, run: getApiList } = useRequest(menuService.getApiList, { manual: true });
-  const { runAsync: getAllocApis } = useRequest(menuService.getAllocApis, { manual: true });
-  const { run: addMenu, loading: createLoading } = useRequest(menuService.addMenu, {
+  const { data: apiData, run: getApiList } = useRequest(api_apiList, { manual: true });
+  const { runAsync: getAllocApis } = useRequest(menu_getAllocAPIByMenu, { manual: true });
+  const { run: addMenu, loading: createLoading } = useRequest(menu_create, {
     manual: true,
     onSuccess: () => {
       antdUtils.message?.success(t("kKvCUxII" /* 新增成功 */));
@@ -42,7 +43,7 @@ function NewAndEditMenuForm({
     },
   });
 
-  const { run: updateMenu, loading: updateLoading } = useRequest(menuService.updateMenu, {
+  const { run: updateMenu, loading: updateLoading } = useRequest(menu_update, {
     manual: true,
     onSuccess: () => {
       antdUtils.message?.success(t("XLSnfaCz" /* 更新成功 */));
@@ -70,7 +71,7 @@ function NewAndEditMenuForm({
   async function setDefaultFormValues() {
     if (editData?.id) {
       form.setFieldsValue(editData);
-      const [error, allocApis] = await to(getAllocApis(editData.id));
+      const [error, allocApis] = await to(getAllocApis({ menuId: editData.id }));
       if (!error) {
         form.setFieldValue('apis', allocApis.map((api) => [api.method, api.path].join('~')))
       }
@@ -113,11 +114,11 @@ function NewAndEditMenuForm({
   }
 
   const formatApi = useMemo(() => {
-    return (apiData || []).map((item) => ({
+    return (apiData?.data || []).map((item: any) => ({
       value: item.path,
       label: titleRender(item),
       type: item.type,
-      children: item.children?.map((o) => ({
+      children: item.children?.map((o: any) => ({
         value: `${o.method}~${item.prefix}${o.path}`,
         label: titleRender(o),
         type: o.type,
@@ -128,7 +129,7 @@ function NewAndEditMenuForm({
   }, [apiData]);
 
   const save = async (values: any) => {
-    const formData: Menu = omit({ ...values }, 'apis') as Menu;
+    const formData: any = omit({ ...values }, 'apis') as any;
 
     formData.parentId = curRecord?.id || null;
 

@@ -1,8 +1,8 @@
+import { auth_sendResetPasswordEmail } from '@/api/auth';
 import { antdUtils } from '@/utils/antd';
 import { useRequest } from 'ahooks';
 import { Button, Input, Modal } from 'antd';
 import { useEffect, useState } from 'react';
-import loginService from '../service';
 
 interface Props {
   open: boolean;
@@ -11,11 +11,11 @@ interface Props {
 
 const ForgetPasswordModal = ({ open, setOpen }: Props) => {
 
-  const [emailInputFoucs, setEmailInputFocus] = useState(false);
+  const [emailInputFocus, setEmailInputFocus] = useState(false);
   const [checkEmail, setCheckEmail] = useState<string>();
 
   const { runAsync: sendResetPasswordEmail, loading: resetPasswordBtnLoading } = useRequest(
-    loginService.sendResetPasswordEmail,
+    auth_sendResetPasswordEmail,
     { manual: true }
   );
 
@@ -32,7 +32,7 @@ const ForgetPasswordModal = ({ open, setOpen }: Props) => {
       return;
     }
 
-    const [error] = await sendResetPasswordEmail(checkEmail);
+    const [error] = await sendResetPasswordEmail({ checkEmail });
 
     if (!error) {
       antdUtils.message.success('邮件已发送，请到邮箱查看。');
@@ -56,13 +56,13 @@ const ForgetPasswordModal = ({ open, setOpen }: Props) => {
         body: { padding: '20px 0', position: 'relative' }
       }}
     >
-      {!emailInputFoucs && (
+      {!emailInputFocus && (
         <img
           className='absolute top-[-139px] left-[calc(50%-67px)]'
           src='https://lf3-cdn-tos.bytescm.com/obj/static/xitu_juejin_web/ad7fa76844a2df5c03151ead0ce65ea6.svg'
         />
       )}
-      {emailInputFoucs && (
+      {emailInputFocus && (
         <img
           className='absolute top-[-139px] left-[calc(50%-67px)]'
           src='https://lf3-cdn-tos.bytescm.com/obj/static/xitu_juejin_web/500c1180a96859e5c54a5359f024a397.svg'

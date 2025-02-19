@@ -9,12 +9,10 @@ import MessageHandle from './message-handle';
 import Slide from './slide';
 import SystemSetting from './system-setting';
 
-
 export default function Layout1() {
 
   const { lang } = useGlobalStore(useSelector('lang'));
   const { loading } = useUserDetail();
-
 
   if (loading) {
     return (

@@ -7,26 +7,27 @@ import {
 } from 'antd';
 import { useRef, useState } from 'react';
 
+import { role_page, role_remove } from '@/api/role';
 import LinkButton from '@/components/link-button';
 import FProTable from '@/components/pro-table';
 import { antdUtils } from '@/utils/antd';
+import { toPageRequestParams } from '@/utils/utils';
 import { PlusOutlined } from '@ant-design/icons';
 import { ActionType, ProColumnType } from '@ant-design/pro-components';
 import dayjs from 'dayjs';
 import NewAndEditForm from './new-edit-form';
 import RoleMenu from './role-menu';
-import roleService, { Role } from './service';
 
 
 function RolePage() {
-  const [editData, setEditData] = useState<Role | null>(null);
+  const [editData, setEditData] = useState<API.RoleVO | null>(null);
   const [roleMenuVisible, setRoleMenuVisible] = useState(false);
   const [curRoleId, setCurRoleId] = useState<string | null>();
   const [formOpen, setFormOpen] = useState(false);
   const actionRef = useRef<ActionType>();
 
 
-  const columns: ProColumnType<Role>[] = [
+  const columns: ProColumnType<API.RoleVO>[] = [
     {
       title: t("qvtQYcfN" /* 名称 */),
       dataIndex: 'name',
@@ -54,7 +55,7 @@ function RolePage() {
       width: 240,
       align: 'center',
       search: false,
-      renderText: (id: string, record: Role) => (
+      renderText: (id: string, record: API.RoleVO) => (
         <Space
           split={(
             <Divider type='vertical' />
@@ -79,7 +80,7 @@ function RolePage() {
           <Popconfirm
             title={t("RCCSKHGu" /* 确认删除？ */)}
             onConfirm={async () => {
-              const [error] = await roleService.removeRole(id);
+              const [error] = await role_remove({ id });
               if (!error) {
                 antdUtils.message?.success(t("CVAhpQHp" /* 删除成功! */));
                 actionRef.current?.reload();
@@ -115,11 +116,11 @@ function RolePage() {
 
   return (
     <>
-      <FProTable<Role, Omit<Role, 'id'>>
+      <FProTable<API.RoleVO, Omit<API.RoleVO, 'id'>>
         actionRef={actionRef}
         columns={columns}
         request={async params => {
-          return roleService.getRoleListByPage(params);
+          return role_page(toPageRequestParams(params));
         }}
         headerTitle={(
           <Space>

@@ -1,11 +1,11 @@
+import { menu_list } from '@/api/menu';
+import { role_allocMenu, role_getMenusByRoleId } from '@/api/role';
 import { antdUtils } from '@/utils/antd';
 import { t } from '@/utils/i18n';
 import { Modal, Radio, Spin, Tree } from 'antd';
 import { DataNode } from 'antd/es/tree';
 import to from 'await-to-js';
 import { Key, useEffect, useState } from 'react';
-import { Menu } from '../menu/service';
-import roleService from './service';
 
 interface RoleMenuProps {
   visible: boolean;
@@ -59,7 +59,7 @@ function RoleMenu({
     }
   };
 
-  const formatTree = (roots: Menu[] = [], group: Record<string, Menu[]>): DataNode[] => {
+  const formatTree = (roots: API.MenuVO[] = [], group: Record<string, API.MenuVO[]>): DataNode[] => {
     return roots.map((node) => {
       return {
         key: node.id,
@@ -72,11 +72,11 @@ function RoleMenu({
   const getData = async () => {
     setGetDataLoading(true);
     const [error, data] = await to(
-      roleService.getAllMenus()
+      menu_list()
     );
 
     if (!error) {
-      const group = data.reduce<Record<string, Menu[]>>((prev, cur) => {
+      const group = data.reduce<Record<string, API.MenuVO[]>>((prev, cur) => {
         if (!cur.parentId) {
           return prev;
         }
@@ -102,7 +102,7 @@ function RoleMenu({
     if (!roleId) return;
 
     const [error, data] = await to(
-      roleService.getRoleMenus(roleId)
+      role_getMenusByRoleId({ id: roleId })
     );
 
     if (!error) {
@@ -120,12 +120,12 @@ function RoleMenu({
     if (!roleId) return;
 
     setSaveLoading(true);
-    const [error] = await roleService.setRoleMenus(checkedKeys, roleId)
+    const [error] = await role_allocMenu({ menuIds: checkedKeys, roleId })
 
     setSaveLoading(false);
 
     if (!error) {
-      antdUtils.message?.success(t ("koENLxye" /* 分配成功 */));
+      antdUtils.message?.success(t("koENLxye" /* 分配成功 */));
       onCancel();
     }
   };
@@ -142,7 +142,7 @@ function RoleMenu({
   return (
     <Modal
       open={visible}
-      title={t ("DvINURho" /* 分配菜单 */)}
+      title={t("DvINURho" /* 分配菜单 */)}
       onCancel={() => {
         onCancel();
       }}
@@ -161,16 +161,16 @@ function RoleMenu({
         <Spin />
       ) : (
         <div>
-          <label>{t ("oewZmYWL" /* 选择类型： */)}</label>
+          <label>{t("oewZmYWL" /* 选择类型： */)}</label>
           <Radio.Group
             onChange={(e) => setSelectType(e.target.value)}
             defaultValue="allChildren"
             optionType="button"
             buttonStyle="solid"
           >
-            <Radio value="allChildren">{t ("dWBURdsX" /* 所有子级 */)}</Radio>
-            <Radio value="current">{t ("REnCKzPW" /* 当前 */)}</Radio>
-            <Radio value="firstChildren">{t ("dGQCFuac" /* 一级子级 */)}</Radio>
+            <Radio value="allChildren">{t("dWBURdsX" /* 所有子级 */)}</Radio>
+            <Radio value="current">{t("REnCKzPW" /* 当前 */)}</Radio>
+            <Radio value="firstChildren">{t("dGQCFuac" /* 一级子级 */)}</Radio>
           </Radio.Group>
           <div className="mt-16px">
             <Tree

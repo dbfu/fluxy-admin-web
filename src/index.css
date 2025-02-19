@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 /* 解决antd菜单不垂直居中的问题 */
-
 .ant-menu-item {
   display: flex !important;
   align-items: center;
@@ -15,7 +14,6 @@
 }
 
 /* 解决antd收起菜单选中状态背景色问题 */
-
 .ant-menu-inline-collapsed .ant-menu-submenu.ant-menu-submenu-vertical.ant-menu-submenu-selected .ant-menu-submenu-title {
   background-color: var(--ant-menu-item-selected-bg);
   display: flex !important;
@@ -24,5 +22,3 @@
 .dark .ant-menu-inline-collapsed .ant-menu-submenu.ant-menu-submenu-vertical.ant-menu-submenu-selected .ant-menu-submenu-title {
   background-color: var(--ant-menu-dark-item-selected-bg);
 }
-
-

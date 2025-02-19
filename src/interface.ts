@@ -31,3 +31,11 @@ export interface SystemSettingType {
   }[];
   defaultLang: string;
 }
+
+export type Menu = API.MenuVO & {
+  children?: Menu[];
+  parentPaths?: string[];
+  path?: string;
+};
+
+export type CurrentUser = API.CurrentUserVO & { flatMenus: Menu[], menus: Menu[], authList: string[] }

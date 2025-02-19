@@ -15,7 +15,6 @@ import { useSettingStore } from './stores/setting';
 import { generateDarkTheme } from './theme/dark';
 import { generateLightTheme } from './theme/light';
 
-
 configResponsive({
   md: 768,
   lg: 1024,
@@ -57,6 +56,11 @@ function App() {
       document.body.style.backgroundColor = theme.token?.colorBgLayout || '';
       setCurTheme(theme);
     }
+
+    setTimeout(() => {
+      document.body.style.transition = 'all 0.5s ease-in-out';
+    }, 500);
+    
   }, [darkMode, primaryColor]);
 
   useEffect(() => {

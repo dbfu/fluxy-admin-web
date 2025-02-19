@@ -1,23 +1,32 @@
+import { auth_getCurrentUser } from '@/api/auth';
 import Result404 from '@/components/exception/404';
 import { pages } from '@/config/pages';
-import globalService, { Menu, MenuType } from '@/global-service';
+import { useWebSocketMessage } from '@/hooks/use-websocket';
+import { CurrentUser, Menu } from '@/interface';
+import { MenuType } from '@/pages/menu/interface';
 import { router } from '@/router';
 import { replaceRoutes } from '@/router/router-utils';
 import { useGlobalStore } from '@/stores/global';
+import { SocketMessage, useMessageStore } from '@/stores/message';
 import { useUserStore } from '@/stores/user';
-import { useRequest } from 'ahooks';
+import { useRequest, useUpdateEffect } from 'ahooks';
 import { lazy, useEffect, useState } from 'react';
 
-
 export function useUserDetail() {
-
   const [loading, setLoading] = useState(true);
 
-  const { refreshToken } = useGlobalStore();
+  const { refreshToken, token } = useGlobalStore();
   const { setCurrentUser } = useUserStore();
+  const { setLatestMessage } = useMessageStore();
+
+  // 当获取完用户信息后，手动连接
+  const { latestMessage, connect } = useWebSocketMessage(
+    `${window.location.protocol.replace('http', 'ws')}//${window.location.host}/ws/?token=${token}`,
+    { manual: true }
+  );
 
   const { data: currentUserDetail, loading: requestLoading } = useRequest(
-    globalService.getCurrentUserDetail,
+    auth_getCurrentUser,
     { refreshDeps: [refreshToken] }
   );
 
@@ -33,13 +42,17 @@ export function useUserDetail() {
       parentMenu?: Menu
     ): Menu[] {
       return menus.map(menu => {
-        const children = menuGroup[menu.id];
+        const children = menuGroup[menu.id!];
 
         const parentPaths = parentMenu?.parentPaths || [];
         const lastPath = parentPaths[parentPaths.length - 1];
         const path = (parentMenu ? `${lastPath}${menu.route}` : menu.route) || '';
 
-        routes.push({ ...menu, path, parentPaths });
+        routes.push({
+          ...menu,
+          path,
+          parentPaths,
+        });
 
         return {
           ...menu,
@@ -55,7 +68,7 @@ export function useUserDetail() {
 
     const { menus = [] } = currentUserDetail;
 
-    const menuGroup = menus.reduce<Record<string, Menu[]>>((prev, menu) => {
+    const menuGroup = menus.reduce<Record<string, API.MenuVO[]>>((prev, menu) => {
       if (!menu.parentId) {
         return prev;
       }
@@ -70,16 +83,15 @@ export function useUserDetail() {
 
     const routes: Menu[] = [];
 
-    currentUserDetail.flatMenus = routes;
-    currentUserDetail.menus = formatMenus(menus.filter(o => !o.parentId), menuGroup, routes);
+    const currentUser: CurrentUser = {
+      ...currentUserDetail,
+      flatMenus: routes,
+      menus: formatMenus(menus.filter(o => !o.parentId), menuGroup, routes),
+      authList: menus
+        .filter(menu => menu.type === MenuType.BUTTON && menu.authCode)
+        .map(menu => menu.authCode!),
+    };
 
-    currentUserDetail.authList = menus
-      .filter(menu => menu.type === MenuType.BUTTON && menu.authCode)
-      .map(menu => menu.authCode!);
-
-    
-    
-    console.log(router, 'router')
 
     replaceRoutes('*', [
       ...routes.map(menu => {
@@ -105,13 +117,33 @@ export function useUserDetail() {
       }
     ]);
 
-    setCurrentUser(currentUserDetail);
+    setCurrentUser(currentUser);
 
     // replace一下当前路由，为了触发路由匹配
     router.navigate(`${location.pathname}${location.search}`, { replace: true });
 
     setLoading(false);
+
+    connect && connect();
   }, [currentUserDetail, setCurrentUser]);
+
+
+  useUpdateEffect(() => {
+    if (latestMessage?.data) {
+      try {
+        const socketMessage = JSON.parse(latestMessage?.data) as SocketMessage;
+        setLatestMessage(socketMessage)
+      } catch {
+        console.error(latestMessage?.data);
+      }
+    }
+  }, [latestMessage]);
+
+  useUpdateEffect(() => {
+    if (token) {
+      connect && connect();
+    }
+  }, [token])
 
   return {
     loading: requestLoading || loading,
