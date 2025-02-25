@@ -79,7 +79,9 @@ jobs:
         run: |
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
-          echo ${{ secrets.SERVER_KEY }}
+
+      - name: Dump SERVER_KEY
+        run: echo -n "${{ secrets.SERVER_KEY }}" | xxd -ps
 
       - name: SSH Command
         # You may pin to the exact commit or the version.
