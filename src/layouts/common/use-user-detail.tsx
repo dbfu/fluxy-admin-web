@@ -27,7 +27,12 @@ export function useUserDetail() {
 
   const { data: currentUserDetail, loading: requestLoading } = useRequest(
     auth_getCurrentUser,
-    { refreshDeps: [refreshToken] }
+    {
+      refreshDeps: [refreshToken],
+      onError: () => {
+        router.navigate('/user/login');
+      }
+    }
   );
 
   useEffect(() => {

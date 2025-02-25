@@ -12,9 +12,8 @@ const plugins = [
     'react-dom': 'ReactDOM',
     antd: 'antd',
     'lodash-es': '_',
-    '@ant-design/icons': 'icons',
-    'ahooks': 'ahooks',
     'react-router-dom': 'ReactRouterDOM',
+    'ahooks': 'ahooks',
   })
 ]
 
@@ -49,7 +48,6 @@ export default defineConfig({
         'react-dom',
         'antd',
         'lodash-es',
-        '@ant-design/icons',
         'ahooks',
         'react-router-dom',
       ],
