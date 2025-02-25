@@ -1,5 +1,5 @@
 import ErrorPage from '@/components/exception/500';
-import Layout1 from '@/layouts/layout1';
+import Layout from '@/layouts/layout';
 import Login from '@/pages/login';
 import ResetPassword from '@/pages/login/reset-password';
 import { Navigate, RouteObject } from 'react-router-dom';
@@ -21,7 +21,7 @@ export const routes: RouteObject[]  = [
   },
   {
     path: '*',
-    Component: Layout1,
+    Component: Layout,
     children: [],
     errorElement: <ErrorPage />
   },

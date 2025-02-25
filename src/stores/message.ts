@@ -1,4 +1,4 @@
-import { SocketMessageType } from '@/layouts/layout1/message-handle/interface';
+import { SocketMessageType } from '@/layouts/layout/message-handle/interface';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 

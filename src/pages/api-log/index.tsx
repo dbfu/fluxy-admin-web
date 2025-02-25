@@ -137,6 +137,7 @@ function ApiLogPage() {
       valueType: 'select',
       valueEnum: {
         400: { text: '400' },
+        403: { text: '403' },
         500: { text: '500' },
         404: { text: '404' },
         422: { text: '422' },
@@ -196,7 +197,7 @@ function ApiLogPage() {
     getResultData({ id });
   }
 
-  const formatJson = (json: string) => {
+  const formatJson = (json?: string) => {
     if (!json) return '';
     return JSON.stringify(JSON.parse(json), null, 2);
   }

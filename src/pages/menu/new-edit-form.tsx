@@ -114,16 +114,16 @@ function NewAndEditMenuForm({
   }
 
   const formatApi = useMemo(() => {
-    return (apiData?.data || []).map((item: any) => ({
+    return (apiData || []).map((item: any) => ({
       value: item.path,
       label: titleRender(item),
       type: item.type,
       children: item.children?.map((o: any) => ({
-        value: `${o.method}~${item.prefix}${o.path}`,
+        value: `${o.method}~${item.prefix}${(o.path === '/' ? '' : o.path)}`,
         label: titleRender(o),
         type: o.type,
         method: o.method,
-        path: item.prefix + o.path,
+        path: item.prefix + (o.path === '/' ? '' : o.path),
       })),
     }));
   }, [apiData]);

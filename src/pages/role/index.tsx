@@ -55,7 +55,7 @@ function RolePage() {
       width: 240,
       align: 'center',
       search: false,
-      renderText: (id: string, record: API.RoleVO) => (
+      renderText: (id: string, record) => (
         <Space
           split={(
             <Divider type='vertical' />

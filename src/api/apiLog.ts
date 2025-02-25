@@ -66,7 +66,7 @@ export async function api_log_getBodyData(
   params: API.apiLogGetBodyDataParams,
   options?: { [key: string]: any }
 ) {
-  return request<any>("/api-log/body", {
+  return request<API.BodyParamsVO>("/api-log/body", {
     method: "GET",
     params: {
       ...params,
@@ -104,7 +104,7 @@ export async function api_log_getQueryData(
   params: API.apiLogGetQueryDataParams,
   options?: { [key: string]: any }
 ) {
-  return request<any>("/api-log/query", {
+  return request<API.QueryParamsVO>("/api-log/query", {
     method: "GET",
     params: {
       ...params,
@@ -119,7 +119,7 @@ export async function api_log_getResultData(
   params: API.apiLogGetResultDataParams,
   options?: { [key: string]: any }
 ) {
-  return request<any>("/api-log/result", {
+  return request<API.ResultParamsVO>("/api-log/result", {
     method: "GET",
     params: {
       ...params,

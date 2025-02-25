@@ -132,13 +132,6 @@ declare namespace API {
     userName?: string;
   };
 
-  type ApiPageVo = {
-    /** 数据 */
-    data?: ApiVO[];
-    /** 总条数 */
-    total?: number;
-  };
-
   type ApiVO = {
     /** 接口url */
     path?: string;
@@ -150,6 +143,13 @@ declare namespace API {
     type?: string;
     /** 请求方式 */
     method?: string;
+  };
+
+  type BodyParamsVO = {
+    /** id */
+    id?: string;
+    /** body参数 */
+    body?: string;
   };
 
   type CaptchaVO = {
@@ -170,12 +170,10 @@ declare namespace API {
     phoneNumber?: string;
     /** 邮箱 */
     email?: string;
-    /** 性别（0:女，1:男） */
-    sex?: number;
     /** 头像地址 */
     avatarPath?: string;
     /** 头像 */
-    avatarEntity?: FileEntity;
+    avatar?: FileEntity;
     /** 角色列表 */
     roles?: RoleVO[];
     /** 用户分配的菜单列表 */
@@ -407,6 +405,13 @@ declare namespace API {
     size?: number;
   };
 
+  type QueryParamsVO = {
+    /** id */
+    id?: string;
+    /** query参数 */
+    query?: string;
+  };
+
   type RefreshTokenDTO = {
     /** 刷新token */
     refreshToken?: string;
@@ -419,6 +424,13 @@ declare namespace API {
     email?: string;
     /** 邮箱验证码 */
     emailCaptcha?: string;
+  };
+
+  type ResultParamsVO = {
+    /** id */
+    id?: string;
+    /** result参数 */
+    result?: string;
   };
 
   type RoleDTO = {
@@ -524,8 +536,6 @@ declare namespace API {
     email?: string;
     /** 头像 */
     avatar?: string;
-    /** 性别（0:女，1:男） */
-    sex?: number;
   };
 
   type userGetByIdParams = {
@@ -584,12 +594,10 @@ declare namespace API {
     phoneNumber?: string;
     /** 邮箱 */
     email?: string;
-    /** 性别（0:女，1:男） */
-    sex?: number;
     /** 头像地址 */
     avatarPath?: string;
     /** 头像 */
-    avatarEntity?: any;
+    avatar?: any;
     /** 角色列表 */
     roles?: any;
   };

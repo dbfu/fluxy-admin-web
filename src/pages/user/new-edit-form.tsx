@@ -5,7 +5,7 @@ import { antdUtils } from '@/utils/antd';
 import { t } from '@/utils/i18n';
 import { clearFormValues } from '@/utils/utils';
 import { useRequest, useUpdateEffect } from 'ahooks';
-import { Form, Input, Radio, Select } from 'antd';
+import { Form, Input, Select } from 'antd';
 import Avatar from './avatar';
 
 interface PropsType {
@@ -101,7 +101,6 @@ function NewAndEditForm({
       wrapperCol={{ sm: { span: 24 }, md: { span: 16 } }}
       form={form}
       onFinish={finishHandle}
-      initialValues={{ sex: 1 }}
       open={open}
       title={title}
       width={640}
@@ -174,15 +173,6 @@ function NewAndEditForm({
           mode='multiple'
           loading={getRolesLoading}
         />
-      </Form.Item>
-      <Form.Item
-        label={t("ykrQSYRh" /* 性别 */)}
-        name="sex"
-      >
-        <Radio.Group>
-          <Radio value={1}>{t("AkkyZTUy" /* 男 */)}</Radio>
-          <Radio value={0}>{t("yduIcxbx" /* 女 */)}</Radio>
-        </Radio.Group>
       </Form.Item>
     </FModalForm>
   )
