@@ -80,9 +80,6 @@ jobs:
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
-      - name: Dump SERVER_KEY
-        run: echo -n "${{ secrets.SERVER_KEY }}" | xxd -ps
-
       - name: SSH Command
         # You may pin to the exact commit or the version.
         # uses: D3rHase/ssh-command-action@981832f056c539720824429fa91df009db0ee9cd
