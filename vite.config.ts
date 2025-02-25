@@ -12,6 +12,9 @@ const plugins = [
     'react-dom': 'ReactDOM',
     antd: 'antd',
     'lodash-es': '_',
+    '@ant-design/icons': 'icons',
+    'ahooks': 'ahooks',
+    'react-router-dom': 'ReactRouterDOM',
   })
 ]
 
