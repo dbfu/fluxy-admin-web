@@ -20,7 +20,7 @@ export function useUserDetail() {
   const { setLatestMessage } = useMessageStore();
 
   // 当获取完用户信息后，手动连接
-  const { latestMessage, connect } = useWebSocketMessage(
+  const { latestMessage, connect, disconnect } = useWebSocketMessage(
     `${window.location.protocol.replace('http', 'ws')}//${window.location.host}/ws/?token=${token}`,
     { manual: true }
   );
@@ -152,6 +152,7 @@ export function useUserDetail() {
 
   return {
     loading: requestLoading || loading,
+    disconnectWS: disconnect,
   }
 }
 

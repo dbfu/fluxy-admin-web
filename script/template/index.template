@@ -1,0 +1,123 @@
+import { t } from '@/utils/i18n';
+import {
+  Button,
+  Divider,
+  Popconfirm,
+  Space
+} from 'antd';
+import { useRef, useState } from 'react';
+
+import { $2_page, $2_remove } from '@/api/$2';
+import LinkButton from '@/components/link-button';
+import FProTable from '@/components/pro-table';
+import { antdUtils } from '@/utils/antd';
+import { toPageRequestParams } from '@/utils/utils';
+import { PlusOutlined } from '@ant-design/icons';
+import { ActionType, ProColumnType } from '@ant-design/pro-components';
+import NewAndEditForm from './new-edit-form';
+
+function $1Page() {
+  const [editData, setEditData] = useState<API.$1VO | null>(null);
+  const [formOpen, setFormOpen] = useState(false);
+  const actionRef = useRef<ActionType>();
+
+  const columns: ProColumnType<API.$1VO>[] = [
+    {
+      title: t("qvtQYcfN" /* 名称 */),
+      dataIndex: 'name',
+    },
+    {
+      title: t("WIRfoXjK" /* 代码 */),
+      dataIndex: 'code',
+      valueType: 'text',
+    },
+    {
+      title: t("QkOmYwne" /* 操作 */),
+      dataIndex: 'id',
+      hideInForm: true,
+      width: 240,
+      align: 'center',
+      search: false,
+      renderText: (id: string, record) => (
+        <Space
+          split={(
+            <Divider type='vertical' />
+          )}
+        >
+          <LinkButton
+            onClick={() => {
+              setEditData(record);
+              setFormOpen(true);
+            }}
+          >
+            {t("wXpnewYo" /* 编辑 */)}
+          </LinkButton>
+          <Popconfirm
+            title={t("RCCSKHGu" /* 确认删除？ */)}
+            onConfirm={async () => {
+              const [error] = await $2_remove({ id });
+              if (!error) {
+                antdUtils.message?.success(t("CVAhpQHp" /* 删除成功! */));
+                actionRef.current?.reload();
+              }
+            }}
+            placement="topRight"
+          >
+            <LinkButton
+            >
+              {t("HJYhipnp" /* 删除 */)}
+            </LinkButton>
+          </Popconfirm>
+        </Space>
+      ),
+    },
+  ];
+
+
+  const openForm = () => {
+    setFormOpen(true);
+  };
+
+  const closeForm = () => {
+    setFormOpen(false);
+    setEditData(null);
+  };
+
+  const saveHandle = () => {
+    actionRef.current?.reload();
+    setFormOpen(false);
+    setEditData(null);
+  };
+
+  return (
+    <>
+      <FProTable<API.$1VO, Omit<API.$1VO, 'id'>>
+        actionRef={actionRef}
+        columns={columns}
+        request={async params => {
+          return $2_page(toPageRequestParams(params));
+        }}
+        headerTitle={(
+          <Space>
+            <Button
+              onClick={openForm}
+              type='primary'
+              icon={<PlusOutlined />}
+            >
+              {t('morEPEyc' /* 新增 */)}
+            </Button>
+          </Space>
+        )}
+      />
+      <NewAndEditForm
+        onOpenChange={open => !open && closeForm()}
+        editData={editData}
+        onSaveSuccess={saveHandle}
+        open={formOpen}
+        title={editData ? t('wXpnewYo' /* 编辑 */) : t('VjwnJLPY' /* 新建 */)}
+      />
+    </>
+  );
+}
+
+export default $1Page;

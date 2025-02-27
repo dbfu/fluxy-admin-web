@@ -1,6 +1,6 @@
-import {useWebSocket} from 'ahooks';
-import type {Options, Result} from 'ahooks/lib/useWebSocket';
-import {useRef} from 'react';
+import { useWebSocket } from 'ahooks';
+import type { Options, Result } from 'ahooks/lib/useWebSocket';
+import { useCallback, useRef } from 'react';
 
 export function useWebSocketMessage(
   socketUrl: string,
@@ -51,11 +51,14 @@ export function useWebSocketMessage(
 
   // 发送心跳消息
   function sendHeartbeat() {
+    if (webSocketIns?.CLOSED) {
+      return;
+    }
     resetHeartbeat();
 
     // 三秒之后发送一次心跳消息
     setTimeout(() => {
-      sendMessage && sendMessage(JSON.stringify({type: 'Ping'}));
+      sendMessage && sendMessage(JSON.stringify({ type: 'Ping' }));
       // 心跳消息发送3s后，还没得到服务器响应，说明服务器可能挂了，需要自动重连。
       timerRef.current = window.setTimeout(() => {
         disconnect && disconnect();
@@ -64,11 +67,16 @@ export function useWebSocketMessage(
     }, 3000);
   }
 
+  const disconnectWS = useCallback(() => {
+    disconnect && disconnect();
+    resetHeartbeat();
+  }, [])
+
   return {
     latestMessage,
     connect,
     sendMessage,
-    disconnect,
+    disconnect: disconnectWS,
     readyState,
     webSocketIns,
   };

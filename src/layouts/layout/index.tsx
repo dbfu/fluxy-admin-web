@@ -12,7 +12,7 @@ import SystemSetting from './system-setting';
 export default function Layout1() {
 
   const { lang } = useGlobalStore(useSelector('lang'));
-  const { loading } = useUserDetail();
+  const { loading, disconnectWS } = useUserDetail();
 
   if (loading) {
     return (
@@ -24,7 +24,7 @@ export default function Layout1() {
     <Watermark type='full'>
       <div key={lang} className='overflow-hidden'>
         <MessageHandle />
-        <Header />
+        <Header disconnectWS={disconnectWS} />
         <Slide />
         <Content />
         {import.meta.env.DEV && <SystemSetting />}
