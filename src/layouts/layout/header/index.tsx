@@ -7,7 +7,11 @@ import MenuSearcher from './menu-searcher';
 import ThemeSwitcher from './theme-switcher';
 import UserInfo from './user-info';
 
-function Header() {
+function Header({
+  disconnectWS
+}: {
+  disconnectWS: () => void
+}) {
 
   const {
     darkMode,
@@ -29,7 +33,7 @@ function Header() {
         <div className='flex gap-[16px] items-center'>
           <ThemeSwitcher darkMode={darkMode} setDarkMode={setDarkMode} />
           <LangDropdown lang={lang} setLang={setLang} />
-          <UserInfo darkMode={darkMode} />
+          <UserInfo disconnectWS={disconnectWS} darkMode={darkMode} />
         </div>
       </div>
     </div>

@@ -1,21 +1,30 @@
+import { auth_logout } from '@/api/auth';
 import { IconBuguang } from '@/assets/icons/buguang';
 import IconButton from '@/components/icon-button';
 import { router } from '@/router';
+import { useGlobalStore } from '@/stores/global';
 import { useUserStore } from '@/stores/user';
 import { SettingOutlined } from '@ant-design/icons';
 import { Avatar, Button, Dropdown } from 'antd';
 
 interface Props {
   darkMode: boolean;
+  disconnectWS: () => void;
 }
 
 function UserInfo({
-  darkMode
+  darkMode,
+  disconnectWS
 }: Props) {
 
   const { currentUser } = useUserStore();
+  const { setRefreshToken } = useGlobalStore();
 
-  function logout() {
+  async function logout() {
+    setRefreshToken('');
+    await auth_logout();
+    // 断开 websocket
+    disconnectWS();
     router.navigate('/user/login');
   }
 
