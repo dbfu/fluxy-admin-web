@@ -16,17 +16,18 @@ export default function Layout() {
   const { lang } = useGlobalStore(useSelector('lang'));
   const { loading, disconnectWS } = useUserDetail();
 
-
   useEffect(() => {
-    // 加定时器是为了解决闪烁问题
-    setTimeout(() => {
-      antdUtils.notification.warning({
-        description: '请注意，每天晚上 12 点数据会重置所有数据。',
-        message: '提示',
-        duration: 0,
-        placement: 'topRight'
-      });
-    }, 100);
+    if (import.meta.env.PROD) {
+      // 加定时器是为了解决闪烁问题
+      setTimeout(() => {
+        antdUtils.notification.warning({
+          description: '请注意，每天晚上 12 点数据会重置所有数据。',
+          message: '提示',
+          duration: 0,
+          placement: 'topRight'
+        });
+      }, 300);
+    }
   }, [])
 
   if (loading) {
@@ -34,7 +35,6 @@ export default function Layout() {
       <GlobalLoading />
     )
   }
-
 
   return (
     <Watermark type='full'>
