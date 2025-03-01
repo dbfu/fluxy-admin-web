@@ -2,15 +2,30 @@ import { IconBuguang } from '@/assets/icons/buguang';
 import { t } from '@/utils/i18n';
 
 import { defaultSetting } from '@/default-setting';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ForgetPasswordModal from './components/forget-password-modal';
 import LoginForm from './components/login-form';
 import RightContent from './components/right-content';
 
+import { antdUtils } from '@/utils/antd';
 import './index.css';
 
 function Login() {
   const [emailResetPasswordOpen, setEmailResetPasswordOpen] = useState(false);
+
+  useEffect(() => {
+    if (import.meta.env.PROD) {
+      // 加定时器是为了解决闪烁问题
+      setTimeout(() => {
+        antdUtils.notification.warning({
+          description: '请注意，每天晚上 12 点数据会重置所有数据。',
+          message: '提示',
+          duration: 0,
+          placement: 'topRight'
+        });
+      }, 100);
+    }
+  }, []);
 
   return (
     <div className="flex justify-center items-center h-[100vh]">

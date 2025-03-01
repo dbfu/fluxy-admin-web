@@ -1,7 +1,7 @@
-
 import { api_log_getBodyData, api_log_getQueryData, api_log_getResultData, api_log_page } from '@/api/apiLog';
 import LinkButton from '@/components/link-button';
 import FProTable from '@/components/pro-table';
+import { t } from '@/utils/i18n';
 import { toPageRequestParams } from '@/utils/utils';
 import { ProColumnType } from '@ant-design/pro-components';
 import { useRequest } from 'ahooks';
@@ -35,11 +35,11 @@ function ApiLogPage() {
   const columns: ProColumnType<API.ApiLogVO>[] = [
     {
       dataIndex: 'url',
-      title: '请求地址',
+      title: t ("qXyXvYKQ" /* 请求地址 */),
       width: 250,
     }, {
       dataIndex: 'method',
-      title: '请求方式',
+      title: t ("BIHtcucU" /* 请求方式 */),
       width: 80,
       valueType: 'select',
       valueEnum: {
@@ -50,23 +50,23 @@ function ApiLogPage() {
       },
     }, {
       dataIndex: 'success',
-      title: '是否成功',
+      title: t ("jUMSQtwr" /* 是否成功 */),
       width: 80,
       valueType: 'select',
       valueEnum: {
-        0: { text: '失败' },
-        1: { text: '成功' },
+        0: { text: t ("HaLzGNdm" /* 失败 */) },
+        1: { text: t ("pyuYsBVW" /* 成功 */) },
       },
       renderText: (value: boolean) => {
         return value ? (
-          <Badge status='success' text='成功' />
+          <Badge status='success' text={t ("pyuYsBVW" /* 成功 */)} />
         ) : (
-          <Badge status='error' text='失败' />
+          <Badge status='error' text={t ("HaLzGNdm" /* 失败 */)} />
         );
       }
     }, {
       dataIndex: 'startTime',
-      title: '请求开始时间',
+      title: t ("enuYCXKm" /* 请求开始时间 */),
       width: 160,
       hideInSearch: true,
       renderText: (value: Date) => {
@@ -75,13 +75,13 @@ function ApiLogPage() {
     },
     {
       dataIndex: 'startTimeRange',
-      title: '请求开始时间范围',
+      title: t ("JoQzAZoH" /* 请求开始时间范围 */),
       valueType: 'dateTimeRange',
       hideInTable: true,
     },
     {
       dataIndex: 'endTime',
-      title: '请求结束时间',
+      title: t ("vSIQMaLG" /* 请求结束时间 */),
       width: 160,
       hideInSearch: true,
       renderText: (value: Date) => {
@@ -90,14 +90,14 @@ function ApiLogPage() {
     },
     {
       dataIndex: 'endTimeRange',
-      title: '请求结束时间范围',
+      title: t ("CXtLVbIc" /* 请求结束时间范围 */),
       width: 160,
       valueType: 'dateTimeRange',
       hideInTable: true,
     },
     {
       dataIndex: 'duration',
-      title: '耗时（毫秒）',
+      title: t ("icSKnRmj" /* 耗时（毫秒） */),
       width: 100,
       hideInSearch: true,
       align: 'right',
@@ -117,23 +117,23 @@ function ApiLogPage() {
     },
     {
       dataIndex: 'durationRange',
-      title: '耗时（毫秒）',
+      title: t ("nuCgtjoc" /* 耗时（毫秒） */),
       hideInTable: true,
       valueType: 'digitRange'
     },
     {
       dataIndex: 'ip',
-      title: '请求ip',
+      title: t ("McNVQPJd" /* 请求ip */),
       width: 120
     },
     {
       dataIndex: 'userName',
-      title: '请求用户',
+      title: t ("DmTCRsso" /* 请求用户 */),
       search: false,
     },
     {
       dataIndex: 'errorType',
-      title: '错误码',
+      title: t ("OmuvkRln" /* 错误码 */),
       valueType: 'select',
       valueEnum: {
         400: { text: '400' },
@@ -145,32 +145,32 @@ function ApiLogPage() {
     },
     {
       dataIndex: 'errorMsg',
-      title: '错误消息',
+      title: t ("isrNxNgU" /* 错误消息 */),
       ellipsis: true,
       search: false,
     },
     {
       dataIndex: 'query',
-      title: '请求query参数',
+      title: 'query',
       search: false,
       renderText: (_, record) => (
-        <LinkButton onClick={() => viewQuery(record.id)}>查看</LinkButton>
+        <LinkButton onClick={() => viewQuery(record.id)}>{t ("tdxojzse" /* 查看 */)}</LinkButton>
       )
     },
     {
       dataIndex: 'body',
-      title: '请求body参数',
+      title: 'body',
       search: false,
       renderText: (_, record) => (
-        <LinkButton onClick={() => viewBody(record.id)}>查看</LinkButton>
+        <LinkButton onClick={() => viewBody(record.id)}>{t ("QlRHLvop" /* 查看 */)}</LinkButton>
       )
     },
     {
       dataIndex: 'result',
-      title: '响应结果',
+      title: t ("RcReZbBQ" /* 响应结果 */),
       search: false,
       renderText: (_, record) => (
-        <LinkButton onClick={() => viewResult(record.id)}>查看</LinkButton>
+        <LinkButton onClick={() => viewResult(record.id)}>{t ("dorOOXKc" /* 查看 */)}</LinkButton>
       )
     }
   ];
@@ -227,7 +227,7 @@ function ApiLogPage() {
         }}
       />
       <Modal
-        title={viewType === 'body' ? '请求body参数' : viewType === 'query' ? '请求query参数' : '响应结果'}
+        title={viewType === 'body' ? t ("FCHoRuDz" /* 请求body参数 */) : viewType === 'query' ? t ("QHcGgoYL" /* 请求query参数 */) : t ("GvGjdJnR" /* 响应结果 */)}
         open={open}
         onCancel={() => setOpen(false)}
         width={800}
