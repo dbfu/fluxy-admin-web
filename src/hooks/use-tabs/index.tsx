@@ -98,7 +98,7 @@ export function useTabs() {
       // 如果是同一个路由，但是参数不同，我们只需要刷新当前页签并且把pathname设置为新的pathname， children设置为新的children
       setKeepAliveTabs(prev => {
         const index = (prev || []).findIndex(tab => tab.routePath === matchRoute.routePath);
-        if (index >= 0 && prev && !prev[index].children) {
+        if (index >= 0 && prev) {
           prev[index].key = getKey();
           prev[index].pathname = matchRoute.pathname;
           prev[index].children = matchRoute.children;
