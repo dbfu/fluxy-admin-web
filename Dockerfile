@@ -1,4 +1,4 @@
-FROM gplane/pnpm:8.4.0 as builder
+FROM registry.cn-hangzhou.aliyuncs.com/dbfu/pnpm:8.4.0 as builder
 ARG SENTRY_AUTH_TOKEN
 
 WORKDIR /app/web
@@ -11,7 +11,7 @@ RUN pnpm install
 COPY . .
 RUN pnpm run build
 
-FROM nginx:alpine as nginx
+FROM registry.cn-hangzhou.aliyuncs.com/dbfu/nginx:latest as nginx
 
 RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && echo "Asia/Shanghai" > /etc/timezone 
